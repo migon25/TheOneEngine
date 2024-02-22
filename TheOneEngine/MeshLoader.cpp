@@ -33,6 +33,7 @@ struct aiSceneExt : aiScene
 {
     auto materials() const { return span(mMaterials, mNumMaterials); }
     auto meshes() const { return span((aiMeshExt**)mMeshes, mNumMeshes); }
+    auto animations() const { return span(mAnimations, mNumAnimations); }
 };
 
 
@@ -111,6 +112,11 @@ std::vector<MeshBufferedData> MeshLoader::LoadMesh(const std::string& path)
     if (scene != NULL)
     {
         aiMatrix4x4 globalTransform = scene->mRootNode->mTransformation;
+
+        for (size_t a = 0; a < scene->mNumAnimations; ++a)
+        {
+            auto animation = scene->mAnimations[a];
+        }
 
         for (size_t m = 0; m < scene->mNumMeshes; ++m)
         {
