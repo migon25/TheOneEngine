@@ -21,10 +21,12 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshLoader.h" />
     <ClInclude Include="Ray.h" />
+    <ClInclude Include="Shader.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="EngineCore.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="UIDGen.h" />
+    <ClInclude Include="Uniform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
@@ -35,9 +37,11 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshLoader.cpp" />
     <ClCompile Include="Ray.cpp" />
+    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="EngineCore.cpp" />
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="Uniform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TheOneAudio\TheOneAudio.vcxproj">
