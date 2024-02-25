@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Module.h"
+#include "..\TheOneEngine\Shader.h"
 
 #include <memory>
 
@@ -36,6 +37,12 @@ public:
     double dtSum = 0;
 
     std::shared_ptr<GameObject> sceneCamera;
+
+
+#ifdef SHADER_TEST
+    //TODO: SHADER TEBUG TEST CODE, remove it when its done
+    std::unique_ptr<Shader> basicShader;
+#endif
 };
 
 #endif // !__RENDERER_3D_H__

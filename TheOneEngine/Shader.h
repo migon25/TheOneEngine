@@ -4,6 +4,7 @@
 #include "glm/glm.hpp"
 
 
+#define SHADER_TEST
 class Material;
 struct UniformField
 {

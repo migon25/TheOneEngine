@@ -55,6 +55,11 @@ bool Renderer3D::Start()
     LOG(LogType::LOG_INFO, "# Testing Component Duplication");
     sceneCamera.get()->AddComponent<Camera>();
 
+#ifdef SHADER_TEST
+    basicShader = std::make_unique<Shader>("Assets/Shaders/basicTexture");
+    basicShader->addUniform("tex", UniformType::Sampler2D);
+#endif //SHADER_TEST
+
 
     return true;
 }
@@ -72,6 +77,12 @@ bool Renderer3D::Update(double dt)
     app->gui->panelScene->isHovered = false;
 
     app->engine->Update(dt);
+
+#ifdef SHADER_TEST
+    basicShader->Bind();
+    basicShader->SetMVP(glm::mat4(1), sceneCamera->GetComponent<Camera>()->viewMatrix, sceneCamera->GetComponent<Camera>()->projectionMatrix);
+#endif // SHADER_TEST
+
 
     /*app->engine->audio->SetListenerTransform(
         sceneCamera.get()->GetComponent<Transform>()->getPosition().x,
