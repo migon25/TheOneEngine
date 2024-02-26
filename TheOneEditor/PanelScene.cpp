@@ -12,6 +12,8 @@
 #include "imgui.h"
 #include "ImGuizmo.h"
 
+#include "glm/gtx/matrix_decompose.inl"
+
 #include <vector>
 
 PanelScene::PanelScene(PanelType type, std::string name) : Panel(type, name), isHovered(false)
@@ -145,10 +147,18 @@ bool PanelScene::Draw()
         }
 
         //ImGuizmoMod
+            //to test
+        //gizmoType = ImGuizmo::OPERATION::TRANSLATE;
+        //gizmoType = ImGuizmo::OPERATION::ROTATE;
+        //gizmoType = ImGuizmo::OPERATION::SCALE;
+
+        //Get gizmoType stored in input module
+        gizmoType = app->input->GetStoredGizmoType();
+
         auto selGO = app->sceneManager->GetSelectedGO();
-        if (selGO)
+        if (selGO && gizmoType != -1)
         {
-            ImGuizmo::SetOrthographic(false);
+            //ImGuizmo::SetOrthographic(false);
             ImGuizmo::SetDrawlist();
 
             ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y,
@@ -162,8 +172,25 @@ bool PanelScene::Draw()
             auto tc = selGO->GetComponent<Transform>();
             glm::mat4 transform = tc->GetWorldTransform();
 
+            //renders gizmo
             ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection),
-                ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::LOCAL, glm::value_ptr(transform));
+                (ImGuizmo::OPERATION)gizmoType, ImGuizmo::LOCAL, glm::value_ptr(transform));
+
+            if (ImGuizmo::IsUsing())
+            {
+                //decompose data into translation, rotation and scale from transform matrix
+                glm::vec3 translation, rotation, scale;
+                ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(transform), glm::value_ptr(translation), 
+                    glm::value_ptr(rotation), glm::value_ptr(scale));
+
+                //calculate deltaRotation
+                    //glm::vec3 deltaRotation = rotation - GO.rotation
+                //pass decomposed data to GO
+                    //GO.translation = translation;
+                    //GO.rotation += deltaRotation;
+                    //GO.scale += scale;
+
+            }
         }
 
         //Draw Rays
@@ -192,4 +219,9 @@ Ray PanelScene::GetScreenRay(int x, int y, Camera* camera, int width, int height
     float rayY = - (2.0f * y) / height + 1.0f;
 
     return camera->ComputeCameraRay(rayX, rayY);
+}
+
+void PanelScene::SetGizmoType(int newType)
+{
+    gizmoType = newType;
 }

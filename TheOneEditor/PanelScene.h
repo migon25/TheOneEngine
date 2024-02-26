@@ -19,6 +19,8 @@ public:
 
 	Ray GetScreenRay(int x, int y, Camera* camera, int width, int height);
 
+	void SetGizmoType(int newType);
+
 public:
 	bool isHovered;
 	std::vector<Ray> rays;
@@ -30,6 +32,8 @@ public:
 	bool drawAABB;
 	bool drawOBB;
 	bool drawChecker;
+
+	int gizmoType = -1;
 };
 
 #endif // !__PANEL_SCENE_H__

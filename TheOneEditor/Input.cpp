@@ -3,6 +3,9 @@
 #include "Gui.h"
 #include "Window.h"
 #include "SceneManager.h"
+#include "PanelScene.h"//ImguizmoMod
+
+#include "ImGuizmo.h"
 
 #include "Log.h"
 #include <string>
@@ -136,6 +139,28 @@ bool Input::processSDLEvents()
             case SDL_KEYDOWN:
                 switch (event.key.keysym.sym) {
                 case SDLK_ESCAPE: return false;
+
+                    //add q, w, e, r for ImguizmoMod
+                case SDLK_q:
+                {
+                    storeGizmoType = -1; LOG(LogType::LOG_INFO, "NO Gizmo -- Unactive");
+                    break;
+                }
+                case SDLK_w:
+                {
+                    storeGizmoType = ImGuizmo::OPERATION::TRANSLATE; LOG(LogType::LOG_INFO, "TRANSLATE Gizmo -- Active");
+                    break;
+                }
+                case SDLK_e:
+                {
+                    storeGizmoType = ImGuizmo::OPERATION::ROTATE; LOG(LogType::LOG_INFO, "ROTATE Gizmo -- Active");
+                    break;
+                }
+                case SDLK_r:
+                {
+                    storeGizmoType = ImGuizmo::OPERATION::SCALE; LOG(LogType::LOG_INFO, "SCALE Gizmo -- Active");
+                    break;
+                }
                 }
                 break;
 

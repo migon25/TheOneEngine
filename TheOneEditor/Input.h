@@ -63,6 +63,11 @@ public:
 		return mouse_y_motion;
 	}
 
+	int GetStoredGizmoType() const
+	{
+		return storeGizmoType;
+	}
+
 private:
 	KEY_STATE* keyboard;
 	KEY_STATE mouse_buttons[MAX_MOUSE_BUTTONS];
@@ -73,6 +78,8 @@ private:
 	int mouse_y_motion;
 	float dx;
 	float dy;
+
+	int storeGizmoType = -1;//ImguizmoMod
 };
 
 #endif // !__INPUT_H__
