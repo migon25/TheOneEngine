@@ -80,7 +80,7 @@ bool Renderer3D::Update(double dt)
 
 #ifdef SHADER_TEST
     basicShader->Bind();
-    basicShader->SetMVP(glm::mat4(1), sceneCamera->GetComponent<Camera>()->viewMatrix, sceneCamera->GetComponent<Camera>()->projectionMatrix);
+    basicShader->SetViewProj(sceneCamera->GetComponent<Camera>()->viewMatrix, sceneCamera->GetComponent<Camera>()->projectionMatrix);
 #endif // SHADER_TEST
 
 

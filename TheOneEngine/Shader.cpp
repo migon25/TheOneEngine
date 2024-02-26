@@ -326,6 +326,17 @@ void Shader::SetMVP(const glm::mat4& model, const glm::mat4& view, const glm::ma
 	glUniformMatrix4fv(projectionMatrixID, 1, GL_FALSE, glm::value_ptr(proj));
 }
 
+void Shader::SetViewProj(const glm::mat4& view, const glm::mat4& proj)
+{
+	glUniformMatrix4fv(viewMatrixID, 1, GL_FALSE, glm::value_ptr(view));
+	glUniformMatrix4fv(projectionMatrixID, 1, GL_FALSE, glm::value_ptr(proj));
+}
+
+void Shader::SetModel(const glm::mat4& model)
+{
+	glUniformMatrix4fv(modelMatrixID, 1, GL_FALSE, glm::value_ptr(model));
+}
+
 UniformField* Shader::getUniform(const char* name)
 {
 	if (uniforms.empty())

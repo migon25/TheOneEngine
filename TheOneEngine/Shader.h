@@ -62,6 +62,8 @@ public:
 	void setUniformType(const char* name, const UniformType type);
 	void setUniformName(const char* oldName, const char* newName);
 	void SetMVP(const glm::mat4& model, const glm::mat4& view, const glm::mat4& proj);
+	void SetViewProj(const glm::mat4& view, const glm::mat4& proj);
+	void SetModel(const glm::mat4& model);
 	UniformField* getUniform(const char* name);
 
 	inline const char* getPath() { return path.c_str(); }
