@@ -4,11 +4,13 @@
 #include "Renderer3D.h"
 #include "SceneManager.h"
 #include "Window.h"
-#include "imgui.h"
 #include "Log.h"
 
 #include "..\TheOneEngine\EngineCore.h"
 #include "..\TheOneEngine\Ray.h"
+
+#include "imgui.h"
+#include "ImGuizmo.h"
 
 #include <vector>
 
@@ -140,6 +142,28 @@ bool PanelScene::Draw()
 
             rays.push_back(ray);
             //editor->SelectObject(ray);
+        }
+
+        //ImGuizmoMod
+        auto selGO = app->sceneManager->GetSelectedGO();
+        if (selGO)
+        {
+            ImGuizmo::SetOrthographic(false);
+            ImGuizmo::SetDrawlist();
+
+            ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y,
+                               ImGui::GetWindowWidth(), ImGui::GetWindowHeight());
+
+            //Camera
+            const glm::mat4& cameraProjection = sceneCam->projectionMatrix;
+            glm::mat4 cameraView = glm::inverse(selGO->GetComponent<Transform>()->GetWorldTransform());
+
+            //Entity Transform
+            auto tc = selGO->GetComponent<Transform>();
+            glm::mat4 transform = tc->GetWorldTransform();
+
+            ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection),
+                ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::LOCAL, glm::value_ptr(transform));
         }
 
         //Draw Rays

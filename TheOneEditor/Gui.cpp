@@ -23,6 +23,7 @@
 #include "imgui_internal.h"
 #include "imgui_impl_sdl2.h"
 #include "imgui_impl_opengl3.h"
+#include "ImGuizmo.h"
 
 #include "implot.h"
 
@@ -202,6 +203,8 @@ bool Gui::PreUpdate()
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame(app->window->window);
     ImGui::NewFrame();
+    //ImGuizmoMod
+    ImGuizmo::BeginFrame();
 
     // hekbas TODO get input here?
 
