@@ -10,6 +10,7 @@
 #include "Mesh.h"
 #include "Texture.h"
 #include "Ray.h"
+#include "Shader.h"
 
 #include "..\TheOneAudio\AudioCore.h"
 
@@ -48,8 +49,15 @@ public:
 	bool vsync = false;
 	AudioCore* audio = nullptr;
 
+
+#ifdef SHADER_TEST
+	//TODO: SHADER TEBUG TEST CODE, remove it when its done
+	std::shared_ptr<Shader> basicShader;
+#endif
+	static EngineCore* instance;
 private:
 
 };
+
 
 #endif // !__ENGINE_CORE_H__

@@ -184,9 +184,9 @@ void Shader::CompileFiles(const char* vertexShaderSource, const char* fragmentSh
 
 	compileState = State::Compiled;
 
-	modelMatrixID = glGetUniformLocation(ProgramID, "u_Model");
-	projectionMatrixID = glGetUniformLocation(ProgramID, "u_Proj");
-	viewMatrixID = glGetUniformLocation(ProgramID, "u_View");
+	modelMatrixID = glGetUniformLocation(ProgramID, "model");
+	projectionMatrixID = glGetUniformLocation(ProgramID, "projection");
+	viewMatrixID = glGetUniformLocation(ProgramID, "view");
 }
 void Shader::Bind()
 {

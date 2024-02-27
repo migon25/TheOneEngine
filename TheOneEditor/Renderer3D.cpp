@@ -55,10 +55,6 @@ bool Renderer3D::Start()
     LOG(LogType::LOG_INFO, "# Testing Component Duplication");
     sceneCamera.get()->AddComponent<Camera>();
 
-#ifdef SHADER_TEST
-    basicShader = std::make_unique<Shader>("Assets/Shaders/basicTexture");
-    basicShader->addUniform("tex", UniformType::Sampler2D);
-#endif //SHADER_TEST
 
 
     return true;
@@ -79,8 +75,9 @@ bool Renderer3D::Update(double dt)
     app->engine->Update(dt);
 
 #ifdef SHADER_TEST
-    basicShader->Bind();
-    basicShader->SetViewProj(sceneCamera->GetComponent<Camera>()->viewMatrix, sceneCamera->GetComponent<Camera>()->projectionMatrix);
+    EngineCore::instance->basicShader->Bind();
+    EngineCore::instance->basicShader->SetViewProj(sceneCamera->GetComponent<Camera>()->viewMatrix, sceneCamera->GetComponent<Camera>()->projectionMatrix);
+    EngineCore::instance->basicShader->UnBind();
 #endif // SHADER_TEST
 
 

@@ -62,38 +62,49 @@ void MeshLoader::BufferData(MeshData meshData)
 {
     //extension = ".fbx";
     //this->path = ASSETS_PATH + std::to_string(ID) + extension;
+
     meshBuffData.numVerts = meshData.vertex_data.size();
     meshBuffData.numIndexs = meshData.index_data.size();
     glGenBuffers(1, &meshBuffData.vertex_buffer_id);
-    glBindBuffer(GL_ARRAY_BUFFER, meshBuffData.vertex_buffer_id);
+    glGenVertexArrays(1, &meshBuffData.vertex_array_id);
+    glBindVertexArray(meshBuffData.vertex_array_id);
 
+    int vSize = 0;
     switch (meshData.format)
     {
     case Formats::F_V3:
-        glBufferData(GL_ARRAY_BUFFER, sizeof(V3) * meshData.vertex_data.size(), meshData.vertex_data.data(), GL_STATIC_DRAW);
+        vSize = sizeof(V3);
         meshBuffData.format = Formats::F_V3;
         break;
     case Formats::F_V3C4:
-        glBufferData(GL_ARRAY_BUFFER, sizeof(V3C4) * meshData.vertex_data.size(), meshData.vertex_data.data(), GL_STATIC_DRAW);
+        vSize = sizeof(V3C4);
         meshBuffData.format = Formats::F_V3C4;
         break;
     case Formats::F_V3T2:
-        glBufferData(GL_ARRAY_BUFFER, sizeof(V3T2) * meshData.vertex_data.size(), meshData.vertex_data.data(), GL_STATIC_DRAW);
+        vSize = sizeof(V3T2);
         meshBuffData.format = Formats::F_V3T2;
         break;
     }
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, meshBuffData.vertex_buffer_id);
+    glBufferData(GL_ARRAY_BUFFER, vSize * meshData.vertex_data.size(), meshData.vertex_data.data(), GL_STATIC_DRAW);
 
     if (meshData.index_data.data())
     {
         glGenBuffers(1, &meshBuffData.indexs_buffer_id);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshBuffData.indexs_buffer_id);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * meshData.index_data.size(), meshData.index_data.data(), GL_STATIC_DRAW);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
     else {
         meshBuffData.indexs_buffer_id = 0;
     }
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, vSize, (void*)0);
+    glEnableVertexAttribArray(0);
+
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, vSize, (void*)(sizeof(float) * 3));
+    glEnableVertexAttribArray(1);
+
+    glBindVertexArray(0);
 }
 
 std::vector<MeshBufferedData> MeshLoader::LoadMesh(const std::string& path)

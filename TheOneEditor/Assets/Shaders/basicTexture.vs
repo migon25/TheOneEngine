@@ -3,7 +3,7 @@
 // Positions/Coordinates
 layout (location = 0) in vec3 pos;
 // Texture Coordinates
-layout (location = 2) in vec2 texCoords;
+layout (location = 1) in vec2 texCoords;
 
 
 // Outputs the color for the Fragment Shader

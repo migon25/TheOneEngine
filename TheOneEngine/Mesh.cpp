@@ -4,6 +4,7 @@
 
 #include "../TheOneEditor/Log.h"
 #include "../TheOneEditor/SceneManager.h"
+#include "EngineCore.h"
 
 #include <span>
 #include <vector>
@@ -36,18 +37,18 @@ Mesh::~Mesh()
 // Draw
 void Mesh::DrawComponent()
 {
-    glLineWidth(1);
-    glColor4ub(255, 255, 255, 255); 
-
-    glBindBuffer(GL_ARRAY_BUFFER, mesh.vertex_buffer_id);
-    glEnableClientState(GL_VERTEX_ARRAY);
 
     std::shared_ptr<GameObject> containerGO = GetContainerGO();
-    glPushMatrix();
-    glMultMatrixd(&containerGO.get()->GetComponent<Transform>()->getMatrix()[0].x);
+    
+#ifdef SHADER_TEST
+    EngineCore::instance->basicShader->Bind();
+    EngineCore::instance->basicShader->SetModel(containerGO.get()->GetComponent<Transform>()->getMatrix());
+    if (mesh.texture.get() && !drawChecker) mesh.texture->bind();
+#endif // SHADER_TEST
 
-    ConfigureVertexFormat();
 
+
+    glBindVertexArray(mesh.vertex_array_id);
     if (active)
     {
         if (drawWireframe)
@@ -63,8 +64,7 @@ void Mesh::DrawComponent()
 
         if (mesh.indexs_buffer_id)
         {
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.indexs_buffer_id);
-            glDrawElements(GL_TRIANGLES, mesh.numIndexs, GL_UNSIGNED_INT, nullptr);
+            glDrawElements(GL_TRIANGLES, mesh.numIndexs, GL_UNSIGNED_INT, 0);
         }
         else
             glDrawArrays(GL_TRIANGLES, 0, mesh.numVerts);
@@ -72,19 +72,20 @@ void Mesh::DrawComponent()
         if (drawNormalsVerts) DrawVertexNormals();
         if (drawNormalsFaces) DrawFaceNormals();
 
+        glBindVertexArray(0);
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-        glDisableClientState(GL_VERTEX_ARRAY);
-        glDisableClientState(GL_COLOR_ARRAY);
-        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+       
         glDisable(GL_TEXTURE_2D);
     }
+
+#ifdef SHADER_TEST
+    EngineCore::instance->basicShader->UnBind();
+#endif // SHADER_TEST
     
     GLenum error = glGetError();
 
-    glPopMatrix();
+
+
 }
 
 void Mesh::ConfigureVertexFormat()

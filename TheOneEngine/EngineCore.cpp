@@ -6,9 +6,12 @@
 
 #include <memory>
 
+EngineCore* EngineCore::instance = NULL;
+
 EngineCore::EngineCore()
 {
     audio = new AudioCore();
+    instance = this;
 }
 
 void EngineCore::Awake()
@@ -20,6 +23,11 @@ void EngineCore::Awake()
 
 void EngineCore::Start()
 {
+
+#ifdef SHADER_TEST
+    basicShader = std::make_shared<Shader>("Assets/Shaders/basicTexture");
+    basicShader->addUniform("tex", UniformType::Sampler2D);
+#endif //SHADER_TEST
     
 }
 

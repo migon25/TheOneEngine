@@ -42,6 +42,8 @@ struct MeshBufferedData
 	std::string meshName;
 	Formats format;
 
+	uint vertex_array_id;
+
 	uint vertex_buffer_id;
 	uint numVerts;
 
