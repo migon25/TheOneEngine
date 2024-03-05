@@ -7,13 +7,39 @@
 #include "Component.h"
 #include "Texture.h"
 #include "Graphic.h"
+#include "Material.h"
 
 #include <vector>
 #include <memory>
 #include <string>
 
 class GameObject;
-struct MeshBufferData;
+
+struct MeshVertex
+{
+    vec3f position;
+    vec2f texCoords;
+};
+
+struct MeshData
+{
+    std::string meshName;
+
+    BufferLayout format;
+
+    std::vector<MeshVertex> vertexData;
+    std::vector<unsigned int> indexData;
+
+    uint numFaces;
+
+    std::vector<vec3f> meshVerts;
+    std::vector<vec3f> meshNorms;
+    std::vector<vec3f> meshFaceCenters;
+    std::vector<vec3f> meshFaceNorms;
+
+    std::string texturePath;
+    uint materialIndex;
+};
 
 class Mesh : public Component
 {
@@ -27,16 +53,20 @@ public:
     json SaveComponent();
     void LoadComponent(const json& meshJSON);
 
+    void LoadMesh(const std::string& path);
+    void LoadTexture(const std::string& path);
+
 private:
 
-    void ConfigureVertexFormat();
     void DrawVertexNormals();
     void DrawFaceNormals();
     //void DrawWireframe();
+    void GenBufferData();
+
+    void serializeMeshData(const std::string& filename);
+    void deserializeMeshData(const std::string& filename);
 
 public:
-
-    MeshBufferedData mesh;
     MeshData meshData;
 
     bool active;
@@ -55,6 +85,14 @@ public:
 private:
 
     MeshLoader* meshLoader;
+
+    std::shared_ptr<Material> material;
+    std::shared_ptr<Texture> texture;
+
+
+    std::shared_ptr<VertexArray> meshVAO;
+    std::shared_ptr<VertexBuffer> meshVBO;
+    std::shared_ptr<IndexBuffer> meshIBO;
 };
 
 #endif // !__MESH_H__

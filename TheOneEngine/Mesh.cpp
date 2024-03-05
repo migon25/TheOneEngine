@@ -1,6 +1,7 @@
 #include "Mesh.h"
 #include "GameObject.h"
 #include "Transform.h"
+#include "nlohmann/json.hpp"
 
 #include "Log.h"
 
@@ -9,7 +10,13 @@
 #include <array>
 #include <cstdio>
 #include <cassert>
+#include <filesystem>
+#include <fstream>
+#include <assimp/scene.h>
 
+namespace fs = std::filesystem;
+using namespace std;
+using namespace nlohmann::literals;
 
 Mesh::Mesh(std::shared_ptr<GameObject> containerGO) : Component(containerGO, ComponentType::Mesh)
 {
@@ -21,20 +28,17 @@ Mesh::Mesh(std::shared_ptr<GameObject> containerGO) : Component(containerGO, Com
 
     normalLineWidth = 1;
     normalLineLength = 0.1f;
-    meshLoader = new MeshLoader();
-    //GenerateAABB();
 }
 
 Mesh::~Mesh()
 {
-    /*if (_vertex_buffer_id) glDeleteBuffers(1, &_vertex_buffer_id);
-    if (_indexs_buffer_id) glDeleteBuffers(1, &_indexs_buffer_id);*/
 }
 
 
 // Draw
 void Mesh::DrawComponent()
 {
+    //TODO: change this to retained mode, add a shader to the material and make it work
     glLineWidth(1);
     glColor4ub(255, 255, 255, 255); 
 
@@ -45,7 +49,6 @@ void Mesh::DrawComponent()
     glPushMatrix();
     glMultMatrixd(&containerGO.get()->GetComponent<Transform>()->CalculateWorldTransform()[0].x);
 
-    ConfigureVertexFormat();
 
     if (active)
     {
@@ -86,32 +89,6 @@ void Mesh::DrawComponent()
     glPopMatrix();
 }
 
-void Mesh::ConfigureVertexFormat()
-{
-    switch (mesh.format)
-    {
-    case Formats::F_V3:
-        glVertexPointer(3, GL_FLOAT, 0, nullptr);
-        break;
-
-    case Formats::F_V3C4:
-        glEnableClientState(GL_COLOR_ARRAY);
-        glVertexPointer(3, GL_FLOAT, sizeof(V3C4), nullptr);
-        glColorPointer(4, GL_FLOAT, sizeof(V3C4), (void*)sizeof(V3));
-        break;
-
-    case Formats::F_V3T2:
-        glEnable(GL_TEXTURE_2D);
-        if (mesh.texture.get() && !drawChecker) mesh.texture->bind();
-        //else mesh.checkboard.get()->bind();
-
-        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-        glVertexPointer(3, GL_FLOAT, sizeof(V3T2), nullptr);
-        glTexCoordPointer(2, GL_FLOAT, sizeof(V3T2), (void*)sizeof(V3));
-        break;
-    }
-}
-
 void Mesh::DrawVertexNormals()
 {
     if (meshData.meshVerts.empty() || meshData.meshNorms.empty()) return;
@@ -150,6 +127,57 @@ void Mesh::DrawFaceNormals()
     glColor3f(0.0f, 1.0f, 1.0f);
     glEnd();
 }
+
+
+
+void Mesh::GenBufferData()
+{
+    meshVAO = std::make_shared<VertexArray>();
+
+    if (glGetError() != 0)
+    {
+        LOG(LogType::LOG_ERROR, "Check error %s", glewGetErrorString(glGetError()));
+    }
+    meshVBO = std::make_shared<VertexBuffer>(meshData.vertexData.data(), meshData.vertexData.size() * sizeof(MeshVertex));
+
+    if (glGetError() != 0)
+    {
+        LOG(LogType::LOG_ERROR, "Check error {0}", glewGetErrorString(glGetError()));
+    }
+
+    meshVBO->SetLayout({
+        { ShaderDataType::Float3, "aPos"           },
+        { ShaderDataType::Float3, "aColor"         },
+        { ShaderDataType::Float2, "aTex"           }
+        });
+    meshVAO->AddVertexBuffer(meshVBO);
+
+    std::shared_ptr<IndexBuffer> meshIB = std::make_shared<IndexBuffer>(meshData.indexData.data(), meshData.indexData.size());
+
+
+    if (glGetError() != 0)
+    {
+        LOG(LogType::LOG_ERROR, "Check error %s", glewGetErrorString(glGetError()));
+    }
+
+    meshVAO->SetIndexBuffer(meshIB);
+
+
+    if (glGetError() != 0)
+    {
+        LOG(LogType::LOG_ERROR, "Check error %s", glewGetErrorString(glGetError()));
+    }
+
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+
+    if (glGetError() != 0)
+    {
+        LOG(LogType::LOG_ERROR, "Check error %s", glewGetErrorString(glGetError()));
+    }
+}
+
 
 
 // Load/Save
@@ -242,6 +270,122 @@ void Mesh::LoadComponent(const json& meshJSON)
         meshData = meshLoader->deserializeMeshData(path);
         meshLoader->BufferData(meshData);
         mesh = meshLoader->GetBufferData();
+        meshData.meshVAO->GetVertexBuffers().size
     }
 
+}
+
+
+void Mesh::serializeMeshData(const std::string& filename)
+{
+    std::ofstream outFile(filename, ios::binary);
+
+    // Write meshName size and data
+    size_t meshNameSize = meshData.meshName.size();
+    outFile.write(reinterpret_cast<const char*>(&meshNameSize), sizeof(size_t));
+    outFile.write(meshData.meshName.c_str(), meshNameSize);
+
+    // Write format
+    outFile.write(reinterpret_cast<const char*>(&meshData.format), /*TODO*/);
+
+    // Write vertex_data size and data
+    uint numVerts = static_cast<uint>(meshData.vertexData.size());
+    outFile.write(reinterpret_cast<const char*>(&numVerts), sizeof(uint));
+    outFile.write(reinterpret_cast<const char*>(&meshData.vertexData[0]), numVerts * sizeof(MeshVertex));
+
+    // Write index_data size and data
+    uint numIndexs = static_cast<uint>(meshData.indexData.size());
+    outFile.write(reinterpret_cast<const char*>(&numIndexs), sizeof(uint));
+    outFile.write(reinterpret_cast<const char*>(&meshData.indexData[0]), numIndexs * sizeof(uint));
+
+    // Write meshVerts size and data
+    uint numMeshVerts = static_cast<uint>(meshData.meshVerts.size());
+    outFile.write(reinterpret_cast<const char*>(&numMeshVerts), sizeof(uint));
+    outFile.write(reinterpret_cast<const char*>(&meshData.meshVerts[0]), numMeshVerts * sizeof(vec3f));
+
+    // Write meshNorms size and data
+    uint numMeshNorms = static_cast<uint>(meshData.meshNorms.size());
+    outFile.write(reinterpret_cast<const char*>(&numMeshNorms), sizeof(uint));
+    outFile.write(reinterpret_cast<const char*>(&meshData.meshNorms[0]), numMeshNorms * sizeof(vec3f));
+
+    // Write meshFaceCenters size and data
+    uint numMeshFaceCenters = static_cast<uint>(meshData.meshFaceCenters.size());
+    outFile.write(reinterpret_cast<const char*>(&numMeshFaceCenters), sizeof(uint));
+    outFile.write(reinterpret_cast<const char*>(&meshData.meshFaceCenters[0]), numMeshFaceCenters * sizeof(vec3f));
+
+    // Write meshFaceNorms size and data
+    uint numMeshFaceNorms = static_cast<uint>(meshData.meshFaceNorms.size());
+    outFile.write(reinterpret_cast<const char*>(&numMeshFaceNorms), sizeof(uint));
+    outFile.write(reinterpret_cast<const char*>(&meshData.meshFaceNorms[0]), numMeshFaceNorms * sizeof(vec3f));
+
+    LOG(LogType::LOG_OK, "-%s created", filename.data());
+
+    outFile.close();
+}
+
+void Mesh::deserializeMeshData(const std::string& filename)
+{
+
+    std::ifstream inFile(filename, std::ios::binary);
+
+    // Read meshName
+    size_t meshNameSize = meshData.meshName.size();
+    inFile.read(reinterpret_cast<char*>(&meshNameSize), sizeof(size_t));
+
+    meshData.meshName.resize(meshNameSize);
+    inFile.read(&meshData.meshName[0], meshNameSize);
+
+    // Read format
+    inFile.read(reinterpret_cast<char*>(&meshData.format), /*TODO*/);
+
+    // Read vertex_data size and allocate memory
+    uint numVerts;
+    inFile.read(reinterpret_cast<char*>(&numVerts), sizeof(uint));
+    meshData.vertexData.resize(numVerts);
+
+    // Read vertex_data
+    inFile.read(reinterpret_cast<char*>(&meshData.vertexData[0]), numVerts * sizeof(MeshVertex));
+
+    // Read index_data size and allocate memory
+    uint numIndexs;
+    inFile.read(reinterpret_cast<char*>(&numIndexs), sizeof(uint));
+    meshData.indexData.resize(numIndexs);
+
+    // Read index_data
+    inFile.read(reinterpret_cast<char*>(&meshData.indexData[0]), numIndexs * sizeof(uint));
+
+    // Read meshVerts size and allocate memory
+    uint numMeshVerts;
+    inFile.read(reinterpret_cast<char*>(&numMeshVerts), sizeof(uint));
+    meshData.meshVerts.resize(numMeshVerts);
+
+    // Read meshVerts
+    inFile.read(reinterpret_cast<char*>(&meshData.meshVerts[0]), numMeshVerts * sizeof(vec3f));
+
+    // Read meshNorms size and allocate memory
+    uint numMeshNorms;
+    inFile.read(reinterpret_cast<char*>(&numMeshNorms), sizeof(uint));
+    meshData.meshNorms.resize(numMeshNorms);
+
+    // Read meshNorms
+    inFile.read(reinterpret_cast<char*>(&meshData.meshNorms[0]), numMeshNorms * sizeof(vec3f));
+
+    // Read meshFaceCenters size and allocate memory
+    uint numMeshFaceCenters;
+    inFile.read(reinterpret_cast<char*>(&numMeshFaceCenters), sizeof(uint));
+    meshData.meshFaceCenters.resize(numMeshFaceCenters);
+
+    // Read meshFaceCenters
+    inFile.read(reinterpret_cast<char*>(&meshData.meshFaceCenters[0]), numMeshFaceCenters * sizeof(vec3f));
+
+    // Read meshFaceNorms size and allocate memory
+    uint numMeshFaceNorms;
+    inFile.read(reinterpret_cast<char*>(&numMeshFaceNorms), sizeof(uint));
+    meshData.meshFaceNorms.resize(numMeshFaceNorms);
+
+    // Read meshFaceNorms
+    inFile.read(reinterpret_cast<char*>(&meshData.meshFaceNorms[0]), numMeshFaceNorms * sizeof(vec3f));
+
+    LOG(LogType::LOG_INFO, "-%s loaded", filename.data());
+    inFile.close();
 }

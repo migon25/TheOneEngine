@@ -28,6 +28,9 @@
     <Filter Include="Scripting">
       <UniqueIdentifier>{a8075659-49bf-4b54-8265-8bcd515fb64f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Render">
+      <UniqueIdentifier>{60695406-402f-4f09-96ff-1ef27a29997b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineCore.h">
@@ -87,6 +90,21 @@
     <ClInclude Include="Log.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Buffer.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexArray.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Uniform.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineCore.cpp">
@@ -123,7 +141,7 @@
       <Filter>Math</Filter>
     </ClCompile>
     <ClCompile Include="N_SceneManager.cpp">
-      <Filter>SceneManagement</Filter>    
+      <Filter>SceneManagement</Filter>
     </ClCompile>
     <ClCompile Include="MonoManager.cpp">
       <Filter>Scripting</Filter>
@@ -136,6 +154,21 @@
     </ClCompile>
     <ClCompile Include="Log.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Buffer.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexArray.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Uniform.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Render</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
