@@ -3,12 +3,12 @@
 #include "Camera.h"
 #include "Mesh.h"
 #include "Texture.h"
+#include "Canvas.h"
+#include "Listener.h"
+#include "Source.h"
 #include "UIDGen.h"
 #include "BBox.hpp"
-
-
-#include "../TheOneEditor/SceneManager.h"
-
+#include "EngineCore.h"
 #include "Math.h"
 
 
@@ -52,7 +52,7 @@ void GameObject::Draw()
 {
 	for (const auto& component : components)
 	{
-		if (component && component->IsEnabled())
+		if (component && component->IsEnabled() && component->GetType() != ComponentType::Canvas)
 			component->DrawComponent();
 	}
 
@@ -60,6 +60,14 @@ void GameObject::Draw()
 		DrawAABB();
 }
 
+void GameObject::DrawUI(const DrawMode mode)
+{
+	auto canvas = this->GetComponent<Canvas>();
+
+	if (canvas && canvas->IsEnabled())
+		if (mode == DrawMode::GAME || canvas->debugDraw)
+			canvas->DrawComponent();
+}
 
 // Component ----------------------------------------
 void GameObject::RemoveComponent(ComponentType type)
@@ -93,24 +101,24 @@ void GameObject::GenerateAABBFromMesh()
 	case Formats::F_V3:
 		glBufferData(GL_ARRAY_BUFFER, sizeof(V3) * mesh->mesh.numVerts, mesh->meshData.vertex_data.data(), GL_STATIC_DRAW);
 		for (const auto& v : std::span((V3*)mesh->meshData.vertex_data.data(), mesh->meshData.vertex_data.size())) {
-			aabb.min = glm::min(aabb.min, vec3(v.v));
-			aabb.max = glm::max(aabb.max, vec3(v.v));
+			aabb.minPoint = (glm::min)(aabb.minPoint, vec3(v.v));
+			aabb.maxPoint = (glm::max)(aabb.maxPoint, vec3(v.v));
 		}
 		break;
 
 	case Formats::F_V3C4:
 		glBufferData(GL_ARRAY_BUFFER, sizeof(V3C4) * mesh->mesh.numVerts, mesh->meshData.vertex_data.data(), GL_STATIC_DRAW);
 		for (const auto& v : std::span((V3C4*)mesh->meshData.vertex_data.data(), mesh->meshData.vertex_data.size())) {
-			aabb.min = glm::min(aabb.min, vec3(v.v));
-			aabb.max = glm::max(aabb.max, vec3(v.v));
+			aabb.minPoint = (glm::min)(aabb.minPoint, vec3(v.v));
+			aabb.maxPoint = (glm::max)(aabb.maxPoint, vec3(v.v));
 		}
 		break;
 
 	case Formats::F_V3T2:
 		glBufferData(GL_ARRAY_BUFFER, sizeof(V3T2) * mesh->mesh.numVerts, mesh->meshData.vertex_data.data(), GL_STATIC_DRAW);
 		for (const auto& v : std::span((V3T2*)mesh->meshData.vertex_data.data(), mesh->meshData.vertex_data.size())) {
-			aabb.min = glm::min(aabb.min, vec3(v.v));
-			aabb.max = glm::max(aabb.max, vec3(v.v));
+			aabb.minPoint = (glm::min)(aabb.minPoint, vec3(v.v));
+			aabb.maxPoint = (glm::max)(aabb.maxPoint, vec3(v.v));
 		}
 		break;
 	}
@@ -135,9 +143,9 @@ AABBox GameObject::CalculateAABB()
 
 	for (const auto& child : children)
 	{
-		AABBox childAABB = (child.get()->GetComponent<Transform>()->getMatrix() * child.get()->CalculateAABB()).AABB();
-		aabb.min = glm::min(aabb.min, childAABB.min);
-		aabb.max = glm::max(aabb.max, childAABB.max);
+		AABBox childAABB = (child.get()->GetComponent<Transform>()->GetTransform() * child.get()->CalculateAABB()).AABB();
+		aabb.minPoint = (glm::min)(aabb.minPoint, childAABB.minPoint);
+		aabb.maxPoint = (glm::max)(aabb.maxPoint, childAABB.maxPoint);
 	}
 
 	return aabb;
@@ -147,7 +155,7 @@ AABBox GameObject::CalculateAABBWithChildren()
 {
 	AABBox aabb = CalculateAABB();
 	// Transform the AABB to the coordinate system of the parent objects
-	mat4 parentTransform = GetComponent<Transform>()->GetWorldTransform();
+	mat4 parentTransform = GetComponent<Transform>()->CalculateWorldTransform();
 	OBBox obb = parentTransform * aabb;
 	return obb.AABB();
 }
@@ -292,9 +300,14 @@ void GameObject::SetStatic(bool staticFlag)
 	isStatic = staticFlag;
 }
 
+bool GameObject::HasCameraComponent()
+{
+	return this->GetComponent<Camera>();
+}
+
 void GameObject::CreateUID()
 {
-	UID = UIDGen::GenerateUID();
+	//UID = UIDGen::GenerateUID();
 }
 
 
@@ -361,6 +374,7 @@ void GameObject::LoadGameObject(const json& gameObjectJSON)
 		enabled = gameObjectJSON["Enabled"];
 	}
 
+
 	// Load components
 	if (gameObjectJSON.contains("Components"))
 	{
@@ -384,6 +398,26 @@ void GameObject::LoadGameObject(const json& gameObjectJSON)
 			{
 				this->AddComponent<Mesh>();
 				this->GetComponent<Mesh>()->LoadComponent(componentJSON);
+			}
+			else if (componentJSON["Type"] == 4)
+			{
+				this->AddComponent<Listener>();
+				this->GetComponent<Listener>()->LoadComponent(componentJSON);
+				this->GetComponent<Listener>()->goID = audioManager->audio->RegisterGameObject(this->GetName());
+				audioManager->AddAudioObject((std::shared_ptr<AudioComponent>)this->GetComponent<Listener>());
+				audioManager->audio->SetDefaultListener(this->GetComponent<Listener>()->goID);
+			}
+			else if (componentJSON["Type"] == 5)
+			{
+				this->AddComponent<Source>();
+				this->GetComponent<Source>()->LoadComponent(componentJSON);
+				this->GetComponent<Source>()->goID = audioManager->audio->RegisterGameObject(this->GetName());
+				audioManager->AddAudioObject((std::shared_ptr<AudioComponent>)this->GetComponent<Source>());
+			}
+			else if (componentJSON["Type"] == 6)
+			{
+				this->AddScript(componentJSON["ScriptName"]);
+				this->GetComponent<Script>()->LoadComponent(componentJSON);
 			}
 		}
 	}
