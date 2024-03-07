@@ -1,5 +1,5 @@
 #include "App.h"
-#include "../TheOneEngine/Log.h"
+#include "Log.h"
 
 #include <iostream>
 #include <sstream>

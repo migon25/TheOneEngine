@@ -3,8 +3,7 @@
 #include "Gui.h"
 #include "imgui.h"
 
-#include "../TheOneEngine/EngineCore.h"
-#include "../TheOneEngine/Log.h"
+#include "Log.h"
 
 PanelConsole::PanelConsole(PanelType type, std::string name) : Panel(type, name) {}
 
@@ -18,7 +17,7 @@ bool PanelConsole::Draw()
 	if (ImGui::Begin("Console", &enabled, consoleFlags))
 	{
 		if (ImGui::SmallButton("Clear"))
-			engine->CleanLogs();
+			app->CleanLogs();
 
 		ImGui::Separator();
 
@@ -32,7 +31,7 @@ bool PanelConsole::Draw()
 
 			std::string logType;
 
-			for (const auto& log : engine->GetLogs())
+			for (const auto& log : app->GetLogs())
 			{
 				switch (log.type)
 				{
@@ -47,11 +46,6 @@ bool PanelConsole::Draw()
 
 					case LogType::LOG_AUDIO:
 						logType = "[AUDIO] ";
-						ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0, 1, 0, 1));
-						break;
-
-					case LogType::LOG_MONO:
-						logType = "[MONO] ";
 						ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0, 1, 0, 1));
 						break;
 

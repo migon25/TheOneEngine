@@ -1,6 +1,6 @@
 #include "App.h"
 #include "Window.h"
-#include "../TheOneEngine/Log.h"
+#include "Log.h"
 
 
 Window::Window(App* app) :

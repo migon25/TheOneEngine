@@ -15,10 +15,6 @@ enum class ComponentType
 	Camera,
 	Mesh,
     Texture,
-    Listener,
-    Source,
-    Script,
-    Canvas,
 	Unknown
 };
 
@@ -45,7 +41,7 @@ public:
     //virtual void CreateInspectorNode();
     virtual void DrawComponent() {};
 
-    //void CreateUID() { UID = UIDGen::GenerateUID(); }
+    void CreateUID() { UID = UIDGen::GenerateUID(); }
     uint32 GetUID() { return UID; }
 
     virtual json SaveComponent() = 0;
