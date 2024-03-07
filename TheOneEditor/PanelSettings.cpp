@@ -128,11 +128,11 @@ void PanelSettings::Window()
 		app->window->SetResolution((Resolution)resolution);
 
 	// Vsync
-	bool vsync = engine->GetVSync();
+	bool vsync = app->engine->GetVSync();
 	ImGui::Text("V-Sync");
 	ImGui::SameLine();
 	if (ImGui::Checkbox("##V-Sync", &vsync))
-		engine->SetVSync(vsync);
+		app->engine->SetVSync(vsync);
 
 	ImGui::SameLine();
 

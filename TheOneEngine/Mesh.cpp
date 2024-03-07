@@ -2,7 +2,8 @@
 #include "GameObject.h"
 #include "Transform.h"
 
-#include "Log.h"
+#include "../TheOneEditor/Log.h"
+#include "../TheOneEditor/SceneManager.h"
 
 #include <span>
 #include <vector>
@@ -43,7 +44,7 @@ void Mesh::DrawComponent()
 
     std::shared_ptr<GameObject> containerGO = GetContainerGO();
     glPushMatrix();
-    glMultMatrixd(&containerGO.get()->GetComponent<Transform>()->CalculateWorldTransform()[0].x);
+    glMultMatrixd(&containerGO.get()->GetComponent<Transform>()->getMatrix()[0].x);
 
     ConfigureVertexFormat();
 
@@ -112,7 +113,7 @@ void Mesh::ConfigureVertexFormat()
     }
 }
 
-void Mesh::DrawVertexNormals()
+void Mesh::DrawVertexNormals() 
 {
     if (meshData.meshVerts.empty() || meshData.meshNorms.empty()) return;
 

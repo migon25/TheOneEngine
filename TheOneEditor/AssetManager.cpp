@@ -1,7 +1,7 @@
 #include "AssetManager.h"
 #include "App.h"
 
-#include "../TheOneEngine/Log.h"
+#include "Log.h"
 #include "Importer.h"
 
 #include <assimp/cimport.h>

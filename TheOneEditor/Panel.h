@@ -15,7 +15,6 @@ enum class PanelType
 	SCENE,
 	GAME,
 	SETTINGS,
-	BUILD,
 
 	UNKNOWN
 };

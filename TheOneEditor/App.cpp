@@ -1,10 +1,11 @@
 #include "App.h"
+#include "Log.h"
 
 #include "Window.h"
 #include "Input.h"
 #include "Hardware.h"
-#include "Gui.h"
 #include "SceneManager.h"
+#include "Gui.h"
 #include "Renderer3D.h"
 
 #include "PanelAbout.h"
@@ -15,29 +16,26 @@
 #include "PanelScene.h"
 #include "PanelSettings.h"
 #include "Timer.h"
-#include "../TheOneEngine/Transform.h"
-#include "../TheOneEngine/Log.h"
-
-EngineCore* engine = NULL;
+#include "..\TheOneEngine\Transform.h"
 
 App::App(int argc, char* args[]) : argc(argc), args(args)
 {
 	engine = new EngineCore();
-	
+
 	window = new Window(this);
 	input = new Input(this);
 	hardware = new Hardware(this);
+	sceneManager = new SceneManager(this);
 	gui = new Gui(this);
-	scenemanager = new SceneManager(this);
 	renderer3D = new Renderer3D(this);
 
 	// Ordered for awake / Start / Update
 	// Reverse order for CleanUp
-
+	
 	AddModule(window, true);
 	AddModule(input, true);
 	AddModule(hardware, true);
-	AddModule(scenemanager, true);
+	AddModule(sceneManager, true);
 	AddModule(gui, true);
 
 	// Render last to swap buffer
@@ -59,7 +57,7 @@ App::~App()
 
 void App::AddModule(Module* module, bool activate)
 {
-	if (activate == true)
+	if(activate == true)
 		module->Init();
 
 	modules.push_back(module);
@@ -79,9 +77,9 @@ bool App::Awake()
 	if (ret == true)
 	{
 		//title = configNode.child("app").child("title").child_value();
-
+		
 		//maxFrameDuration = configNode.child("app").child("frcap").attribute("value").as_int();
-
+	
 		for (const auto& item : modules)
 		{
 			if (item->active == false)
@@ -146,9 +144,10 @@ bool App::Update()
 	return ret;
 }
 
+
 // -------------------- LOOP ITERATION --------------------
 void App::PrepareUpdate()
-{
+{	
 	frameStart = std::chrono::steady_clock::now();
 }
 
@@ -179,7 +178,7 @@ bool App::DoUpdate()
 			continue;
 
 		if (module->Update(dt) == false)
-			return false;
+			return false;		
 	}
 
 	return true;
@@ -231,6 +230,7 @@ void App::FinishUpdate()
 	app->gui->panelSettings->AddFpsValue(fps);
 }
 
+
 // -------------------- QUIT --------------------
 bool App::CleanUp()
 {
@@ -250,6 +250,7 @@ bool App::CleanUp()
 	return ret;
 }
 
+
 // -------------------- Get / Set / Funtionalities --------------------
 int App::GetArgc() const
 {
@@ -262,6 +263,28 @@ const char* App::GetArgv(int index) const
 		return args[index];
 	else
 		return NULL;
+}
+
+// Logs
+std::vector<LogInfo> App::GetLogs()
+{
+	return logs;
+}
+
+void App::AddLog(LogType type, const char* entry)
+{
+	if (logs.size() > MAX_LOGS_CONSOLE)
+		logs.erase(logs.begin());
+
+	std::string toAdd = entry;
+	LogInfo info = { type, toAdd };
+
+	logs.push_back(info);
+}
+
+void App::CleanLogs()
+{
+	logs.clear();
 }
 
 // Fps control
@@ -292,30 +315,30 @@ void App::Play()
 {
 	static std::string actual_scene_name;
 	if (state == GameState::NONE) {
+
 		state = GameState::PLAY;
 
 		game_time = 0.0F;
 		game_timer->Start();
 
 		LOG(LogType::LOG_INFO, "GameState changed to PLAY");
-		audioManager->audio->PlayEngine();
+		engine->audio->PlayEngine();
 	}
 	else if (state == GameState::PAUSE) {
 		state = GameState::PLAY;
 		game_timer->Resume();
 
 		LOG(LogType::LOG_INFO, "GameState changed to PLAY");
-		// JULS: This should be taken in account to resume 
-		audioManager->audio->PlayEngine();
 	}
 	else if (state == GameState::PLAY) {
 		state = GameState::NONE;
 		game_time = 0.0F;
 
 		LOG(LogType::LOG_INFO, "GameState changed to NONE");
-		audioManager->audio->PauseEngine();
+		engine->audio->PauseEngine();
 
 	}
+
 }
 
 void App::Pause()
@@ -328,7 +351,7 @@ void App::Pause()
 		game_timer->Pause();
 
 		LOG(LogType::LOG_INFO, "GameState changed to PAUSE");
-		audioManager->audio->PauseEngine();
+		engine->audio->PauseEngine();
 
 	}
 }
@@ -340,12 +363,13 @@ void App::PlayOnce()
 		state = GameState::PLAY_ONCE;
 
 		LOG(LogType::LOG_INFO, "GameState changed to PLAY_ONCE");
-		audioManager->audio->PlayEngine();
+		engine->audio->PlayEngine();
 
 	}
 	else if (state == GameState::PLAY) {
 		state = GameState::PLAY_ONCE;
 		LOG(LogType::LOG_INFO, "GameState changed to PLAY_ONCE");
+
 	}
 }
 
@@ -368,5 +392,5 @@ void App::Stop()
 	game_time = 0.0F;
 	state = GameState::NONE;
 	LOG(LogType::LOG_INFO, "GameState changed to NONE");
-	audioManager->audio->PauseEngine();
+	engine->audio->PauseEngine();
 }
