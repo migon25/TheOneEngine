@@ -11,6 +11,8 @@ class AudioManager;
 class Source : public Component, public AudioComponent {
 public:
 	Source(std::shared_ptr<GameObject> containerGO);
+	Source(std::shared_ptr<GameObject> containerGO, Source* ref);
+
 	virtual ~Source();
 
 	void SetTransform(std::shared_ptr<GameObject> containerGO);

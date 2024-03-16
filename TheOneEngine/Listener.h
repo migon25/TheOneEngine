@@ -13,6 +13,8 @@ class AudioManager;
 class Listener : public Component, public AudioComponent {
 public:
     Listener(std::shared_ptr<GameObject> containerGO);
+    Listener(std::shared_ptr<GameObject> containerGO, Listener* ref);
+
     virtual ~Listener();
 
     void SetListener(AkGameObjectID goID);

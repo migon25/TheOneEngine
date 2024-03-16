@@ -17,8 +17,6 @@ bool AudioManager::Update(double dt)
 	audio->Update(dt);
 	for (const auto& audioComponent : audioComponents) {
 		audioComponent->SetTransform(audioComponent->GetGameObject());
-		
-		
 	}
 	return true;
 }

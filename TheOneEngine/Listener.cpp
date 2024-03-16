@@ -10,6 +10,10 @@ Listener::Listener(std::shared_ptr<GameObject> containerGO) : Component(containe
 	SetTransform(containerGO);
 }
 
+Listener::Listener(std::shared_ptr<GameObject> containerGO, Listener* ref) : Component(containerGO, ComponentType::Listener)
+{
+}
+
 Listener::~Listener()
 {
 
