@@ -211,6 +211,9 @@ void EngineCore::LogGL(string id)
 
 void EngineCore::CleanUp()
 {
+    audioManager->CleanUp();
+    delete audioManager;
+    
     monoManager->ShutDownMono();
     delete monoManager;
 

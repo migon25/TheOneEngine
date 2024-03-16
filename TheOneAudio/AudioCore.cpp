@@ -247,7 +247,7 @@ AkGameObjectID AudioCore::RegisterGameObject(std::string name)
 {
     if (AK::SoundEngine::RegisterGameObj((AkGameObjectID)gameObjectIDs.size(), name.c_str()) == AK_Success)
     {
-        LOG(LogType::LOG_AUDIO, "Game Object %s with ID %d SUCCES on Register", name.c_str(), gameObjectIDs.size());
+        LOG(LogType::LOG_AUDIO, "Game Object %s with ID %d SUCCESS on Register", name.c_str(), gameObjectIDs.size());
         gameObjectIDs.push_back((AkGameObjectID)gameObjectIDs.size());
         return gameObjectIDs.size() - 1;
     }

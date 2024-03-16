@@ -8,6 +8,8 @@
 #include "Mesh.h"
 #include "Texture.h"
 #include "Collider2D.h"
+#include "Listener.h"
+#include "Source.h"
 #include "Canvas.h"
 #include "../TheOneAudio/AudioCore.h"
 #include "EngineCore.h"
@@ -250,7 +252,13 @@ std::shared_ptr<GameObject> N_SceneManager::DuplicateGO(std::shared_ptr<GameObje
 			break;
 		case ComponentType::Script:
 			duplicatedGO.get()->AddCopiedComponent<Script>((Script*)item);
-			break;		
+			break;	
+		//case ComponentType::Listener:
+		//	duplicatedGO.get()->AddCopiedComponent<Listener>((Listener*)item);
+		//	break;
+		//case ComponentType::Source:
+		//	duplicatedGO.get()->AddCopiedComponent<Source>((Source*)item);
+		//	break;
 		case ComponentType::Collider2D:
 			duplicatedGO.get()->AddCopiedComponent<Collider2D>((Collider2D*)item);
 			break;
