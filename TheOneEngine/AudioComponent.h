@@ -1,8 +1,9 @@
 #pragma once
-#include "Defs.h"
-#include "..\TheOneAudio\AudioUtility.h"
 #include "GameObject.h"
 #include "Transform.h"
+
+#include "..\TheOneAudio\AudioUtility.h"
+
 #include <memory>
 
 class GameObject;
@@ -26,5 +27,5 @@ public:
 	std::shared_ptr<GameObject> GO;
 	AkGameObjectID goID;
 
-	AudioManager* AM;
+	AudioManager* AM = nullptr;
 };

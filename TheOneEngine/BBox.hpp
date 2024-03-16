@@ -1,10 +1,7 @@
 #pragma once
 
 #include <array>
-#include <limits>
 #include "types.h"
-#undef max
-#undef min
 
 struct AABBox
 {

@@ -1,8 +1,8 @@
 #pragma once
-#include "Defs.h"
-#include "..\TheOneAudio\AudioCore.h"
 #include "AudioComponent.h"
 #include "Source.h"
+
+#include "..\TheOneAudio\AudioCore.h"
 
 class AudioManager {
 public:
