@@ -57,13 +57,7 @@ public:
 
 	//volume functions
 	//percentage, from 0 (mute) to 100 (max)
-	void SetGlobalSound(float volume);
-
-	//transform the game object that events are attached to
-	void SetAudioGameObjectTransform(AkGameObjectID goID, float posx, float posy, float posz, float ofx, float ofy, float ofz, float otx, float oty, float otz);
-
-	//transform the position and reset the orientation to the game object that events are attached to
-	void SetAudioGameObjectPosition(AkGameObjectID goID, float posx, float posy, float posz);
+	void SetGlobalVolume(float volume);
 
 	EngineState state = EngineState::STOPPED;
 

@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AudioComponent.h" />
+    <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collider2D.h" />
     <ClInclude Include="CollisionSolver.h" />
@@ -24,6 +26,7 @@
     <ClInclude Include="GamepadInput.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Graphic.h" />
+    <ClInclude Include="Listener.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshLoader.h" />
@@ -32,6 +35,7 @@
     <ClInclude Include="Ray.h" />
     <ClInclude Include="N_SceneManager.h" />
     <ClInclude Include="Script.h" />
+    <ClInclude Include="Source.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="EngineCore.h" />
     <ClInclude Include="Transform.h" />
@@ -40,6 +44,8 @@
     <ClInclude Include="ItemUI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AudioComponent.cpp" />
+    <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collider2D.cpp" />
     <ClCompile Include="CollisionSolver.cpp" />
@@ -50,6 +56,7 @@
     <ClCompile Include="Framebuffer.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GamepadInput.cpp" />
+    <ClCompile Include="Listener.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -59,6 +66,7 @@
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="N_SceneManager.cpp" />
     <ClCompile Include="Script.cpp" />
+    <ClCompile Include="Source.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="EngineCore.cpp" />
     <ClCompile Include="Transform.cpp" />

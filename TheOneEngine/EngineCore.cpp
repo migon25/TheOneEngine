@@ -10,9 +10,11 @@
 //#include "../TheOneEditor/App.h"
 //#include "../TheOneEditor/SceneManager.h"
 
+AudioManager* audioManager = NULL;
+
 EngineCore::EngineCore()
 {
-    audio = new AudioCore();
+    audioManager = new AudioManager();
     monoManager = new MonoManager();
     collisionSolver = new CollisionSolver();
     inputManager = new InputManager();
@@ -23,8 +25,8 @@ void EngineCore::Awake()
 {
     LOG(LogType::LOG_OK, "Initializing DevIL");
     ilInit();
+    audioManager->Awake();
     monoManager->InitMono();
-    audio->Awake();
     inputManager->Init();
 }
 
@@ -134,8 +136,9 @@ void EngineCore::Update(double dt)
         }
     }
 
+    audioManager->Update(dt);
+
     this->dt = dt;
-    audio->Update(dt);
 }
 
 void EngineCore::Render(Camera* camera)
@@ -210,9 +213,6 @@ void EngineCore::CleanUp()
 {
     monoManager->ShutDownMono();
     delete monoManager;
-
-    audio->CleanUp();
-    delete audio;
 
     inputManager->CleanUp();
     delete inputManager;

@@ -187,7 +187,7 @@ void AudioCore::Awake()
         audioEvents.push_back(new AudioEvent);
     }
 
-    SetGlobalSound(globalVolume);
+    SetGlobalVolume(globalVolume);
 
 }
 
@@ -336,7 +336,7 @@ void AudioCore::StopEngine()
     }
 }
 
-void AudioCore::SetGlobalSound(float volume)
+void AudioCore::SetGlobalVolume(float volume)
 {
     if (volume < 0.0f)
     {
@@ -349,39 +349,6 @@ void AudioCore::SetGlobalSound(float volume)
     globalVolume = volume;
     AK::SoundEngine::SetOutputVolume(AK::SoundEngine::GetOutputID(AK_INVALID_UNIQUE_ID, 0.0f), (AkReal32)(volume * 0.01f));
 }
-
-void AudioCore::SetAudioGameObjectTransform(AkGameObjectID goID, float posx, float posy, float posz, float ofx, float ofy, float ofz, float otx, float oty, float otz)
-{
-    //SINCE OPENGL AND WWISE USE DIFFERENT POSITIVE X AND Z POSITIONS HERE WILL BE CHANGED HERE
-    AkSoundPosition tTransform;
-    tTransform.SetPosition({ -posx, posy, -posz });
-    tTransform.SetOrientation({ ofx, ofy, ofz }, { otx, oty, otz });
-    if (AK::SoundEngine::SetPosition(goID, tTransform) != AK_Success)
-    {
-        LOG(LogType::LOG_AUDIO, "ERROR setting transform to %d audiogameobject", goID);
-    }
-    else
-    {
-        //LOG(LogType::LOG_AUDIO, "SUCCES setting transform to %d audiogameobject", goID);
-    }
-}
-
-void AudioCore::SetAudioGameObjectPosition(AkGameObjectID goID, float posx, float posy, float posz)
-{
-    //SINCE OPENGL AND WWISE USE DIFFERENT POSITIVE X AND Z POSITIONS HERE WILL BE CHANGED HERE
-    AkSoundPosition tTransform;
-    tTransform.SetPosition({ -posx, posy, -posz });
-    tTransform.SetOrientation({ 0.0f, 0.0f, -1.0f }, { 0.0f, 1.0f, 0.0f });
-    if (AK::SoundEngine::SetPosition(goID, tTransform) != AK_Success)
-    {
-        LOG(LogType::LOG_AUDIO, "ERROR setting position to %d audiogameobject", goID);
-    }
-    else
-    {
-        LOG(LogType::LOG_AUDIO, "SUCCES setting position to %d audiogameobject: x: %f, y: %f, z: %f", goID, posx, posy, posz);
-    }
-}
-
 
 void AudioCore::EventCallBack(AkCallbackType in_eType, AkCallbackInfo* in_pCallbackInfo)
 {

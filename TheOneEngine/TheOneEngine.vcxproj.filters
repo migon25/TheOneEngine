@@ -43,6 +43,15 @@
     <Filter Include="Render">
       <UniqueIdentifier>{954d7850-b1f2-45be-b0ff-9ffe77288d41}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{cfeab712-cbe8-4bc3-a595-9adae3a1bc06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Components\Audio">
+      <UniqueIdentifier>{776116c6-7fa9-4699-b202-8de05f56a541}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Components\Audio\Items">
+      <UniqueIdentifier>{e8e13a2f-ef25-4c4d-8f6d-7b3c4034238f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineCore.h">
@@ -126,6 +135,18 @@
     <ClInclude Include="Framebuffer.h">
       <Filter>Render</Filter>
     </ClInclude>
+    <ClInclude Include="AudioManager.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioComponent.h">
+      <Filter>GameObject\Components\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Listener.h">
+      <Filter>GameObject\Components\Audio\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Source.h">
+      <Filter>GameObject\Components\Audio\Items</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineCore.cpp">
@@ -199,6 +220,18 @@
     </ClCompile>
     <ClCompile Include="Framebuffer.cpp">
       <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioManager.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioComponent.cpp">
+      <Filter>GameObject\Components\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Listener.cpp">
+      <Filter>GameObject\Components\Audio\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Source.cpp">
+      <Filter>GameObject\Components\Audio\Items</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

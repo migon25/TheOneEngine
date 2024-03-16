@@ -1,7 +1,10 @@
 #pragma once
 
 #include <array>
+#include <limits>
 #include "types.h"
+#undef max
+#undef min
 
 struct AABBox
 {
@@ -35,8 +38,8 @@ struct OBBox
 		AABBox aabb = { a,a };
 
 		for (const auto& v : verts) {
-			aabb.min = glm::min(aabb.min, v);
-			aabb.max = glm::max(aabb.max, v);
+			aabb.min = (glm::min)(aabb.min, v);
+			aabb.max = (glm::max)(aabb.max, v);
 		}
 		return aabb;
 	}

@@ -18,6 +18,8 @@ enum class ComponentType
     Texture,
     Script,
     Collider2D,
+    Listener,
+    Source,
     Canvas,
 	Unknown
 };
