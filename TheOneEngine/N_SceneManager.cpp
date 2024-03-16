@@ -253,17 +253,17 @@ std::shared_ptr<GameObject> N_SceneManager::DuplicateGO(std::shared_ptr<GameObje
 		case ComponentType::Script:
 			duplicatedGO.get()->AddCopiedComponent<Script>((Script*)item);
 			break;	
-		//case ComponentType::Listener:
-		//	duplicatedGO.get()->AddCopiedComponent<Listener>((Listener*)item);
-		//	break;
-		//case ComponentType::Source:
-		//	duplicatedGO.get()->AddCopiedComponent<Source>((Source*)item);
-		//	break;
 		case ComponentType::Collider2D:
 			duplicatedGO.get()->AddCopiedComponent<Collider2D>((Collider2D*)item);
 			break;
 		case ComponentType::Canvas:
 			duplicatedGO.get()->AddCopiedComponent<Canvas>((Canvas*)item);
+			break;
+		case ComponentType::Listener:
+			duplicatedGO.get()->AddCopiedComponent<Listener>((Listener*)item);
+			break;
+		case ComponentType::Source:
+			duplicatedGO.get()->AddCopiedComponent<Source>((Source*)item);
 			break;
 		case ComponentType::Unknown:
 			break;
