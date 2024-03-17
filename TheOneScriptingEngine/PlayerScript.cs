@@ -3,6 +3,7 @@
 public class PlayerScript : MonoBehaviour
 {
 	float speed = 7.0f;
+	bool lastFrameToMove = false;
 
 	public override void Update()
 	{
@@ -10,7 +11,6 @@ public class PlayerScript : MonoBehaviour
 		Vector3 movement = Vector3.zero;
 
 		//Keyboard
-
 		if (Input.GetKeyboardButton(Input.KeyboardCode.ESCAPE))
 		{
 			InternalCalls.ExitApplication();
@@ -20,27 +20,27 @@ public class PlayerScript : MonoBehaviour
 		{
 			movement = movement + Vector3.forward;
 			toMove = true;
-		}
+        }
 
-		if (Input.GetKeyboardButton(Input.KeyboardCode.D))
+        if (Input.GetKeyboardButton(Input.KeyboardCode.D))
 		{
 			movement = movement - Vector3.right;
 			toMove = true;
-		}
+        }
 
-		if (Input.GetKeyboardButton(Input.KeyboardCode.S))
+        if (Input.GetKeyboardButton(Input.KeyboardCode.S))
 		{
 			movement = movement - Vector3.forward;
 			toMove = true;
-		}
+        }
 
-		if (Input.GetKeyboardButton(Input.KeyboardCode.A))
+        if (Input.GetKeyboardButton(Input.KeyboardCode.A))
 		{
 			movement = movement + Vector3.right;
 			toMove = true;
-		}
+        }
 
-		if (Input.GetKeyboardButton(Input.KeyboardCode.UP))
+        if (Input.GetKeyboardButton(Input.KeyboardCode.UP))
 		{
 			attachedGameObject.transform.rotation = Vector3.zero;
 		}
@@ -60,21 +60,24 @@ public class PlayerScript : MonoBehaviour
 		if (Input.GetKeyboardButton(Input.KeyboardCode.SPACEBAR))
 		{
 			InternalCalls.InstantiateBullet(attachedGameObject.transform.position, attachedGameObject.transform.rotation);
-		}
+            attachedGameObject.source.PlayAudio(AudioManager.EventIDs.GUNSHOT);
+        }
 
-		if (toMove)
+        if (toMove)
 		{
 			attachedGameObject.transform.Translate(movement.Normalize() * speed * Time.deltaTime);
-		}
+        }
 
-		//Controller
-		Vector2 movementVector = Input.GetControllerJoystick(Input.ControllerJoystickCode.JOY_LEFT);
+        //Controller
+        Vector2 movementVector = Input.GetControllerJoystick(Input.ControllerJoystickCode.JOY_LEFT);
 
 		if (movementVector.x != 0.0f || movementVector.y != 0.0f)
 		{
 			movement = new Vector3(-movementVector.x, 0.0f, -movementVector.y);
 
 			attachedGameObject.transform.Translate(movement * speed * Time.deltaTime);
+
+			toMove = true;
 		}
 
 		Vector2 lookVector = Input.GetControllerJoystick(Input.ControllerJoystickCode.JOY_RIGHT);
@@ -89,5 +92,19 @@ public class PlayerScript : MonoBehaviour
         {
 			InternalCalls.InstantiateBullet(attachedGameObject.transform.position, attachedGameObject.transform.rotation);
 		}
-	}
+
+		// Play steps
+        if (lastFrameToMove != toMove)
+        {
+            if (toMove)
+            {
+                attachedGameObject.source.PlayAudio(AudioManager.EventIDs.STEP);
+            }
+            else
+            {
+                attachedGameObject.source.StopAudio(AudioManager.EventIDs.STEP);
+            }
+            lastFrameToMove = toMove;
+        }
+    }
 }

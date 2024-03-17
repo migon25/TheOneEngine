@@ -111,6 +111,18 @@ static void ExitApplication()
 	engine->inputManager->shutDownEngine = true;
 }
 
+// Audio
+static void PlaySource(GameObject* GOptr, uint audio) {
+	AkUInt32 myAkUInt32 = static_cast<AkUInt32>(audio);
+	
+	audioManager->PlayAudio(GOptr->GetComponent<Source>(), audio);
+}
+
+static void StopSource(GameObject* GOptr, uint audio) {
+	AkUInt32 myAkUInt32 = static_cast<AkUInt32>(audio);
+
+	audioManager->StopAudio(GOptr->GetComponent<Source>(), audio);
+}
 
 void MonoRegisterer::RegisterFunctions()
 {
@@ -132,4 +144,7 @@ void MonoRegisterer::RegisterFunctions()
 
 	mono_add_internal_call("InternalCalls::GetAppDeltaTime", GetAppDeltaTime);
 	mono_add_internal_call("InternalCalls::ExitApplication", ExitApplication);
+
+	mono_add_internal_call("InternalCalls::PlaySource", PlaySource);
+	mono_add_internal_call("InternalCalls::StopSource", StopSource);
 }

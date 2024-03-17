@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using static AudioManager;
 
 class InternalCalls
 {
@@ -50,4 +51,10 @@ class InternalCalls
     
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static void ExitApplication();
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void PlaySource(IntPtr GOptr, EventIDs audio);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void StopSource(IntPtr GOptr, EventIDs audio);
 }

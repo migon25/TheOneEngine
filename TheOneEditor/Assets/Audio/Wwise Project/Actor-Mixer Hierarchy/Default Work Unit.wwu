@@ -281,6 +281,7 @@
 								<Value>40</Value>
 							</ValueList>
 						</Property>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
 					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Attenuation">

@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AudioManager.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="CamControlTest.cs" />
     <Compile Include="ExampleScript.cs" />
@@ -48,6 +49,7 @@
     <Compile Include="IGameObject.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="InternalCalls.cs" />
+    <Compile Include="ISource.cs" />
     <Compile Include="ITransform.cs" />
     <Compile Include="MonoBehaviour.cs" />
     <Compile Include="PlayerScript.cs" />
