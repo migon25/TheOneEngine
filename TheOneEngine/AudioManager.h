@@ -12,10 +12,10 @@ public:
 	bool Update(double dt);
 	bool CleanUp();
 
-	void PlayAudio(Source* source);
-	void StopAudio(Source* source);
-	void PauseAudio(Source* source);
-	void ResumeAudio(Source* source);
+	void PlayAudio(Source* source, AkUniqueID event);
+	void StopAudio(Source* source, AkUniqueID event);
+	void PauseAudio(Source* source, AkUniqueID event);
+	void ResumeAudio(Source* source, AkUniqueID event);
 
 	//static AudioManager* GetAudioManager() { return &this; }
 

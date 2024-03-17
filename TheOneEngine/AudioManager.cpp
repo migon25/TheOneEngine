@@ -29,31 +29,29 @@ bool AudioManager::CleanUp()
 }
 
 // JULS: Not sure tho if they should be added like this
-void AudioManager::PlayAudio(Source* source)
+void AudioManager::PlayAudio(Source* source, AkUniqueID event)
 {
-	audio->PlayEvent(source->event, source->goID);
+	audio->PlayEvent(event, source->goID);
 }
 
-void AudioManager::StopAudio(Source* source)
+void AudioManager::StopAudio(Source* source, AkUniqueID event)
 {
-	audio->StopEvent(source->event, source->goID);
+	audio->StopEvent(event, source->goID);
 }
 
-void AudioManager::PauseAudio(Source* source)
+void AudioManager::PauseAudio(Source* source, AkUniqueID event)
 {
-	audio->PauseEvent(source->event, source->goID);
+	audio->PauseEvent(event, source->goID);
 }
 
-void AudioManager::ResumeAudio(Source* source)
+void AudioManager::ResumeAudio(Source* source, AkUniqueID event)
 {
-	audio->ResumeEvent(source->event, source->goID);
+	audio->ResumeEvent(event, source->goID);
 }
 
 // Implementation of AddAudioObject
 void AudioManager::AddAudioObject(std::shared_ptr<AudioComponent> audioGO)
 {
 	audioComponents.push_back(audioGO);
-	// Ensure that the component is properly initialized before enabling it
-	//audioGO->GetGameObject()->GetComponent<;
 }
 

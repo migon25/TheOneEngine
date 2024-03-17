@@ -39,6 +39,16 @@
           "Yaw": 0.0,
           "zFar": 1000.0,
           "zNear": 0.1
+        },
+        {
+          "AudioID": 2,
+          "Name": "Listener",
+          "Type": 7
+        },
+        {
+          "AudioID": 3,
+          "Name": "Source",
+          "Type": 8
         }
       ],
       "Enabled": true,
@@ -377,6 +387,11 @@
           "ScriptName": "PlayerScript",
           "Type": 4,
           "UID": 2318333276
+        },
+        {
+          "AudioID": 4,
+          "Name": "Source",
+          "Type": 8
         }
       ],
       "Enabled": true,
@@ -474,8 +489,8 @@
           "Rect": [
             0.0,
             0.0,
-            -0.22689279913902283,
-            -0.12768305838108063
+            116.4802474975586,
+            65.54882049560547
           ],
           "Type": 6,
           "UID": 1205880597,
@@ -507,6 +522,11 @@
           "Yaw": 0.0,
           "zFar": 1000.0,
           "zNear": 0.1
+        },
+        {
+          "AudioID": 5,
+          "Name": "Source",
+          "Type": 8
         }
       ],
       "Enabled": true,

@@ -36,18 +36,20 @@ public:
 
 	void CleanUp();
 
-	//set default listener
+	// Set default listener
 	void SetDefaultListener(AkGameObjectID goID);
 
-	//register a wwise game object and return its id or return -1 if failed
+	// Register a Wwise game object and return its id or return -1 if failed
 	AkGameObjectID RegisterGameObject(std::string name);
-	//function to play an event
+	// Unregister a Wwise game object
+	void UnregisterGameObject(AkGameObjectID goID, std::string name);
+	// Function to play an event
 	void PlayEvent(AkUniqueID event, AkGameObjectID goID);
-	//function to stop event
+	// Function to stop event
 	void StopEvent(AkUniqueID event, AkGameObjectID goID);
-	//function to pause event
+	// Function to pause event
 	void PauseEvent(AkUniqueID event, AkGameObjectID goID);
-	//function to resume the event if it has been paused
+	// Function to resume the event if it has been paused
 	void ResumeEvent(AkUniqueID event, AkGameObjectID goID);
 
 	//audio engine functions

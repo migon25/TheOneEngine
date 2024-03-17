@@ -58,9 +58,9 @@ json Source::SaveComponent()
 	sourceJSON["Type"] = type;
 
 	sourceJSON["AudioID"] = goID;
-	sourceJSON["Event"] = event;
+	//sourceJSON["Event"] = event;
 	
-	return json();
+	return sourceJSON;
 }
 
 void Source::LoadComponent(const json& sourceJSON)
@@ -74,10 +74,4 @@ void Source::LoadComponent(const json& sourceJSON)
 	{
 		goID = sourceJSON["AudioID"];
 	}
-
-	if (sourceJSON.contains("Event"))
-	{
-		event = sourceJSON["Event"];
-	}
-
 }

@@ -22,7 +22,7 @@ public:
 
 	string path;
 	int volume;
-	AkUniqueID event;
+	//AkUniqueID event;
 private:
 
 };

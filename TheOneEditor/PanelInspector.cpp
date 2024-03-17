@@ -464,26 +464,27 @@ bool PanelInspector::Draw()
                 //{
                 //}
 
-                ImGui::SeparatorText("Components");
-                if (ImGui::Selectable("Footsteps")) {
-                    source->event = AK::EVENTS::STEP;
-                }if (ImGui::Selectable("Gunshot")) {
-                    source->event = AK::EVENTS::GUNSHOT;
-                }
+                //ImGui::SeparatorText("Components");
+                //if (ImGui::Selectable("Footsteps")) {
+                //    source->event = AK::EVENTS::STEP;
+                //}if (ImGui::Selectable("Gunshot")) {
+                //    source->event = AK::EVENTS::GUNSHOT;
+                //}
+                //
+                //if (source->event != NULL) {
+                //    if (ImGui::Button("Play"))
+                //        audioManager->PlayAudio(source);
+                //    if (ImGui::Button("Stop"))
+                //        audioManager->StopAudio(source);
+                //    if (ImGui::Button("Pause"))
+                //        audioManager->PauseAudio(source);
+                //    if (ImGui::Button("Resume"))
+                //        audioManager->ResumeAudio(source);
+                //}
+                //else {
+                //    ImGui::Text("No audio event selected");
+                //}
 
-                if (source->event != NULL) {
-                    if (ImGui::Button("Play"))
-                        audioManager->PlayAudio(source);
-                    if (ImGui::Button("Stop"))
-                        audioManager->StopAudio(source);
-                    if (ImGui::Button("Pause"))
-                        audioManager->PauseAudio(source);
-                    if (ImGui::Button("Resume"))
-                        audioManager->ResumeAudio(source);
-                }
-                else {
-                    ImGui::Text("No audio event selected");
-                }
                 ImGui::Dummy(ImVec2(0.0f, 10.0f));
             }
 

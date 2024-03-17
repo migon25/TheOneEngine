@@ -258,6 +258,21 @@ AkGameObjectID AudioCore::RegisterGameObject(std::string name)
     }
 }
 
+void AudioCore::UnregisterGameObject(AkGameObjectID goID, std::string name)
+{
+    if (AK::SoundEngine::UnregisterGameObj(goID) == AK_Success)
+    {
+        LOG(LogType::LOG_AUDIO, "Game Object %s with ID %d SUCCESS on Unregister", name.c_str(), gameObjectIDs.size());
+        gameObjectIDs.erase(gameObjectIDs.begin() + goID);
+        //return gameObjectIDs.size() - 1;
+    }
+    else
+    {
+        LOG(LogType::LOG_AUDIO, "Game Object %s ERROR on Unregister", name.c_str());
+        //return -1;
+    }
+}
+
 void AudioCore::PlayEvent(AkUniqueID event, AkGameObjectID goID)
 {
     for (size_t i = 0; i < MAX_AUDIO_EVENTS; i++)
@@ -289,6 +304,8 @@ void AudioCore::ResumeEvent(AkUniqueID event, AkGameObjectID goID)
     AK::SoundEngine::ExecuteActionOnEvent(event, AK::SoundEngine::AkActionOnEventType::AkActionOnEventType_Resume, gameObjectIDs[goID]);
 }
 
+// JULS: Probably not necessary actually
+/*
 void AudioCore::PlayEngine()
 {
     if (state == EngineState::PAUSED)
@@ -335,6 +352,7 @@ void AudioCore::StopEngine()
         AK::SoundEngine::StopAll(gameObjectIDs[i]);
     }
 }
+*/
 
 void AudioCore::SetGlobalVolume(float volume)
 {
