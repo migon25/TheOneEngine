@@ -10,9 +10,11 @@
 //#include "../TheOneEditor/App.h"
 //#include "../TheOneEditor/SceneManager.h"
 
+AudioManager* audioManager = NULL;
+
 EngineCore::EngineCore()
 {
-    audio = new AudioCore();
+    audioManager = new AudioManager();
     monoManager = new MonoManager();
     collisionSolver = new CollisionSolver();
     inputManager = new InputManager();
@@ -23,8 +25,8 @@ void EngineCore::Awake()
 {
     LOG(LogType::LOG_OK, "Initializing DevIL");
     ilInit();
+    audioManager->Awake();
     monoManager->InitMono();
-    audio->Awake();
     inputManager->Init();
 }
 
@@ -128,14 +130,43 @@ void EngineCore::Update(double dt)
             case CollisionType::Wall:
                 // do nothing at all
                 break;
+            case CollisionType::Bullet:
+                for (auto& item2 : collisionSolver->goWithCollision)
+                {
+                    if (item != item2)
+                    {
+                        switch (item2->GetComponent<Collider2D>()->collisionType)
+                        {
+                        case CollisionType::Player:
+                            if (collisionSolver->CheckCollision(item, item2))
+                            {
+                                LOG(LogType::LOG_WARNING, "Player Hit");
+                                item->Delete(engine->N_sceneManager->objectsToDelete);
+                            }
+                            break;
+                        case CollisionType::Enemy:
+                            //if they collide
+                            if (collisionSolver->CheckCollision(item, item2))
+                            {
+                                MonoManager::CallScriptFunction(item2->GetComponent<Script>()->monoBehaviourInstance, "ReduceLife");
+                                item->Delete(engine->N_sceneManager->objectsToDelete);
+                            }
+                            break;
+                        default:
+                            break;
+                        }
+                    }
+                }
+                break;
             default:
                 break;
             }
         }
     }
 
+    audioManager->Update(dt);
+
     this->dt = dt;
-    audio->Update(dt);
 }
 
 void EngineCore::Render(Camera* camera)
@@ -187,6 +218,11 @@ void EngineCore::Render(Camera* camera)
 
     if (collisionSolver->drawCollisions) collisionSolver->DrawCollisions();
 
+    if (!monoManager->debugShapesQueue.empty())
+    {
+        monoManager->RenderShapesQueue();
+    }
+
     glColor3f(1.0f, 1.0f, 1.0f);
     //DrawFrustum(camera->viewMatrix);
 
@@ -208,11 +244,11 @@ void EngineCore::LogGL(string id)
 
 void EngineCore::CleanUp()
 {
+    audioManager->CleanUp();
+    delete audioManager;
+    
     monoManager->ShutDownMono();
     delete monoManager;
-
-    audio->CleanUp();
-    delete audio;
 
     inputManager->CleanUp();
     delete inputManager;

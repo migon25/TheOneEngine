@@ -26,7 +26,7 @@
           "UID": 997210521
         },
         {
-          "Aspect": 1.941176414489746,
+          "Aspect": 1.9381003379821777,
           "CameraType": 0,
           "FOV": 65.0,
           "Name": "Camera",
@@ -39,6 +39,11 @@
           "Yaw": 0.0,
           "zFar": 1000.0,
           "zNear": 0.1
+        },
+        {
+          "AudioID": 0,
+          "Name": "Listener",
+          "Type": 7
         }
       ],
       "Enabled": true,
@@ -281,6 +286,11 @@
           "ScriptName": "MainMenuManager",
           "Type": 4,
           "UID": 1923971447
+        },
+        {
+          "AudioID": 1,
+          "Name": "Source",
+          "Type": 8
         }
       ],
       "Enabled": true,

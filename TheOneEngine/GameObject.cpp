@@ -4,6 +4,8 @@
 #include "Mesh.h"
 #include "Texture.h"
 #include "Collider2D.h"
+#include "Listener.h"
+#include "Source.h"
 #include "Canvas.h"
 #include "ParticleSystem.h"
 #include "UIDGen.h"
@@ -11,7 +13,7 @@
 #include "Camera.h"
 
 #include "Math.h"
-
+#include "EngineCore.h"
 
 GameObject::GameObject(std::string name) :
 	name(name),
@@ -102,24 +104,24 @@ void GameObject::GenerateAABBFromMesh()
 	case Formats::F_V3:
 		glBufferData(GL_ARRAY_BUFFER, sizeof(V3) * mesh->mesh.numVerts, mesh->meshData.vertex_data.data(), GL_STATIC_DRAW);
 		for (const auto& v : std::span((V3*)mesh->meshData.vertex_data.data(), mesh->meshData.vertex_data.size())) {
-			aabb.min = glm::min(aabb.min, vec3(v.v));
-			aabb.max = glm::max(aabb.max, vec3(v.v));
+			aabb.min = (glm::min)(aabb.min, vec3(v.v));
+			aabb.max = (glm::max)(aabb.max, vec3(v.v));
 		}
 		break;
 
 	case Formats::F_V3C4:
 		glBufferData(GL_ARRAY_BUFFER, sizeof(V3C4) * mesh->mesh.numVerts, mesh->meshData.vertex_data.data(), GL_STATIC_DRAW);
 		for (const auto& v : std::span((V3C4*)mesh->meshData.vertex_data.data(), mesh->meshData.vertex_data.size())) {
-			aabb.min = glm::min(aabb.min, vec3(v.v));
-			aabb.max = glm::max(aabb.max, vec3(v.v));
+			aabb.min = (glm::min)(aabb.min, vec3(v.v));
+			aabb.max = (glm::max)(aabb.max, vec3(v.v));
 		}
 		break;
 
 	case Formats::F_V3T2:
 		glBufferData(GL_ARRAY_BUFFER, sizeof(V3T2) * mesh->mesh.numVerts, mesh->meshData.vertex_data.data(), GL_STATIC_DRAW);
 		for (const auto& v : std::span((V3T2*)mesh->meshData.vertex_data.data(), mesh->meshData.vertex_data.size())) {
-			aabb.min = glm::min(aabb.min, vec3(v.v));
-			aabb.max = glm::max(aabb.max, vec3(v.v));
+			aabb.min = (glm::min)(aabb.min, vec3(v.v));
+			aabb.max = (glm::max)(aabb.max, vec3(v.v));
 		}
 		break;
 	}
@@ -145,8 +147,8 @@ AABBox GameObject::CalculateAABB()
 	for (const auto& child : children)
 	{
 		AABBox childAABB = (child.get()->GetComponent<Transform>()->GetTransform() * child.get()->CalculateAABB()).AABB();
-		aabb.min = glm::min(aabb.min, childAABB.min);
-		aabb.max = glm::max(aabb.max, childAABB.max);
+		aabb.min = (glm::min)(aabb.min, childAABB.min);
+		aabb.max = (glm::max)(aabb.max, childAABB.max);
 	}
 
 	return aabb;
@@ -440,6 +442,21 @@ void GameObject::LoadGameObject(const json& gameObjectJSON)
 				this->AddScript(componentJSON["ScriptName"]);
 				this->GetComponent<Script>()->LoadComponent(componentJSON);
 			}
+			else if (componentJSON["Type"] == (int)ComponentType::Listener)
+			{
+				this->AddComponent<Listener>();
+				this->GetComponent<Listener>()->LoadComponent(componentJSON);
+				this->GetComponent<Listener>()->goID = audioManager->audio->RegisterGameObject(this->GetName());
+				audioManager->AddAudioObject((std::shared_ptr<AudioComponent>)this->GetComponent<Listener>());
+				audioManager->audio->SetDefaultListener(this->GetComponent<Listener>()->goID);
+			}
+			else if (componentJSON["Type"] == (int)ComponentType::Source)
+			{
+				this->AddComponent<Source>();
+				this->GetComponent<Source>()->LoadComponent(componentJSON);
+				this->GetComponent<Source>()->goID = audioManager->audio->RegisterGameObject(this->GetName());
+				audioManager->AddAudioObject((std::shared_ptr<AudioComponent>)this->GetComponent<Source>());
+			}
 			else if (componentJSON["Type"] == (int)ComponentType::Collider2D)
 			{
 				this->AddComponent<Collider2D>();
@@ -471,6 +488,40 @@ void GameObject::LoadGameObject(const json& gameObjectJSON)
 			// Add the loaded child game object to the current game object
 			childGameObject.get()->parent = this->weak_from_this().lock();
 			this->children.emplace_back(childGameObject);
+		}
+	}
+}
+
+void GameObject::SetPrefab(const uint32_t& pID)
+{
+	if (!children.empty()) 
+	{
+		for (auto item = children.begin(); item != children.end(); ++item) 
+		{
+			if (*item != nullptr && (pID != 0 || (*item).get()->prefabID == this->prefabID))
+			{
+				(*item).get()->SetPrefab(pID);
+			}
+		}
+	}
+	prefabID = pID;
+}
+
+void GameObject::UnpackPrefab()
+{
+	if (IsPrefab())
+		SetPrefab(0);
+}
+
+void GameObject::LockPrefab(bool lock)
+{
+	if (IsPrefab())
+	{
+		lockedPrefab = lock;
+		for (auto item = children.begin(); item != children.end(); ++item) {
+			if (*item != nullptr) {
+				(*item).get()->LockPrefab(lock);
+			}
 		}
 	}
 }

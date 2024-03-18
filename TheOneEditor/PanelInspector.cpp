@@ -11,6 +11,8 @@
 #include "..\TheOneEngine\Camera.h"
 #include "..\TheOneEngine\Script.h"
 #include "..\TheOneEngine\Collider2D.h"
+#include "..\TheOneEngine\Listener.h"
+#include "..\TheOneEngine\Source.h"
 #include "..\TheOneEngine\MonoManager.h"
 #include "..\TheOneEngine\ParticleSystem.h"
 #include "..\TheOneEngine\Canvas.h"
@@ -414,6 +416,30 @@ bool PanelInspector::Draw()
                     collider2D->colliderType = (ColliderType)colliderType;
                 }
 
+                // Offset of collider
+                float offsetX = (float)collider2D->offset.x;
+                float offsetY = (float)collider2D->offset.y;
+                float offsetZ = (float)collider2D->offset.z;
+                ImGui::Text("Offset");
+                ImGui::Text("X");
+                ImGui::SameLine();
+                if (ImGui::InputFloat("##OffsetX", &offsetX))
+                {
+                    collider2D->offset.x = offsetX;
+                }
+                ImGui::Text("Y");
+                ImGui::SameLine();
+                if (ImGui::InputFloat("##OffsetY", &offsetY))
+                {
+                    collider2D->offset.y = offsetY;
+                }
+                ImGui::Text("Z");
+                ImGui::SameLine();
+                if (ImGui::InputFloat("##OffsetZ", &offsetZ))
+                {
+                    collider2D->offset.z = offsetZ;
+                }
+
                 if (collider2D->colliderType == ColliderType::Rect)
                 {
                     // Rectangle collider
@@ -759,6 +785,48 @@ bool PanelInspector::Draw()
                 }
             }
 
+            /*Listener Component*/
+            Listener* listener = selectedGO->GetComponent<Listener>();
+
+            if (listener != nullptr && ImGui::CollapsingHeader("Listener", ImGuiTreeNodeFlags_None | ImGuiTreeNodeFlags_DefaultOpen)) {
+                // No properties
+                ImGui::Dummy(ImVec2(0.0f, 10.0f));
+
+            }
+
+            /*Source Component*/
+            Source* source = selectedGO->GetComponent<Source>();
+
+            if (source != nullptr && ImGui::CollapsingHeader("Audio Source", ImGuiTreeNodeFlags_None | ImGuiTreeNodeFlags_DefaultOpen)) {
+                // JULS: Volume not applied yet
+                //if (ImGui::SliderFloat("Volume", &zNear, 0.01, 10.0))
+                //{
+                //}
+
+                //ImGui::SeparatorText("Components");
+                //if (ImGui::Selectable("Footsteps")) {
+                //    source->event = AK::EVENTS::STEP;
+                //}if (ImGui::Selectable("Gunshot")) {
+                //    source->event = AK::EVENTS::GUNSHOT;
+                //}
+                //
+                //if (source->event != NULL) {
+                //    if (ImGui::Button("Play"))
+                //        audioManager->PlayAudio(source);
+                //    if (ImGui::Button("Stop"))
+                //        audioManager->StopAudio(source);
+                //    if (ImGui::Button("Pause"))
+                //        audioManager->PauseAudio(source);
+                //    if (ImGui::Button("Resume"))
+                //        audioManager->ResumeAudio(source);
+                //}
+                //else {
+                //    ImGui::Text("No audio event selected");
+                //}
+
+                ImGui::Dummy(ImVec2(0.0f, 10.0f));
+            }
+
             /*Add Component*/
             if (ImGui::BeginMenu("Add Component"))
             {
@@ -768,6 +836,22 @@ bool PanelInspector::Draw()
                 if (ImGui::MenuItem("Particle System"))
                 {
                     selectedGO->AddComponent<ParticleSystem>();
+                }
+
+                
+                if (ImGui::MenuItem("Listener"))
+                {
+                    selectedGO->AddComponent<Listener>();
+                    selectedGO->GetComponent<Listener>()->goID = audioManager->audio->RegisterGameObject(selectedGO->GetName());
+                    audioManager->AddAudioObject((std::shared_ptr<AudioComponent>)selectedGO->GetComponent<Listener>());
+                    audioManager->audio->SetDefaultListener(selectedGO->GetComponent<Listener>()->goID);
+
+                }
+                if (ImGui::MenuItem("Source"))
+                {
+                    selectedGO->AddComponent<Source>();
+                    selectedGO->GetComponent<Source>()->goID = audioManager->audio->RegisterGameObject(selectedGO->GetName());
+                    audioManager->AddAudioObject((std::shared_ptr<AudioComponent>)selectedGO->GetComponent<Source>());
                 }
 
                 if (ImGui::TreeNode("Collider2D"))
