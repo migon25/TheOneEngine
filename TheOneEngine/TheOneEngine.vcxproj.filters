@@ -61,6 +61,15 @@
     <Filter Include="GameObject\Components\Particles\Emmiter Modules\Render">
       <UniqueIdentifier>{a5921b07-18ce-42d5-9a89-55eefe6c47cc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{cfeab712-cbe8-4bc3-a595-9adae3a1bc06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Components\Audio">
+      <UniqueIdentifier>{776116c6-7fa9-4699-b202-8de05f56a541}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Components\Audio\Items">
+      <UniqueIdentifier>{e8e13a2f-ef25-4c4d-8f6d-7b3c4034238f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineCore.h">
@@ -177,6 +186,18 @@
     <ClInclude Include="DebugShape.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="AudioManager.h">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioComponent.h">
+      <Filter>GameObject\Components\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Listener.h">
+      <Filter>GameObject\Components\Audio\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Source.h">
+      <Filter>GameObject\Components\Audio\Items</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineCore.cpp">
@@ -280,6 +301,18 @@
     </ClCompile>
     <ClCompile Include="ButtonImageUI.cpp">
       <Filter>GameObject\Components\UI\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioManager.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioComponent.cpp">
+      <Filter>GameObject\Components\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Listener.cpp">
+      <Filter>GameObject\Components\Audio\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Source.cpp">
+      <Filter>GameObject\Components\Audio\Items</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

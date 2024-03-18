@@ -17,7 +17,7 @@
             0.0,
             1.0,
             0.0,
-            0.0,
+            -0.9673018455505371,
             0.0,
             0.0,
             1.0
@@ -32,13 +32,18 @@
           "Name": "Camera",
           "ParentUID": 3452816845,
           "Pitch": 0.0,
-          "PrimaryCamera": false,
+          "PrimaryCamera": true,
           "Size": 5.0,
           "Type": 1,
           "UID": 498534244,
           "Yaw": 0.0,
           "zFar": 1000.0,
           "zNear": 0.1
+        },
+        {
+          "AudioID": 1,
+          "Name": "Listener",
+          "Type": 7
         }
       ],
       "Enabled": true,
@@ -24422,12 +24427,550 @@
           ],
           "IsON": true,
           "Name": "ParticleSystem",
-          "Type": 7,
+          "Type": 9,
           "UID": 2625644913
         }
       ],
       "Enabled": true,
       "Name": "Sparks",
+      "ParentUID": 3452816845,
+      "Static": false,
+      "UID": 3452816845
+    },
+    {
+      "Components": [
+        {
+          "Name": "Transform",
+          "Transformation Matrix": [
+            4.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            4.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            4.0,
+            0.0,
+            0.24839866161346436,
+            0.0,
+            23.995555877685547,
+            1.0
+          ],
+          "Type": 0,
+          "UID": 1114269627
+        },
+        {
+          "Active": true,
+          "DrawAABB": true,
+          "DrawChecker": false,
+          "DrawNormalsFaces": false,
+          "DrawNormalsVerts": false,
+          "DrawOBB": false,
+          "DrawWireframe": false,
+          "Name": "Mesh",
+          "ParentUID": 3452816845,
+          "Path": "Library/Meshes/SK_MainCharacter/SK_MainCharacter.mesh",
+          "Type": 2,
+          "UID": 589185576
+        },
+        {
+          "AudioID": 2,
+          "Name": "Source",
+          "Type": 8
+        },
+        {
+          "Name": "Script",
+          "ParentUID": 3452816845,
+          "ScriptName": "PlayerScript",
+          "Type": 4,
+          "UID": 4274293051
+        }
+      ],
+      "Enabled": true,
+      "Name": "SK_MainCharacter",
+      "ParentUID": 3452816845,
+      "Static": false,
+      "UID": 3452816845
+    },
+    {
+      "Components": [
+        {
+          "Name": "Transform",
+          "Transformation Matrix": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            -129.61643981933594,
+            0.0,
+            56.73735046386719,
+            1.0
+          ],
+          "Type": 0,
+          "UID": 1231582166
+        },
+        {
+          "Active": true,
+          "DrawAABB": true,
+          "DrawChecker": false,
+          "DrawNormalsFaces": false,
+          "DrawNormalsVerts": false,
+          "DrawOBB": false,
+          "DrawWireframe": false,
+          "Name": "Mesh",
+          "ParentUID": 3452816845,
+          "Path": "Library/Meshes/SM_Box_LowPoly/SM_Box_LowPoly.mesh",
+          "Type": 2,
+          "UID": 3199201601
+        },
+        {
+          "ColliderType": 1,
+          "CollisionType": 2,
+          "Height": 20.841222763061523,
+          "Name": "Specified Type was not found",
+          "OffsetX": 10.420000076293945,
+          "OffsetY": 0.0,
+          "OffsetZ": -10.420000076293945,
+          "ParentUID": 3452816845,
+          "Radius": 0.5,
+          "Type": 5,
+          "UID": 1313888087,
+          "Width": 20.841221809387207
+        }
+      ],
+      "Enabled": true,
+      "Name": "SM_Box_LowPoly1",
+      "ParentUID": 3452816845,
+      "Static": false,
+      "UID": 3452816845
+    },
+    {
+      "Components": [
+        {
+          "Name": "Transform",
+          "Transformation Matrix": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            -14.17323112487793,
+            0.0,
+            -57.41239547729492,
+            1.0
+          ],
+          "Type": 0,
+          "UID": 3497372111
+        },
+        {
+          "Active": true,
+          "DrawAABB": true,
+          "DrawChecker": false,
+          "DrawNormalsFaces": false,
+          "DrawNormalsVerts": false,
+          "DrawOBB": false,
+          "DrawWireframe": false,
+          "Name": "Mesh",
+          "ParentUID": 3452816845,
+          "Path": "Library/Meshes/SM_Box_LowPoly/SM_Box_LowPoly.mesh",
+          "Type": 2,
+          "UID": 4159494808
+        },
+        {
+          "ColliderType": 1,
+          "CollisionType": 2,
+          "Height": 20.841222763061523,
+          "Name": "Specified Type was not found",
+          "OffsetX": 10.420000076293945,
+          "OffsetY": 0.0,
+          "OffsetZ": -10.420000076293945,
+          "ParentUID": 3452816845,
+          "Radius": 0.5,
+          "Type": 5,
+          "UID": 1472546454,
+          "Width": 20.841221809387207
+        }
+      ],
+      "Enabled": true,
+      "Name": "SM_Box_LowPoly2",
+      "ParentUID": 3452816845,
+      "Static": false,
+      "UID": 3452816845
+    },
+    {
+      "Components": [
+        {
+          "Name": "Transform",
+          "Transformation Matrix": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            416.0189514160156,
+            0.0,
+            69.331787109375,
+            1.0
+          ],
+          "Type": 0,
+          "UID": 2918129615
+        },
+        {
+          "Active": true,
+          "DrawAABB": true,
+          "DrawChecker": false,
+          "DrawNormalsFaces": false,
+          "DrawNormalsVerts": false,
+          "DrawOBB": false,
+          "DrawWireframe": false,
+          "Name": "Mesh",
+          "ParentUID": 3452816845,
+          "Path": "Library/Meshes/SM_Box_LowPoly/SM_Box_LowPoly.mesh",
+          "Type": 2,
+          "UID": 3992288648
+        },
+        {
+          "ColliderType": 1,
+          "CollisionType": 2,
+          "Height": 20.841222763061523,
+          "Name": "Specified Type was not found",
+          "OffsetX": 10.420000076293945,
+          "OffsetY": 0.0,
+          "OffsetZ": -10.420000076293945,
+          "ParentUID": 3452816845,
+          "Radius": 0.5,
+          "Type": 5,
+          "UID": 2267920697,
+          "Width": 20.841221809387207
+        }
+      ],
+      "Enabled": true,
+      "Name": "SM_Box_LowPoly3",
+      "ParentUID": 3452816845,
+      "Static": false,
+      "UID": 3452816845
+    },
+    {
+      "Components": [
+        {
+          "Name": "Transform",
+          "Transformation Matrix": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            322.9402770996094,
+            0.0,
+            -310.2467956542969,
+            1.0
+          ],
+          "Type": 0,
+          "UID": 2363507172
+        },
+        {
+          "Active": true,
+          "DrawAABB": true,
+          "DrawChecker": false,
+          "DrawNormalsFaces": false,
+          "DrawNormalsVerts": false,
+          "DrawOBB": false,
+          "DrawWireframe": false,
+          "Name": "Mesh",
+          "ParentUID": 3452816845,
+          "Path": "Library/Meshes/SM_Box_LowPoly/SM_Box_LowPoly.mesh",
+          "Type": 2,
+          "UID": 3019099807
+        },
+        {
+          "ColliderType": 1,
+          "CollisionType": 2,
+          "Height": 20.841222763061523,
+          "Name": "Specified Type was not found",
+          "OffsetX": 10.420000076293945,
+          "OffsetY": 0.0,
+          "OffsetZ": -10.420000076293945,
+          "ParentUID": 3452816845,
+          "Radius": 0.5,
+          "Type": 5,
+          "UID": 4036511116,
+          "Width": 20.841221809387207
+        }
+      ],
+      "Enabled": true,
+      "Name": "SM_Box_LowPoly4",
+      "ParentUID": 3452816845,
+      "Static": false,
+      "UID": 3452816845
+    },
+    {
+      "Components": [
+        {
+          "Name": "Transform",
+          "Transformation Matrix": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            685.2672729492188,
+            0.0,
+            -212.23228454589844,
+            1.0
+          ],
+          "Type": 0,
+          "UID": 3144143718
+        },
+        {
+          "Active": true,
+          "DrawAABB": true,
+          "DrawChecker": false,
+          "DrawNormalsFaces": false,
+          "DrawNormalsVerts": false,
+          "DrawOBB": false,
+          "DrawWireframe": false,
+          "Name": "Mesh",
+          "ParentUID": 3452816845,
+          "Path": "Library/Meshes/SM_Box_LowPoly/SM_Box_LowPoly.mesh",
+          "Type": 2,
+          "UID": 2324028156
+        },
+        {
+          "ColliderType": 1,
+          "CollisionType": 2,
+          "Height": 20.841222763061523,
+          "Name": "Specified Type was not found",
+          "OffsetX": 10.420000076293945,
+          "OffsetY": 0.0,
+          "OffsetZ": -10.420000076293945,
+          "ParentUID": 3452816845,
+          "Radius": 0.5,
+          "Type": 5,
+          "UID": 3301361862,
+          "Width": 20.841221809387207
+        }
+      ],
+      "Enabled": true,
+      "Name": "SM_Box_LowPoly5",
+      "ParentUID": 3452816845,
+      "Static": false,
+      "UID": 3452816845
+    },
+    {
+      "Components": [
+        {
+          "Name": "Transform",
+          "Transformation Matrix": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            -129.61643981933594,
+            0.0,
+            56.73735046386719,
+            1.0
+          ],
+          "Type": 0,
+          "UID": 2860411287
+        },
+        {
+          "Active": true,
+          "DrawAABB": true,
+          "DrawChecker": false,
+          "DrawNormalsFaces": false,
+          "DrawNormalsVerts": false,
+          "DrawOBB": false,
+          "DrawWireframe": false,
+          "Name": "Mesh",
+          "ParentUID": 3452816845,
+          "Path": "",
+          "Type": 2,
+          "UID": 3468877056
+        },
+        {
+          "ColliderType": 1,
+          "CollisionType": 2,
+          "Height": 20.841222763061523,
+          "Name": "Specified Type was not found",
+          "OffsetX": 10.420000076293945,
+          "OffsetY": 0.0,
+          "OffsetZ": -10.420000076293945,
+          "ParentUID": 3452816845,
+          "Radius": 0.5,
+          "Type": 5,
+          "UID": 4164834432,
+          "Width": 20.841221809387207
+        }
+      ],
+      "Enabled": true,
+      "Name": "Copy of SM_Box_LowPoly1",
+      "ParentUID": 3452816845,
+      "Static": false,
+      "UID": 3452816845
+    },
+    {
+      "Components": [
+        {
+          "Name": "Transform",
+          "Transformation Matrix": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            688.4959106445313,
+            0.0,
+            -435.5291748046875,
+            1.0
+          ],
+          "Type": 0,
+          "UID": 2948082437
+        },
+        {
+          "Active": true,
+          "DrawAABB": true,
+          "DrawChecker": false,
+          "DrawNormalsFaces": false,
+          "DrawNormalsVerts": false,
+          "DrawOBB": false,
+          "DrawWireframe": false,
+          "Name": "Mesh",
+          "ParentUID": 3452816845,
+          "Path": "",
+          "Type": 2,
+          "UID": 3500367811
+        },
+        {
+          "ColliderType": 1,
+          "CollisionType": 2,
+          "Height": 20.841222763061523,
+          "Name": "Specified Type was not found",
+          "OffsetX": 10.420000076293945,
+          "OffsetY": 0.0,
+          "OffsetZ": -10.420000076293945,
+          "ParentUID": 3452816845,
+          "Radius": 0.5,
+          "Type": 5,
+          "UID": 2802979571,
+          "Width": 20.841221809387207
+        }
+      ],
+      "Enabled": true,
+      "Name": "Copy of SM_Box_LowPoly5",
+      "ParentUID": 3452816845,
+      "Static": false,
+      "UID": 3452816845
+    },
+    {
+      "Components": [
+        {
+          "Name": "Transform",
+          "Transformation Matrix": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            200.2586212158203,
+            0.0,
+            -613.9085693359375,
+            1.0
+          ],
+          "Type": 0,
+          "UID": 4120623309
+        },
+        {
+          "Active": true,
+          "DrawAABB": true,
+          "DrawChecker": false,
+          "DrawNormalsFaces": false,
+          "DrawNormalsVerts": false,
+          "DrawOBB": false,
+          "DrawWireframe": false,
+          "Name": "Mesh",
+          "ParentUID": 3452816845,
+          "Path": "",
+          "Type": 2,
+          "UID": 1160454012
+        },
+        {
+          "ColliderType": 1,
+          "CollisionType": 2,
+          "Height": 20.841222763061523,
+          "Name": "Specified Type was not found",
+          "OffsetX": 10.420000076293945,
+          "OffsetY": 0.0,
+          "OffsetZ": -10.420000076293945,
+          "ParentUID": 3452816845,
+          "Radius": 0.5,
+          "Type": 5,
+          "UID": 1302829911,
+          "Width": 20.841221809387207
+        }
+      ],
+      "Enabled": true,
+      "Name": "Copy of Copy of SM_Box_LowPoly5",
       "ParentUID": 3452816845,
       "Static": false,
       "UID": 3452816845

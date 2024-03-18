@@ -8,6 +8,8 @@
 #include "Mesh.h"
 #include "Texture.h"
 #include "Collider2D.h"
+#include "Listener.h"
+#include "Source.h"
 #include "Canvas.h"
 #include "ParticleSystem.h"
 #include "../TheOneAudio/AudioCore.h"
@@ -37,8 +39,6 @@ bool N_SceneManager::Awake()
 bool N_SceneManager::Start()
 {
 	FindCameraInScene();
-	currentScene->listenerAudioGOID = engine->audio->RegisterGameObject(currentScene->currentCamera->GetName().c_str());
-	engine->audio->SetDefaultListener(currentScene->listenerAudioGOID);
 
 	return true;
 }
@@ -46,19 +46,6 @@ bool N_SceneManager::Start()
 bool N_SceneManager::PreUpdate()
 {
 	// Do nothing
-
-	//move into audio engine, the real current camera transform
-	engine->audio->SetAudioGameObjectTransform(currentScene->listenerAudioGOID, 
-		currentScene->currentCamera->GetContainerGO().get()->GetComponent<Transform>()->GetPosition().x,
-		currentScene->currentCamera->GetContainerGO().get()->GetComponent<Transform>()->GetPosition().y,
-		currentScene->currentCamera->GetContainerGO().get()->GetComponent<Transform>()->GetPosition().z,
-		currentScene->currentCamera->GetContainerGO().get()->GetComponent<Transform>()->GetForward().x,
-		currentScene->currentCamera->GetContainerGO().get()->GetComponent<Transform>()->GetForward().y,
-		currentScene->currentCamera->GetContainerGO().get()->GetComponent<Transform>()->GetForward().z,
-		currentScene->currentCamera->GetContainerGO().get()->GetComponent<Transform>()->GetUp().x,
-		currentScene->currentCamera->GetContainerGO().get()->GetComponent<Transform>()->GetUp().y,
-		currentScene->currentCamera->GetContainerGO().get()->GetComponent<Transform>()->GetUp().z);
-
 
 	return true;
 }
@@ -276,12 +263,18 @@ std::shared_ptr<GameObject> N_SceneManager::DuplicateGO(std::shared_ptr<GameObje
 			break;
 		case ComponentType::Script:
 			duplicatedGO.get()->AddCopiedComponent<Script>((Script*)item);
-			break;		
+			break;	
 		case ComponentType::Collider2D:
 			duplicatedGO.get()->AddCopiedComponent<Collider2D>((Collider2D*)item);
 			break;
 		case ComponentType::Canvas:
 			duplicatedGO.get()->AddCopiedComponent<Canvas>((Canvas*)item);
+			break;
+		case ComponentType::Listener:
+			duplicatedGO.get()->AddCopiedComponent<Listener>((Listener*)item);
+			break;
+		case ComponentType::Source:
+			duplicatedGO.get()->AddCopiedComponent<Source>((Source*)item);
 			break;
 		case ComponentType::Unknown:
 			break;

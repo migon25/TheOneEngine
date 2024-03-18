@@ -19,6 +19,8 @@ enum class ComponentType
     Script,
     Collider2D,
     Canvas,
+    Listener,
+    Source,
     ParticleSystem,
 	Unknown
 };

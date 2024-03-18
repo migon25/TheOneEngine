@@ -6,6 +6,7 @@
 #include "Transform.h"
 #include "Canvas.h"
 #include "Collider2D.h"
+#include "ParticleSystem.h"
 #include "N_SceneManager.h"
 
 #include <glm/vec3.hpp>
@@ -260,6 +261,35 @@ static void DrawWireCube()
 
 }
 
+// Particle System
+static void PlayPS(GameObject* GOptr)
+{
+	GOptr->GetComponent<ParticleSystem>()->Play();
+}
+
+static void StopPS(GameObject* GOptr)
+{
+	GOptr->GetComponent<ParticleSystem>()->Stop();
+}
+
+static void ReplayPS(GameObject* GOptr)
+{
+	GOptr->GetComponent<ParticleSystem>()->Replay();
+}
+
+static void StopSource(GameObject* GOptr, uint audio) {
+	AkUInt32 myAkUInt32 = static_cast<AkUInt32>(audio);
+
+	audioManager->StopAudio(GOptr->GetComponent<Source>(), audio);
+}
+
+// Audio
+static void PlaySource(GameObject* GOptr, uint audio) {
+	AkUInt32 myAkUInt32 = static_cast<AkUInt32>(audio);
+
+	audioManager->PlayAudio(GOptr->GetComponent<Source>(), audio);
+}
+
 void MonoRegisterer::RegisterFunctions()
 {
 	mono_add_internal_call("InternalCalls::GetGameObjectPtr", GetGameObjectPtr);
@@ -292,6 +322,13 @@ void MonoRegisterer::RegisterFunctions()
 	mono_add_internal_call("InternalCalls::ScriptingLog", ScriptingLog);
 	mono_add_internal_call("InternalCalls::DrawWireCircle", DrawWireCircle);
 	mono_add_internal_call("InternalCalls::DrawWireSphere", DrawWireSphere);
+
+	mono_add_internal_call("InternalCalls::PlayPS", PlayPS);
+	mono_add_internal_call("InternalCalls::StopPS", StopPS);
+	mono_add_internal_call("InternalCalls::ReplayPS", ReplayPS);
+
+	mono_add_internal_call("InternalCalls::PlaySource", PlaySource);
+	mono_add_internal_call("InternalCalls::StopSource", StopSource);
 }
 
 bool MonoRegisterer::CheckMonoError(MonoError& error)
