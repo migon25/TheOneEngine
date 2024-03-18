@@ -11,6 +11,7 @@
 #include "Listener.h"
 #include "Source.h"
 #include "Canvas.h"
+#include "ParticleSystem.h"
 #include "../TheOneAudio/AudioCore.h"
 #include "EngineCore.h"
 
@@ -58,10 +59,20 @@ bool N_SceneManager::Update(double dt, bool isPlaying)
 	
 	sceneIsPlaying = isPlaying;
 
+	if (previousFrameIsPlaying != isPlaying && isPlaying == true)
+	{
+		for (const auto gameObject : currentScene->GetRootSceneGO()->children)
+		{
+			gameObject->Enable();
+		}
+	}
+
 	if (isPlaying)
 	{
 		currentScene->UpdateGOs(dt);
 	}
+
+	previousFrameIsPlaying = isPlaying;
 
 	return true;
 }
@@ -356,9 +367,8 @@ std::shared_ptr<GameObject> N_SceneManager::CreateCanvasGO(std::string name)
 	std::shared_ptr<GameObject> canvasGO = std::make_shared<GameObject>(name);
 	canvasGO.get()->AddComponent<Transform>();
 	canvasGO.get()->AddComponent<Canvas>();
-	canvasGO.get()->AddComponent<Camera>();
-	canvasGO.get()->GetComponent<Camera>()->UpdateCamera();
-	//Alex: This is just for debug
+	
+	// Debug Img
 	canvasGO.get()->GetComponent<Canvas>()->AddItemUI<ImageUI>();
 
 	canvasGO.get()->parent = currentScene->GetRootSceneGO().get()->weak_from_this();
@@ -425,6 +435,8 @@ std::shared_ptr<GameObject> N_SceneManager::CreateMeshGO(std::string path)
 					meshGO.get()->GetComponent<Mesh>()->meshData = mData;
 					meshGO.get()->GetComponent<Mesh>()->meshData.texturePath = textures[mesh.materialIndex]->path;
 					meshGO.get()->GetComponent<Mesh>()->path = file;
+
+					meshGO.get()->GetComponent<Transform>()->SetTransform(mData.meshTransform);
 				}
 			}
 
@@ -492,6 +504,7 @@ std::shared_ptr<GameObject> N_SceneManager::CreateExistingMeshGO(std::string pat
 
 			std::shared_ptr<GameObject> meshGO = std::make_shared<GameObject>(mData.meshName);
 			meshGO.get()->AddComponent<Transform>();
+			meshGO.get()->GetComponent<Transform>()->SetTransform(mData.meshTransform);
 			meshGO.get()->AddComponent<Mesh>();
 			//meshGO.get()->AddComponent<Texture>(); // hekbas: must implement
 
@@ -644,7 +657,6 @@ void Scene::UpdateGOs(double dt)
 
 void Scene::RecurseUIDraw(std::shared_ptr<GameObject> parentGO, DrawMode mode)
 {
-
 	for (const auto gameObject : parentGO.get()->children)
 	{
 		gameObject.get()->DrawUI(currentCamera, mode);

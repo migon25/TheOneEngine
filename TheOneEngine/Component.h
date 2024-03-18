@@ -21,6 +21,7 @@ enum class ComponentType
     Canvas,
     Listener,
     Source,
+    ParticleSystem,
 	Unknown
 };
 

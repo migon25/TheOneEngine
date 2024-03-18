@@ -7,6 +7,7 @@
 #include "Listener.h"
 #include "Source.h"
 #include "Canvas.h"
+#include "ParticleSystem.h"
 #include "UIDGen.h"
 #include "BBox.hpp"
 #include "Camera.h"
@@ -466,6 +467,11 @@ void GameObject::LoadGameObject(const json& gameObjectJSON)
 				this->AddComponent<Canvas>();
 				this->GetComponent<Canvas>()->LoadComponent(componentJSON);
 			}
+			else if (componentJSON["Type"] == (int)ComponentType::ParticleSystem)
+			{
+				this->AddComponent<ParticleSystem>();
+				this->GetComponent<ParticleSystem>()->LoadComponent(componentJSON);
+			}
 		}
 	}
 
@@ -482,6 +488,40 @@ void GameObject::LoadGameObject(const json& gameObjectJSON)
 			// Add the loaded child game object to the current game object
 			childGameObject.get()->parent = this->weak_from_this().lock();
 			this->children.emplace_back(childGameObject);
+		}
+	}
+}
+
+void GameObject::SetPrefab(const uint32_t& pID)
+{
+	if (!children.empty()) 
+	{
+		for (auto item = children.begin(); item != children.end(); ++item) 
+		{
+			if (*item != nullptr && (pID != 0 || (*item).get()->prefabID == this->prefabID))
+			{
+				(*item).get()->SetPrefab(pID);
+			}
+		}
+	}
+	prefabID = pID;
+}
+
+void GameObject::UnpackPrefab()
+{
+	if (IsPrefab())
+		SetPrefab(0);
+}
+
+void GameObject::LockPrefab(bool lock)
+{
+	if (IsPrefab())
+	{
+		lockedPrefab = lock;
+		for (auto item = children.begin(); item != children.end(); ++item) {
+			if (*item != nullptr) {
+				(*item).get()->LockPrefab(lock);
+			}
 		}
 	}
 }
