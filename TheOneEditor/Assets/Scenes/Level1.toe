@@ -24340,6 +24340,97 @@
       "ParentUID": 3452816845,
       "Static": false,
       "UID": 3452816845
+    },
+    {
+      "Components": [
+        {
+          "Name": "Transform",
+          "Transformation Matrix": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            49.66573715209961,
+            14.61444091796875,
+            56.85737609863281,
+            1.0
+          ],
+          "Type": 0,
+          "UID": 4287025743
+        },
+        {
+          "Emmiters": [
+            {
+              "Delay": 0.0,
+              "Duration": 10.0,
+              "InitializeModules": [
+                {
+                  "MaxSpeed": [
+                    10.0,
+                    20.0,
+                    -5.0
+                  ],
+                  "MinSpeed": [
+                    -10.0,
+                    10.0,
+                    -10.0
+                  ],
+                  "Type": 0,
+                  "UsingSingleValueSpeed": false
+                },
+                {
+                  "MaxColor": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ],
+                  "MinColor": [
+                    200.0,
+                    180.0,
+                    1.0
+                  ],
+                  "Type": 1,
+                  "UsingSingleValueColor": true
+                }
+              ],
+              "IsLooping": true,
+              "IsON": true,
+              "Lifetime": 303.4366760253906,
+              "MaxParticles": 100,
+              "RenderModule": [
+                {
+                  "BillboardType": 0,
+                  "Type": 0
+                }
+              ],
+              "SpawnModule": [
+                {
+                  "Amount": 3.0,
+                  "SpawnRate": 1.5,
+                  "Type": 2
+                }
+              ]
+            }
+          ],
+          "IsON": true,
+          "Name": "ParticleSystem",
+          "Type": 7,
+          "UID": 2625644913
+        }
+      ],
+      "Enabled": true,
+      "Name": "Sparks",
+      "ParentUID": 3452816845,
+      "Static": false,
+      "UID": 3452816845
     }
   ],
   "index": 0,
