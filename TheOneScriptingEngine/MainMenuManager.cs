@@ -71,7 +71,7 @@ public class MainMenuManager : MonoBehaviour
         // Selection Executters
         if ((Input.GetControllerButton(Input.ControllerButtonCode.X) || Input.GetKeyboardButton(Input.KeyboardCode.RETURN)) && canvas.GetSelection() == 0)
         {
-            SceneManager.LoadScene("NewUntitledScene");
+            SceneManager.LoadScene("Level1");
             attachedGameObject.source.PlayAudio(AudioManager.EventIDs.CLICK);
         }
 
