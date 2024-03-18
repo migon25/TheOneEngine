@@ -3,16 +3,71 @@
 	<Events>
 		<WorkUnit Name="Default Work Unit" ID="{5120CC72-B4E5-4D25-9EBA-29892E902FD3}" PersistMode="Standalone">
 			<ChildrenList>
-				<Folder Name="UI" ID="{0DE75828-CEDC-49B1-B208-8A0E2142E5A6}" ShortID="939245316"/>
+				<Folder Name="UI" ID="{0DE75828-CEDC-49B1-B208-8A0E2142E5A6}" ShortID="939245316">
+					<ChildrenList>
+						<Event Name="CLICK" ID="{453369D3-952A-423E-8B87-ADB325B7975D}">
+							<ChildrenList>
+								<Action Name="" ID="{80133848-36A7-468F-81DD-DC4D060CB976}" ShortID="875593167">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="click" ID="{4B3F404A-DC72-447D-8289-9161B6F8ECD0}" WorkUnitID="{A5DDD9EF-ABE8-46C9-A47B-71C56C6B2370}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="HOVER" ID="{690C1AE1-93D0-41A5-A32B-49FF11734810}">
+							<ChildrenList>
+								<Action Name="" ID="{675009B8-3292-446D-A832-C8318F573980}" ShortID="471024753">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="hover" ID="{586222A7-4515-4956-A653-56E8210E3519}" WorkUnitID="{A5DDD9EF-ABE8-46C9-A47B-71C56C6B2370}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+					</ChildrenList>
+				</Folder>
 				<Folder Name="Ambience" ID="{80F3A7DD-31FA-45C5-9310-9A5CA720D656}" ShortID="804417063">
 					<ChildrenList>
-						<Event Name="EXPLORE" ID="{ECFD59B3-4C22-4B8B-9525-C5B687B0E48D}"/>
-						<Event Name="COMBAT" ID="{64FBB048-6C5F-41C1-8692-63C100023D31}"/>
+						<Event Name="EXPLORE" ID="{ECFD59B3-4C22-4B8B-9525-C5B687B0E48D}">
+							<ChildrenList>
+								<Action Name="" ID="{85E0C6F6-B497-4F67-ABA6-1A7AC37C97D6}" ShortID="600372153">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="explore" ID="{842D17EE-2463-4D06-A7DA-5511CCE74CEE}" WorkUnitID="{A5DDD9EF-ABE8-46C9-A47B-71C56C6B2370}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="COMBAT" ID="{64FBB048-6C5F-41C1-8692-63C100023D31}">
+							<ChildrenList>
+								<Action Name="" ID="{214AF19B-3F0D-4A84-823A-57FA5DC6F220}" ShortID="687963915">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="combat" ID="{D13CB725-2D80-49B6-8345-E75F98BFDFB1}" WorkUnitID="{A5DDD9EF-ABE8-46C9-A47B-71C56C6B2370}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="Enemies" ID="{EEE8962D-F55C-423F-88F7-3371F7F8CD29}" ShortID="14045902">
 					<ChildrenList>
-						<Event Name="ENEMYATTACK" ID="{BCCC0A2F-F69E-410B-8279-B1C1E62074DE}"/>
+						<Event Name="ENEMYATTACK" ID="{BCCC0A2F-F69E-410B-8279-B1C1E62074DE}">
+							<ChildrenList>
+								<Action Name="" ID="{EFCA8179-C00E-4643-B3C0-F40A9CE3B549}" ShortID="314725425">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="enemy_attack" ID="{1BD2DB01-6780-482B-9D0D-A5C7CE99CC28}" WorkUnitID="{A5DDD9EF-ABE8-46C9-A47B-71C56C6B2370}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="Player" ID="{BFE87B1B-252B-4DD2-AC0A-94D51660A82C}" ShortID="310226414">

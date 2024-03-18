@@ -162,7 +162,7 @@
 				</AcousticTexture>
 			</AcousticTextures>
 		</SoundBank>
-		<SoundBank Id="3491347560" Type="User" Language="SFX" Hash="{B7DE2F57-E581-4683-A3E6-4091CAE1AB50}">
+		<SoundBank Id="3491347560" Type="User" Language="SFX" Hash="{6D777480-77B7-B816-0879-1E2F8DF98D2F}">
 			<ShortName>TheOneEngine</ShortName>
 			<Path>TheOneEngine.bnk</Path>
 			<Media>
@@ -270,5 +270,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{9CDBB4D0-457F-75A6-7743-9AEF89DE8B2E}</FileHash>
+	<FileHash>{E73895D7-5844-E020-558F-ED503D162308}</FileHash>
 </SoundBanksInfo>
