@@ -142,7 +142,7 @@ static void MoveSelectedButton(GameObject* containerGO, int direction)
 	}
 }
 
-static int GetSelectiedButton(GameObject* containerGO)
+static int GetSelectedButton(GameObject* containerGO)
 {
 	std::vector<ItemUI*> uiElements = containerGO->GetComponent<Canvas>()->GetUiElements();
 	int ret = -1;
@@ -182,7 +182,7 @@ void MonoRegisterer::RegisterFunctions()
 	mono_add_internal_call("InternalCalls::LoadScene", LoadScene);
 
 	mono_add_internal_call("InternalCalls::MoveSelectedButton", MoveSelectedButton);
-	mono_add_internal_call("InternalCalls::GetSelectiedButton", GetSelectiedButton);
+	mono_add_internal_call("InternalCalls::GetSelectedButton", GetSelectedButton);
 }
 
 bool MonoRegisterer::CheckMonoError(MonoError& error)
