@@ -81,6 +81,17 @@ class InternalCalls
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static void DrawWireSphere(Vector3 position, float radius, Vector3 color);
 
+    //Particle Systems
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void PlayPS(IntPtr GOptr);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void StopPS(IntPtr GOptr);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void ReplayPS(IntPtr GOptr);
+
+
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static void PlaySource(IntPtr GOptr, EventIDs audio);
 

@@ -54,6 +54,7 @@
     <Compile Include="Input.cs" />
     <Compile Include="InternalCalls.cs" />
     <Compile Include="ISource.cs" />
+    <Compile Include="IParticleSystem.cs" />
     <Compile Include="SceneManager.cs" />
     <Compile Include="ITransform.cs" />
     <Compile Include="MonoBehaviour.cs" />
