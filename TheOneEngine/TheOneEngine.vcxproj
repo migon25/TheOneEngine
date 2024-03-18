@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AudioComponent.h" />
+    <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Billboard.h" />
     <ClInclude Include="ButtonImageUI.h" />
     <ClInclude Include="Camera.h" />
@@ -20,6 +22,7 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="CubeImmediateMode.h" />
+    <ClInclude Include="DebugShape.h" />
     <ClInclude Include="Defs.h" />
     <ClInclude Include="Framebuffer.h" />
     <ClInclude Include="Emmiter.h" />
@@ -28,6 +31,7 @@
     <ClInclude Include="InitializeEmmiterModule.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Graphic.h" />
+    <ClInclude Include="Listener.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshLoader.h" />
@@ -41,6 +45,7 @@
     <ClInclude Include="Script.h" />
     <ClInclude Include="SingleOrRandom.h" />
     <ClInclude Include="SpawnEmmiterModule.h" />
+    <ClInclude Include="Source.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="EngineCore.h" />
     <ClInclude Include="Transform.h" />
@@ -50,6 +55,8 @@
     <ClInclude Include="UpdateEmmiterModule.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AudioComponent.cpp" />
+    <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="Billboard.cpp" />
     <ClCompile Include="ButtonImageUI.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -64,6 +71,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GamepadInput.cpp" />
     <ClCompile Include="InitializeEmmiterModule.cpp" />
+    <ClCompile Include="Listener.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -78,6 +86,7 @@
     <ClCompile Include="Script.cpp" />
     <ClCompile Include="SingleOrRandom.cpp" />
     <ClCompile Include="SpawnEmmiterModule.cpp" />
+    <ClCompile Include="Source.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="EngineCore.cpp" />
     <ClCompile Include="Transform.cpp" />

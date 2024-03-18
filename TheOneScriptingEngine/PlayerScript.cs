@@ -2,7 +2,8 @@
 
 public class PlayerScript : MonoBehaviour
 {
-	float speed = 7.0f;
+	float speed = 15.0f;	
+	bool lastFrameToMove = false;
 
 	public override void Update()
 	{
@@ -19,32 +20,28 @@ public class PlayerScript : MonoBehaviour
 		{
 			InternalCalls.ExitApplication();
 		}
-
 		if (Input.GetKeyboardButton(Input.KeyboardCode.W))
 		{
 			movement = movement + Vector3.forward;
 			toMove = true;
 		}
-
 		if (Input.GetKeyboardButton(Input.KeyboardCode.D))
 		{
 			movement = movement - Vector3.right;
 			toMove = true;
 		}
-
 		if (Input.GetKeyboardButton(Input.KeyboardCode.S))
 		{
 			movement = movement - Vector3.forward;
 			toMove = true;
 		}
-
 		if (Input.GetKeyboardButton(Input.KeyboardCode.A))
 		{
 			movement = movement + Vector3.right;
 			toMove = true;
-		}
+        }
 
-		if (Input.GetKeyboardButton(Input.KeyboardCode.UP))
+        if (Input.GetKeyboardButton(Input.KeyboardCode.UP))
 		{
 			attachedGameObject.transform.rotation = Vector3.zero;
 		}
@@ -63,22 +60,29 @@ public class PlayerScript : MonoBehaviour
 
 		if (Input.GetKeyboardButton(Input.KeyboardCode.SPACEBAR))
 		{
-			InternalCalls.InstantiateBullet(attachedGameObject.transform.position, attachedGameObject.transform.rotation);
-		}
+			InternalCalls.InstantiateBullet(attachedGameObject.transform.position + attachedGameObject.transform.forward * 3.5f, attachedGameObject.transform.rotation);
+            attachedGameObject.source.PlayAudio(AudioManager.EventIDs.GUNSHOT);
+            // call particleSystem.Replay()
+        }
+      
+		if (Input.GetKeyboardButton(Input.KeyboardCode.LSHIFT)) { speed = 30.0f; }
+		else { speed = 15.0f; }
 
-		if (toMove)
+        if (toMove)
 		{
 			attachedGameObject.transform.Translate(movement.Normalize() * speed * Time.deltaTime);
-		}
+        }
 
-		//Controller
-		Vector2 movementVector = Input.GetControllerJoystick(Input.ControllerJoystickCode.JOY_LEFT);
+        //Controller
+        Vector2 movementVector = Input.GetControllerJoystick(Input.ControllerJoystickCode.JOY_LEFT);
 
 		if (movementVector.x != 0.0f || movementVector.y != 0.0f)
 		{
 			movement = new Vector3(-movementVector.x, 0.0f, -movementVector.y);
 
 			attachedGameObject.transform.Translate(movement * speed * Time.deltaTime);
+
+			toMove = true;
 		}
 
 		Vector2 lookVector = Input.GetControllerJoystick(Input.ControllerJoystickCode.JOY_RIGHT);
@@ -91,7 +95,22 @@ public class PlayerScript : MonoBehaviour
 
 		if (Input.GetControllerButton(Input.ControllerButtonCode.R1))
         {
-			InternalCalls.InstantiateBullet(attachedGameObject.transform.position, attachedGameObject.transform.rotation);
-		}
-	}
+			InternalCalls.InstantiateBullet(attachedGameObject.transform.position + attachedGameObject.transform.forward * 3.5f, attachedGameObject.transform.rotation);
+            // call particleSystem.Replay()
+        }
+
+		// Play steps
+        if (lastFrameToMove != toMove)
+        {
+            if (toMove)
+            {
+                attachedGameObject.source.PlayAudio(AudioManager.EventIDs.STEP);
+            }
+            else
+            {
+                attachedGameObject.source.StopAudio(AudioManager.EventIDs.STEP);
+            }
+            lastFrameToMove = toMove;
+        }
+    }
 }
