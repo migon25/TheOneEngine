@@ -274,7 +274,7 @@ void BuilderApp::Play()
 		game_timer->Start();
 
 		LOG(LogType::LOG_INFO, "GameState changed to PLAY");
-		engine->audio->PlayEngine();
+		//engine->audio->PlayEngine();
 	}
 	else if (state == GameState::PAUSE) {
 		state = GameState::PLAY;
@@ -287,7 +287,7 @@ void BuilderApp::Play()
 		game_time = 0.0F;
 
 		LOG(LogType::LOG_INFO, "GameState changed to NONE");
-		engine->audio->PauseEngine();
+		//engine->audio->PauseEngine();
 
 	}
 }
@@ -302,7 +302,7 @@ void BuilderApp::Pause()
 		game_timer->Pause();
 
 		LOG(LogType::LOG_INFO, "GameState changed to PAUSE");
-		engine->audio->PauseEngine();
+		//engine->audio->PauseEngine();
 
 	}
 }
@@ -314,7 +314,7 @@ void BuilderApp::PlayOnce()
 		state = GameState::PLAY_ONCE;
 
 		LOG(LogType::LOG_INFO, "GameState changed to PLAY_ONCE");
-		engine->audio->PlayEngine();
+		//engine->audio->PlayEngine();
 
 	}
 	else if (state == GameState::PLAY) {
@@ -343,5 +343,5 @@ void BuilderApp::Stop()
 	game_time = 0.0F;
 	state = GameState::NONE;
 	LOG(LogType::LOG_INFO, "GameState changed to NONE");
-	engine->audio->PauseEngine();
+	//engine->audio->PauseEngine();
 }
