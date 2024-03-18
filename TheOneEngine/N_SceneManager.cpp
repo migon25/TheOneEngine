@@ -36,7 +36,7 @@ bool N_SceneManager::Awake()
 
 bool N_SceneManager::Start()
 {
-	currentScene->FindCameraInScene();
+	FindCameraInScene();
 	currentScene->listenerAudioGOID = engine->audio->RegisterGameObject(currentScene->currentCamera->GetName().c_str());
 	engine->audio->SetDefaultListener(currentScene->listenerAudioGOID);
 
@@ -115,7 +115,7 @@ void N_SceneManager::LoadScene(std::string sceneName)
 
 	LoadSceneFromJSON(fileName);
 
-	currentScene->FindCameraInScene();
+	FindCameraInScene();
 	currentScene->SetIsDirty(true);
 }
 
@@ -597,13 +597,13 @@ void N_SceneManager::SetSelectedGO(std::shared_ptr<GameObject> gameObj)
 	selectedGameObject = gameObj;
 }
 
-void Scene::FindCameraInScene()
+void N_SceneManager::FindCameraInScene()
 {
-	for (const auto GO : engine->N_sceneManager->GetGameObjects())
+	for (const auto GO : GetGameObjects())
 	{
 		if (GO->HasCameraComponent())
 		{ 
-			currentCamera = GO->GetComponent<Camera>();
+			currentScene->currentCamera = GO->GetComponent<Camera>();
 			break;
 		}
 	}
