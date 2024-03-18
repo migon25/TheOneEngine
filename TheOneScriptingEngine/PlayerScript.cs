@@ -61,10 +61,10 @@ public class PlayerScript : MonoBehaviour
 		if (Input.GetKeyboardButton(Input.KeyboardCode.SPACEBAR))
 		{
 			InternalCalls.InstantiateBullet(attachedGameObject.transform.position + attachedGameObject.transform.forward * 3.5f, attachedGameObject.transform.rotation);
-			// call particleSystem.Replay()
-		}
             attachedGameObject.source.PlayAudio(AudioManager.EventIDs.GUNSHOT);
+            // call particleSystem.Replay()
         }
+      
 		if (Input.GetKeyboardButton(Input.KeyboardCode.LSHIFT)) { speed = 30.0f; }
 		else { speed = 15.0f; }
 
