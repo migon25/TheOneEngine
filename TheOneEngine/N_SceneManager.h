@@ -67,8 +67,6 @@ public:
 	std::shared_ptr<GameObject> GetSelectedGO() const;
 	void SetSelectedGO(std::shared_ptr<GameObject> gameObj);
 
-	void FindCameraInScene();
-
 	/*SCENE SERIALIZATION*/
 	void SaveScene();
 	void LoadSceneFromJSON(const std::string& filename);
