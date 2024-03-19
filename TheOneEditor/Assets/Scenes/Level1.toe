@@ -18,15 +18,15 @@
             0.499999974763217,
             0.0,
             66.37759399414063,
-            60.0,
-            -14.586780548095703,
+            120.0,
+            -34.5867805480957,
             1.0
           ],
           "Type": 0,
           "UID": 1600152069
         },
         {
-          "Aspect": 1.8568507432937622,
+          "Aspect": 1.9825327396392822,
           "CameraType": 0,
           "FOV": 65.0,
           "Name": "Camera",
@@ -41,7 +41,7 @@
           "zNear": 0.1
         },
         {
-          "AudioID": 0,
+          "AudioID": 2,
           "Name": "Listener",
           "Type": 7
         },
@@ -50,7 +50,7 @@
           "ParentUID": 3452816845,
           "ScriptName": "CameraMovement",
           "Type": 4,
-          "UID": 201851733
+          "UID": 3094835096
         }
       ],
       "Enabled": true,
@@ -24456,6 +24456,48 @@
                 },
                 {
                   "MaxSpeed": [
+                    0.5,
+                    2.0,
+                    0.5
+                  ],
+                  "MinSpeed": [
+                    -0.5,
+                    1.0,
+                    -0.5
+                  ],
+                  "Type": 0,
+                  "UsingSingleValueSpeed": false
+                },
+                {
+                  "MaxSpeed": [
+                    0.5,
+                    2.0,
+                    0.5
+                  ],
+                  "MinSpeed": [
+                    -0.5,
+                    1.0,
+                    -0.5
+                  ],
+                  "Type": 0,
+                  "UsingSingleValueSpeed": false
+                },
+                {
+                  "MaxSpeed": [
+                    0.5,
+                    2.0,
+                    0.5
+                  ],
+                  "MinSpeed": [
+                    -0.5,
+                    1.0,
+                    -0.5
+                  ],
+                  "Type": 0,
+                  "UsingSingleValueSpeed": false
+                },
+                {
+                  "MaxSpeed": [
                     10.0,
                     20.0,
                     -5.0
@@ -24485,7 +24527,7 @@
               ],
               "IsLooping": true,
               "IsON": true,
-              "Lifetime": 642.0455322265625,
+              "Lifetime": 731.9646606445313,
               "MaxParticles": 100,
               "RenderModule": [
                 {
@@ -24554,16 +24596,9 @@
           "UID": 589185576
         },
         {
-          "AudioID": 1,
+          "AudioID": 3,
           "Name": "Source",
           "Type": 8
-        },
-        {
-          "Name": "Script",
-          "ParentUID": 3452816845,
-          "ScriptName": "PlayerScript",
-          "Type": 4,
-          "UID": 4274293051
         },
         {
           "ColliderType": 0,
@@ -25071,17 +25106,17 @@
         {
           "Name": "Transform",
           "Transformation Matrix": [
-            0.25,
+            0.0015800976848426573,
             0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.25,
-            0.0,
-            0.0,
+            -0.24999500653274329,
             0.0,
             0.0,
             0.25,
+            0.0,
+            0.0,
+            0.24999500653274329,
+            0.0,
+            0.0015800976848426573,
             0.0,
             1.0,
             0.0,
@@ -25106,13 +25141,6 @@
           "UID": 1290896346
         },
         {
-          "Name": "Script",
-          "ParentUID": 3452816845,
-          "ScriptName": "AdultXenomorphBehaviour",
-          "Type": 4,
-          "UID": 3567956303
-        },
-        {
           "ColliderType": 0,
           "CollisionType": 1,
           "Height": 297.6038398742676,
@@ -25127,7 +25155,7 @@
           "Width": 210.19146728515625
         },
         {
-          "AudioID": 2,
+          "AudioID": 4,
           "Name": "Source",
           "Type": 8
         }

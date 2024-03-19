@@ -10,6 +10,7 @@ public class AudioManager
         ENEMYATTACK = 2144693767U,
         EXPLORE = 579523862U,
         GUNSHOT = 1287408361U,
+        MAINMENU = 3604647259U,
         HOVER = 3753593413U,
         MUSIC1 = 1730564819U,
         STEP = 621108255U,
