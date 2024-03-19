@@ -20,7 +20,7 @@ class InternalCalls
 
     //Transform
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static bool TranslateCheck(IntPtr GOptr);
+    internal extern static bool TransformCheck(IntPtr GOptr);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Vector3 GetPosition(IntPtr GOptr);
@@ -60,6 +60,9 @@ class InternalCalls
     internal extern static void LoadScene(string sceneName);
 
     //User Interfaces
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void CanvasEnableToggle(IntPtr GOptr);
+
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static void MoveSelectedButton(IntPtr GOptr, int direction);
 

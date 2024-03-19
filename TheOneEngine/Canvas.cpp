@@ -98,6 +98,7 @@ json Canvas::SaveComponent()
 	canvasJSON["UID"] = UID;
 	canvasJSON["Name"] = name;
 	canvasJSON["Type"] = type;
+	canvasJSON["Enabled"] = enabled;
 	canvasJSON["Rect"] = { rect.x, rect.y, rect.w, rect.h };
 	canvasJSON["DebugDraw"] = debugDraw;
 
@@ -122,6 +123,7 @@ void Canvas::LoadComponent(const json& canvasJSON)
 	if (canvasJSON.contains("UID")) UID = canvasJSON["UID"];
 	if (canvasJSON.contains("Name")) name = canvasJSON["Name"];
 	if (canvasJSON.contains("Type")) type = canvasJSON["Type"];
+	if (canvasJSON.contains("Enabled")) enabled = canvasJSON["Enabled"];
 	if (canvasJSON.contains("Rect"))
 	{
 		rect.x = canvasJSON["Rect"][0];

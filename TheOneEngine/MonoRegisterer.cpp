@@ -139,6 +139,18 @@ static void LoadScene(MonoString* sceneName)
 }
 
 //User Interface
+static void CanvasEnableToggle(GameObject* containerGO)
+{
+	if (containerGO->GetComponent<Canvas>()->IsEnabled() == true)
+	{
+		containerGO->GetComponent<Canvas>()->Disable();
+	}
+	else
+	{
+		containerGO->GetComponent<Canvas>()->Enable();
+	}
+}
+
 static int GetSelectiedButton(GameObject* containerGO)
 {
 	std::vector<ItemUI*> uiElements = containerGO->GetComponent<Canvas>()->GetUiElements();
@@ -154,6 +166,7 @@ static int GetSelectiedButton(GameObject* containerGO)
 	}
 	return ret;
 }
+
 static void MoveSelectedButton(GameObject* containerGO, int direction)
 {
 	std::vector<ItemUI*> uiElements = containerGO->GetComponent<Canvas>()->GetUiElements();
@@ -324,6 +337,7 @@ void MonoRegisterer::RegisterFunctions()
 
 	mono_add_internal_call("InternalCalls::LoadScene", LoadScene);
 
+	mono_add_internal_call("InternalCalls::CanvasEnableToggle", CanvasEnableToggle);
 	mono_add_internal_call("InternalCalls::GetSelectiedButton", GetSelectiedButton);
 	mono_add_internal_call("InternalCalls::MoveSelectedButton", MoveSelectedButton);
 

@@ -520,6 +520,15 @@ bool PanelInspector::Draw()
 
             if (tempCanvas != nullptr && ImGui::CollapsingHeader("Canvas", treeNodeFlags))
             {
+                bool componentState = tempCanvas->IsEnabled();
+                if(ImGui::Checkbox("Enable/Disable Component", &(componentState)))
+                {
+                    if (componentState && !tempCanvas->IsEnabled())
+                        tempCanvas->Enable();
+                    else if (!componentState && tempCanvas->IsEnabled())
+                        tempCanvas->Disable();
+                }
+
                 ImGui::Checkbox("Toggle debug draw", &(tempCanvas->debugDraw));
 
                 //ui elements show

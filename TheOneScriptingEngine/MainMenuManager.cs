@@ -26,14 +26,12 @@ public class MainMenuManager : MonoBehaviour
         {
             toMove = true;
             direction = -1;
-            attachedGameObject.source.PlayAudio(AudioManager.EventIDs.HOVER);
         }
 
         if (Input.GetKeyboardButton(Input.KeyboardCode.DOWN))
         {
             toMove = true;
             direction = 1;
-            attachedGameObject.source.PlayAudio(AudioManager.EventIDs.HOVER);
         }
 
         //Controller
@@ -45,13 +43,11 @@ public class MainMenuManager : MonoBehaviour
             {
                 toMove = true;
                 direction = 1;
-                attachedGameObject.source.PlayAudio(AudioManager.EventIDs.HOVER);
             }
             else if(movementVector.y < 0.0f)
             {
                 toMove = true;
                 direction = -1;
-                attachedGameObject.source.PlayAudio(AudioManager.EventIDs.HOVER);
             }
         }
 
@@ -70,6 +66,7 @@ public class MainMenuManager : MonoBehaviour
         {
             onCooldown = true;
             canvas.MoveSelection(direction);
+            attachedGameObject.source.PlayAudio(AudioManager.EventIDs.HOVER);
         }
 
 

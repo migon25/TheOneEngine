@@ -46,7 +46,7 @@ public class ITransform : IComponent
 
     public bool ComponentCheck()
     {
-        return InternalCalls.TranslateCheck(containerGOptr);
+        return InternalCalls.TransformCheck(containerGOptr);
     }
     public void Translate(Vector3 increment)
     {
