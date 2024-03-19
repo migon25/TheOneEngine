@@ -41,7 +41,7 @@
           "zNear": 0.1
         },
         {
-          "AudioID": 2,
+          "AudioID": 0,
           "Name": "Listener",
           "Type": 7
         },
@@ -24498,6 +24498,20 @@
                 },
                 {
                   "MaxSpeed": [
+                    0.5,
+                    2.0,
+                    0.5
+                  ],
+                  "MinSpeed": [
+                    -0.5,
+                    1.0,
+                    -0.5
+                  ],
+                  "Type": 0,
+                  "UsingSingleValueSpeed": false
+                },
+                {
+                  "MaxSpeed": [
                     10.0,
                     20.0,
                     -5.0
@@ -24596,7 +24610,7 @@
           "UID": 589185576
         },
         {
-          "AudioID": 3,
+          "AudioID": 1,
           "Name": "Source",
           "Type": 8
         },
@@ -24613,6 +24627,13 @@
           "Type": 5,
           "UID": 1494357710,
           "Width": -1.7976931348623157e+308
+        },
+        {
+          "Name": "Script",
+          "ParentUID": 3452816845,
+          "ScriptName": "PlayerScript",
+          "Type": 4,
+          "UID": 837925732
         }
       ],
       "Enabled": true,
@@ -25155,9 +25176,16 @@
           "Width": 210.19146728515625
         },
         {
-          "AudioID": 4,
+          "AudioID": 2,
           "Name": "Source",
           "Type": 8
+        },
+        {
+          "Name": "Script",
+          "ParentUID": 3452816845,
+          "ScriptName": "AdultXenomorphBehaviour",
+          "Type": 4,
+          "UID": 4200894854
         }
       ],
       "Enabled": true,

@@ -44,6 +44,10 @@ public class ITransform : IComponent
 
     public ITransform(IntPtr GOptr) : base(GOptr) { }
 
+    public bool ComponentCheck()
+    {
+        return InternalCalls.TranslateCheck(containerGOptr);
+    }
     public void Translate(Vector3 increment)
     {
         //This implementation is temporary, engine Transform.Translate is not working properly.

@@ -13,7 +13,7 @@ public class CameraMovement : MonoBehaviour
 
 	public override void Update()
 	{
-		if (attachedGameObject != null && attachedGameObject.transform != null)
+		if (attachedGameObject.transform.ComponentCheck())
 		{
             attachedGameObject.transform.position = playerGO.transform.position + camOffset;
 
