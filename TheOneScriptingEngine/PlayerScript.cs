@@ -60,7 +60,9 @@ public class PlayerScript : MonoBehaviour
 
 		if (Input.GetKeyboardButton(Input.KeyboardCode.SPACEBAR))
 		{
-			InternalCalls.InstantiateBullet(attachedGameObject.transform.position + attachedGameObject.transform.forward * 13.5f, attachedGameObject.transform.rotation);
+            Vector3 height = new Vector3(0.0f, 30.0f, 0.0f);
+
+            InternalCalls.InstantiateBullet(attachedGameObject.transform.position + attachedGameObject.transform.forward * 13.5f + height, attachedGameObject.transform.rotation);
             attachedGameObject.source.PlayAudio(AudioManager.EventIDs.GUNSHOT);
             // call particleSystem.Replay()
         }
@@ -95,7 +97,9 @@ public class PlayerScript : MonoBehaviour
 
 		if (Input.GetControllerButton(Input.ControllerButtonCode.R1))
         {
-			InternalCalls.InstantiateBullet(attachedGameObject.transform.position + attachedGameObject.transform.forward * 13.5f, attachedGameObject.transform.rotation);
+            Vector3 height = new Vector3( 0.0f, 30.0f, 0.0f );
+
+            InternalCalls.InstantiateBullet(attachedGameObject.transform.position + attachedGameObject.transform.forward * 13.5f + height, attachedGameObject.transform.rotation);
             attachedGameObject.source.PlayAudio(AudioManager.EventIDs.GUNSHOT);
             // call particleSystem.Replay()
         }
