@@ -20,7 +20,7 @@ class InternalCalls
 
     //Transform
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static bool TranslateCheck(IntPtr GOptr);
+    internal extern static bool TransformCheck(IntPtr GOptr);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Vector3 GetPosition(IntPtr GOptr);

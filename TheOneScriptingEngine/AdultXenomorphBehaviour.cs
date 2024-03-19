@@ -44,7 +44,7 @@ public class AdultXenomorphBehaviour : MonoBehaviour
 	{
         if (currentState == States.Dead) return;
 
-        if (attachedGameObject.transform != null)
+        if (attachedGameObject.transform.ComponentCheck())
         {
             //Draw debug ranges
             if (!detected)

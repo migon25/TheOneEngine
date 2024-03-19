@@ -64,7 +64,8 @@ bool N_SceneManager::Update(double dt, bool isPlaying)
 		for (const auto gameObject : currentScene->GetRootSceneGO()->children)
 		{
 			// Kiko disabled this
-			//gameObject->Enable();
+			if(!gameObject.get()->GetComponent<Canvas>())
+				gameObject->Enable();
 		}
 	}
 
