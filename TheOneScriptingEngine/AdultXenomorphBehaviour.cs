@@ -23,18 +23,22 @@ public class AdultXenomorphBehaviour : MonoBehaviour
     bool detected = false;
     
     float enemyDetectedRange = 35.0f;
-    float maxAttackRange = 20.0f;
-    float maxChasingRange = 40.0f;
+    float maxAttackRange = 30.0f;
+    float maxChasingRange = 60.0f;
 
     bool shooting = false;
     bool hasShot = false;
     float currentTimer = 0.0f;
     float attackCooldown = 2.0f;
 
+    bool isExploring = true;
+    AudioManager.EventIDs currentID = 0;
+
     public override void Start()
 	{
-		playerGO = IGameObject.Find("Player");
-	}
+		playerGO = IGameObject.Find("SK_MainCharacter");
+        isExploring = true;
+    }
 
 	public override void Update()
 	{
@@ -71,15 +75,38 @@ public class AdultXenomorphBehaviour : MonoBehaviour
             {
                 shooting = true;
                 currentState = States.Attack;
+                attachedGameObject.source.PlayAudio(AudioManager.EventIDs.ENEMYATTACK);
+                isExploring = false;
             }
             else if (playerDistance > maxAttackRange && playerDistance < maxChasingRange)
             {
                 currentState = States.Chase;
+                isExploring = false;
             }
             else if (playerDistance > maxChasingRange)
             {
                 detected = false;
                 currentState = States.Idle;
+                isExploring = true;
+            }
+        }
+
+        if (isExploring)
+        {
+            if (currentID != AudioManager.EventIDs.EXPLORE)
+            {
+                attachedGameObject.source.PlayAudio(AudioManager.EventIDs.EXPLORE);
+                attachedGameObject.source.StopAudio(AudioManager.EventIDs.COMBAT);
+                currentID = AudioManager.EventIDs.EXPLORE;
+            }
+        }
+        else
+        {
+            if (currentID != AudioManager.EventIDs.COMBAT)
+            {
+                attachedGameObject.source.PlayAudio(AudioManager.EventIDs.COMBAT);
+                attachedGameObject.source.StopAudio(AudioManager.EventIDs.EXPLORE);
+                currentID = AudioManager.EventIDs.COMBAT;
             }
         }
     }

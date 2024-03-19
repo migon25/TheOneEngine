@@ -10,23 +10,23 @@
             0.0,
             0.0,
             0.0,
-            1.0,
+            0.5735764470196116,
+            0.8191520368187818,
             0.0,
             0.0,
+            -0.8191520368187818,
+            0.5735764470196116,
             0.0,
-            0.0,
-            1.0,
-            0.0,
-            -0.9673018455505371,
-            0.0,
-            0.0,
+            66.37759399414063,
+            60.0,
+            -14.586780548095703,
             1.0
           ],
           "Type": 0,
           "UID": 1600152069
         },
         {
-          "Aspect": 1.777,
+          "Aspect": 1.8568507432937622,
           "CameraType": 0,
           "FOV": 65.0,
           "Name": "Camera",
@@ -41,9 +41,16 @@
           "zNear": 0.1
         },
         {
-          "AudioID": 1,
+          "AudioID": 0,
           "Name": "Listener",
           "Type": 7
+        },
+        {
+          "Name": "Script",
+          "ParentUID": 3452816845,
+          "ScriptName": "CameraMovement",
+          "Type": 4,
+          "UID": 201851733
         }
       ],
       "Enabled": true,
@@ -24379,6 +24386,62 @@
               "InitializeModules": [
                 {
                   "MaxSpeed": [
+                    0.5,
+                    2.0,
+                    0.5
+                  ],
+                  "MinSpeed": [
+                    -0.5,
+                    1.0,
+                    -0.5
+                  ],
+                  "Type": 0,
+                  "UsingSingleValueSpeed": false
+                },
+                {
+                  "MaxSpeed": [
+                    0.5,
+                    2.0,
+                    0.5
+                  ],
+                  "MinSpeed": [
+                    -0.5,
+                    1.0,
+                    -0.5
+                  ],
+                  "Type": 0,
+                  "UsingSingleValueSpeed": false
+                },
+                {
+                  "MaxSpeed": [
+                    0.5,
+                    2.0,
+                    0.5
+                  ],
+                  "MinSpeed": [
+                    -0.5,
+                    1.0,
+                    -0.5
+                  ],
+                  "Type": 0,
+                  "UsingSingleValueSpeed": false
+                },
+                {
+                  "MaxSpeed": [
+                    0.5,
+                    2.0,
+                    0.5
+                  ],
+                  "MinSpeed": [
+                    -0.5,
+                    1.0,
+                    -0.5
+                  ],
+                  "Type": 0,
+                  "UsingSingleValueSpeed": false
+                },
+                {
+                  "MaxSpeed": [
                     10.0,
                     20.0,
                     -5.0
@@ -24408,7 +24471,7 @@
               ],
               "IsLooping": true,
               "IsON": true,
-              "Lifetime": 303.4366760253906,
+              "Lifetime": 642.0455322265625,
               "MaxParticles": 100,
               "RenderModule": [
                 {
@@ -24454,9 +24517,9 @@
             0.0,
             4.0,
             0.0,
-            0.24839866161346436,
+            66.37759399414063,
             0.0,
-            23.995555877685547,
+            25.413219451904297,
             1.0
           ],
           "Type": 0,
@@ -24477,7 +24540,7 @@
           "UID": 589185576
         },
         {
-          "AudioID": 2,
+          "AudioID": 1,
           "Name": "Source",
           "Type": 8
         },
@@ -24487,6 +24550,20 @@
           "ScriptName": "PlayerScript",
           "Type": 4,
           "UID": 4274293051
+        },
+        {
+          "ColliderType": 0,
+          "CollisionType": 0,
+          "Height": -1.7976931348623157e+308,
+          "Name": "Specified Type was not found",
+          "OffsetX": 0.0,
+          "OffsetY": 0.0,
+          "OffsetZ": 0.0,
+          "ParentUID": 3452816845,
+          "Radius": 12.0,
+          "Type": 5,
+          "UID": 1494357710,
+          "Width": -1.7976931348623157e+308
         }
       ],
       "Enabled": true,
@@ -24971,6 +25048,78 @@
       ],
       "Enabled": true,
       "Name": "Copy of Copy of SM_Box_LowPoly5",
+      "ParentUID": 3452816845,
+      "Static": false,
+      "UID": 3452816845
+    },
+    {
+      "Components": [
+        {
+          "Name": "Transform",
+          "Transformation Matrix": [
+            0.25,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.25,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.25,
+            0.0,
+            1.0,
+            0.0,
+            25.0,
+            1.0
+          ],
+          "Type": 0,
+          "UID": 374557993
+        },
+        {
+          "Active": true,
+          "DrawAABB": true,
+          "DrawChecker": false,
+          "DrawNormalsFaces": false,
+          "DrawNormalsVerts": false,
+          "DrawOBB": false,
+          "DrawWireframe": false,
+          "Name": "Mesh",
+          "ParentUID": 3452816845,
+          "Path": "Library/Meshes/SM_Xenomorph/Xenomorph.mesh",
+          "Type": 2,
+          "UID": 1290896346
+        },
+        {
+          "Name": "Script",
+          "ParentUID": 3452816845,
+          "ScriptName": "AdultXenomorphBehaviour",
+          "Type": 4,
+          "UID": 3567956303
+        },
+        {
+          "ColliderType": 0,
+          "CollisionType": 1,
+          "Height": 297.6038398742676,
+          "Name": "Specified Type was not found",
+          "OffsetX": 0.0,
+          "OffsetY": 0.0,
+          "OffsetZ": 0.0,
+          "ParentUID": 3452816845,
+          "Radius": 12.0,
+          "Type": 5,
+          "UID": 2730547111,
+          "Width": 210.19146728515625
+        },
+        {
+          "AudioID": 2,
+          "Name": "Source",
+          "Type": 8
+        }
+      ],
+      "Enabled": true,
+      "Name": "Xenomorph",
       "ParentUID": 3452816845,
       "Static": false,
       "UID": 3452816845

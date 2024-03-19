@@ -3,12 +3,12 @@
 public class CameraMovement : MonoBehaviour
 {
 	IGameObject playerGO;
-	Vector3 camOffset = new Vector3(0.0f, 60.0f, -40.0f);
+	Vector3 camOffset = new Vector3(0.0f, 80.0f, -60.0f);
 	float camJoyDisplacement = 10.0f;
 
 	public override void Start()
 	{
-		playerGO = IGameObject.Find("Player");
+		playerGO = IGameObject.Find("SK_MainCharacter");
 	}
 
 	public override void Update()
