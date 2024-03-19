@@ -75,7 +75,7 @@ public class AdultXenomorphBehaviour : MonoBehaviour
             {
                 shooting = true;
                 currentState = States.Attack;
-                attachedGameObject.source.PlayAudio(AudioManager.EventIDs.ENEMYATTACK);
+                //attachedGameObject.source.PlayAudio(AudioManager.EventIDs.ENEMYATTACK);
                 isExploring = false;
             }
             else if (playerDistance > maxAttackRange && playerDistance < maxChasingRange)
