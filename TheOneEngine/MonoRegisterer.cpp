@@ -46,10 +46,20 @@ static void GetControllerJoystick(int joystick, vec2f* joyResult, int gamePad)
 }
 
 //Transform
+static bool TransformCheck(GameObject* GOptr)
+{
+	bool ret = false;
+	if (GOptr->GetComponent<Transform>())
+		ret = true;
+
+	return ret;
+}
+
 static vec3f GetPosition(GameObject* GOptr)
 {
 	return (vec3f)GOptr->GetComponent<Transform>()->GetPosition();
 }
+
 static void SetPosition(GameObject* GOptr, vec3f* position)
 {
 	GOptr->GetComponent<Transform>()->SetPosition((vec3)*position);
@@ -311,6 +321,7 @@ void MonoRegisterer::RegisterFunctions()
 	mono_add_internal_call("InternalCalls::GetControllerButton", GetControllerButton);
 	mono_add_internal_call("InternalCalls::GetControllerJoystick", GetControllerJoystick);
 
+	mono_add_internal_call("InternalCalls::TransformCheck", TransformCheck);
 	mono_add_internal_call("InternalCalls::GetPosition", GetPosition);
 	mono_add_internal_call("InternalCalls::SetPosition", SetPosition);
 	mono_add_internal_call("InternalCalls::GetRotation", GetRotation);

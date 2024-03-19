@@ -103,6 +103,31 @@
 								<ActiveSource Name="uiHover" ID="{F76D1C3E-7E57-408C-8FA6-4F618C483762}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
+						<Sound Name="mainmenu" ID="{BE9DF162-2899-4FEA-96EE-B7167D11F9D1}" ShortID="516621272">
+							<PropertyList>
+								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{70EBEA4B-CF72-4ABE-8E37-07AB298553A9}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{0FFBBA0A-3581-46CE-962E-DF7F916F85E2}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="menu" ID="{E65BE13D-8A70-4B1F-9F6B-1714F95D1F68}">
+									<Language>SFX</Language>
+									<AudioFile>menu.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="396795933"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="menu" ID="{E65BE13D-8A70-4B1F-9F6B-1714F95D1F68}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="Player" ID="{8F264D40-F827-49E4-A628-E1DD68CB8AB0}" ShortID="33384411">

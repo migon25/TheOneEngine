@@ -10,23 +10,23 @@
             0.0,
             0.0,
             0.0,
-            1.0,
+            0.499999974763217,
+            0.8660254183549015,
             0.0,
             0.0,
+            -0.8660254183549015,
+            0.499999974763217,
             0.0,
-            0.0,
-            1.0,
-            0.0,
-            -0.9673018455505371,
-            0.0,
-            0.0,
+            66.37759399414063,
+            120.0,
+            -34.5867805480957,
             1.0
           ],
           "Type": 0,
           "UID": 1600152069
         },
         {
-          "Aspect": 1.7768762111663818,
+          "Aspect": 1.9825327396392822,
           "CameraType": 0,
           "FOV": 65.0,
           "Name": "Camera",
@@ -44,6 +44,13 @@
           "AudioID": 0,
           "Name": "Listener",
           "Type": 7
+        },
+        {
+          "Name": "Script",
+          "ParentUID": 3452816845,
+          "ScriptName": "CameraMovement",
+          "Type": 4,
+          "UID": 3094835096
         }
       ],
       "Enabled": true,
@@ -24449,6 +24456,62 @@
                 },
                 {
                   "MaxSpeed": [
+                    0.5,
+                    2.0,
+                    0.5
+                  ],
+                  "MinSpeed": [
+                    -0.5,
+                    1.0,
+                    -0.5
+                  ],
+                  "Type": 0,
+                  "UsingSingleValueSpeed": false
+                },
+                {
+                  "MaxSpeed": [
+                    0.5,
+                    2.0,
+                    0.5
+                  ],
+                  "MinSpeed": [
+                    -0.5,
+                    1.0,
+                    -0.5
+                  ],
+                  "Type": 0,
+                  "UsingSingleValueSpeed": false
+                },
+                {
+                  "MaxSpeed": [
+                    0.5,
+                    2.0,
+                    0.5
+                  ],
+                  "MinSpeed": [
+                    -0.5,
+                    1.0,
+                    -0.5
+                  ],
+                  "Type": 0,
+                  "UsingSingleValueSpeed": false
+                },
+                {
+                  "MaxSpeed": [
+                    0.5,
+                    2.0,
+                    0.5
+                  ],
+                  "MinSpeed": [
+                    -0.5,
+                    1.0,
+                    -0.5
+                  ],
+                  "Type": 0,
+                  "UsingSingleValueSpeed": false
+                },
+                {
+                  "MaxSpeed": [
                     10.0,
                     20.0,
                     -5.0
@@ -24478,7 +24541,7 @@
               ],
               "IsLooping": true,
               "IsON": true,
-              "Lifetime": 303.4366760253906,
+              "Lifetime": 731.9646606445313,
               "MaxParticles": 100,
               "RenderModule": [
                 {
@@ -24524,9 +24587,9 @@
             0.0,
             4.0,
             0.0,
-            0.24839866161346436,
+            66.37759399414063,
             0.0,
-            23.995555877685547,
+            25.413219451904297,
             1.0
           ],
           "Type": 0,
@@ -24552,11 +24615,25 @@
           "Type": 8
         },
         {
+          "ColliderType": 0,
+          "CollisionType": 0,
+          "Height": -1.7976931348623157e+308,
+          "Name": "Specified Type was not found",
+          "OffsetX": 0.0,
+          "OffsetY": 0.0,
+          "OffsetZ": 0.0,
+          "ParentUID": 3452816845,
+          "Radius": 12.0,
+          "Type": 5,
+          "UID": 1494357710,
+          "Width": -1.7976931348623157e+308
+        },
+        {
           "Name": "Script",
           "ParentUID": 3452816845,
           "ScriptName": "PlayerScript",
           "Type": 4,
-          "UID": 4274293051
+          "UID": 837925732
         }
       ],
       "Enabled": true,
@@ -25050,257 +25127,53 @@
         {
           "Name": "Transform",
           "Transformation Matrix": [
+            0.0015800976848426573,
+            0.0,
+            -0.24999500653274329,
+            0.0,
+            0.0,
+            0.25,
+            0.0,
+            0.0,
+            0.24999500653274329,
+            0.0,
+            0.0015800976848426573,
+            0.0,
             1.0,
             0.0,
-            0.0,
-            0.0,
-            0.0,
-            1.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            1.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
+            25.0,
             1.0
           ],
           "Type": 0,
-          "UID": 3344282964
+          "UID": 374557993
         },
         {
-          "DebugDraw": true,
-          "Enabled": true,
-          "Name": "Canvas",
+          "Active": true,
+          "DrawAABB": true,
+          "DrawChecker": false,
+          "DrawNormalsFaces": false,
+          "DrawNormalsVerts": false,
+          "DrawOBB": false,
+          "DrawWireframe": false,
+          "Name": "Mesh",
           "ParentUID": 3452816845,
-          "Rect": [
-            0.0,
-            0.0,
-            2.0,
-            2.0
-          ],
-          "Type": 6,
-          "UID": 2912716912,
-          "UiElements": [
-            {
-              "ID": 715886260,
-              "ImagePath": "Assets/Textures/Hud/HudDemo.png",
-              "ImageSection": [
-                0.0,
-                0.0,
-                1.0,
-                1.0
-              ],
-              "Interactuable": false,
-              "Name": "Image",
-              "Rect": [
-                0.0,
-                0.6800000071525574,
-                0.949999988079071,
-                0.30000001192092896
-              ],
-              "State": 0,
-              "Type": 0
-            }
-          ]
-        }
-      ],
-      "Enabled": true,
-      "Name": "HUD Canvas",
-      "ParentUID": 3452816845,
-      "Static": false,
-      "UID": 3452816845
-    },
-    {
-      "Components": [
-        {
-          "Name": "Transform",
-          "Transformation Matrix": [
-            1.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            1.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            1.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            1.0
-          ],
-          "Type": 0,
-          "UID": 595373127
+          "Path": "Library/Meshes/SM_Xenomorph/Xenomorph.mesh",
+          "Type": 2,
+          "UID": 1290896346
         },
         {
-          "DebugDraw": true,
-          "Enabled": false,
-          "Name": "Canvas",
+          "ColliderType": 0,
+          "CollisionType": 1,
+          "Height": 297.6038398742676,
+          "Name": "Specified Type was not found",
+          "OffsetX": 0.0,
+          "OffsetY": 0.0,
+          "OffsetZ": 0.0,
           "ParentUID": 3452816845,
-          "Rect": [
-            0.0,
-            0.0,
-            2.0,
-            2.0
-          ],
-          "Type": 6,
-          "UID": 594365140,
-          "UiElements": [
-            {
-              "ID": 1973608398,
-              "ImagePath": "Assets/Textures/Hud/PauseMenu_SpriteSheet.png",
-              "ImageSection": [
-                0.0,
-                0.0,
-                0.3697561025619507,
-                1.0
-              ],
-              "Interactuable": false,
-              "Name": "PauseMenuBackground img",
-              "Rect": [
-                0.0,
-                0.0,
-                0.4000000059604645,
-                0.800000011920929
-              ],
-              "State": 0,
-              "Type": 0
-            },
-            {
-              "ID": 2075171387,
-              "ImagePath": "Assets/Textures/Hud/PauseMenu_SpriteSheet.png",
-              "ImageSectionHovered": [
-                0.7112194895744324,
-                0.0,
-                0.28878048062324524,
-                0.13705584406852722
-              ],
-              "ImageSectionIdle": [
-                0.3970731794834137,
-                0.014213197864592075,
-                0.2960975468158722,
-                0.1309644728899002
-              ],
-              "ImageSectionSelected": [
-                0.0,
-                0.0,
-                0.0,
-                0.0
-              ],
-              "Interactuable": false,
-              "Name": "Resume Button",
-              "Rect": [
-                0.0,
-                -0.25,
-                0.3400000035762787,
-                0.10000000149011612
-              ],
-              "State": 1,
-              "Type": 1
-            },
-            {
-              "ID": 3024552604,
-              "ImagePath": "Assets/Textures/Hud/PauseMenu_SpriteSheet.png",
-              "ImageSectionHovered": [
-                0.7112194895744324,
-                0.16649746894836426,
-                0.28878048062324524,
-                0.13705584406852722
-              ],
-              "ImageSectionIdle": [
-                0.3970731794834137,
-                0.17258882522583008,
-                0.2960975468158722,
-                0.1309644728899002
-              ],
-              "ImageSectionSelected": [
-                0.0,
-                0.0,
-                0.0,
-                0.0
-              ],
-              "Interactuable": false,
-              "Name": "Settings Button",
-              "Rect": [
-                0.0,
-                0.0,
-                0.3400000035762787,
-                0.10000000149011612
-              ],
-              "State": 0,
-              "Type": 1
-            },
-            {
-              "ID": 2405774430,
-              "ImagePath": "Assets/Textures/Hud/PauseMenu_SpriteSheet.png",
-              "ImageSectionHovered": [
-                0.7112194895744324,
-                0.3289340138435364,
-                0.28878048062324524,
-                0.13705584406852722
-              ],
-              "ImageSectionIdle": [
-                0.3970731794834137,
-                0.3289340138435364,
-                0.2960975468158722,
-                0.1309644728899002
-              ],
-              "ImageSectionSelected": [
-                0.0,
-                0.0,
-                0.0,
-                0.0
-              ],
-              "Interactuable": false,
-              "Name": "Menu Button",
-              "Rect": [
-                0.0,
-                0.25,
-                0.3400000035762787,
-                0.10000000149011612
-              ],
-              "State": 0,
-              "Type": 1
-            },
-            {
-              "ID": 3811829014,
-              "ImagePath": "Assets/Textures/Hud/PauseMenu_SpriteSheet.png",
-              "ImageSectionHovered": [
-                0.7112194895744324,
-                0.48121827840805054,
-                0.28878048062324524,
-                0.1309644728899002
-              ],
-              "ImageSectionIdle": [
-                0.3970731794834137,
-                0.4822334945201874,
-                0.28878048062324524,
-                0.1309644728899002
-              ],
-              "ImageSectionSelected": [
-                0.0,
-                0.0,
-                0.0,
-                0.0
-              ],
-              "Interactuable": false,
-              "Name": "Save&Quit Button",
-              "Rect": [
-                0.0,
-                0.5,
-                0.3400000035762787,
-                0.10000000149011612
-              ],
-              "State": 0,
-              "Type": 1
-            }
-          ]
+          "Radius": 12.0,
+          "Type": 5,
+          "UID": 2730547111,
+          "Width": 210.19146728515625
         },
         {
           "AudioID": 2,
@@ -25310,13 +25183,13 @@
         {
           "Name": "Script",
           "ParentUID": 3452816845,
-          "ScriptName": "PauseMenuManager",
+          "ScriptName": "AdultXenomorphBehaviour",
           "Type": 4,
-          "UID": 1275044213
+          "UID": 4200894854
         }
       ],
       "Enabled": true,
-      "Name": "Pause Menu Canvas",
+      "Name": "Xenomorph",
       "ParentUID": 3452816845,
       "Static": false,
       "UID": 3452816845

@@ -2,7 +2,7 @@
 
 public class PlayerScript : MonoBehaviour
 {
-	float speed = 15.0f;	
+	float speed = 40.0f;	
 	bool lastFrameToMove = false;
 
 	public override void Update()
@@ -56,13 +56,13 @@ public class PlayerScript : MonoBehaviour
 
 		if (Input.GetKeyboardButton(Input.KeyboardCode.SPACEBAR))
 		{
-			InternalCalls.InstantiateBullet(attachedGameObject.transform.position + attachedGameObject.transform.forward * 3.5f, attachedGameObject.transform.rotation);
+			InternalCalls.InstantiateBullet(attachedGameObject.transform.position + attachedGameObject.transform.forward * 13.5f, attachedGameObject.transform.rotation);
             attachedGameObject.source.PlayAudio(AudioManager.EventIDs.GUNSHOT);
             // call particleSystem.Replay()
         }
       
-		if (Input.GetKeyboardButton(Input.KeyboardCode.LSHIFT)) { speed = 30.0f; }
-		else { speed = 15.0f; }
+		if (Input.GetKeyboardButton(Input.KeyboardCode.LSHIFT)) { speed = 80.0f; }
+		else { speed = 40.0f; }
 
         if (toMove)
 		{
@@ -91,11 +91,12 @@ public class PlayerScript : MonoBehaviour
 
 		if (Input.GetControllerButton(Input.ControllerButtonCode.R1))
         {
-			InternalCalls.InstantiateBullet(attachedGameObject.transform.position + attachedGameObject.transform.forward * 3.5f, attachedGameObject.transform.rotation);
+			InternalCalls.InstantiateBullet(attachedGameObject.transform.position + attachedGameObject.transform.forward * 13.5f, attachedGameObject.transform.rotation);
+            attachedGameObject.source.PlayAudio(AudioManager.EventIDs.GUNSHOT);
             // call particleSystem.Replay()
         }
 
-		// Play steps
+        // Play steps
         if (lastFrameToMove != toMove)
         {
             if (toMove)
