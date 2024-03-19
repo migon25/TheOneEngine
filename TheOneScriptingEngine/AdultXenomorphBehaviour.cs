@@ -17,14 +17,14 @@ public class AdultXenomorphBehaviour : MonoBehaviour
 
     float life = 200;
 
-    float movementSpeed = 35.0f;
+    float movementSpeed = 35.0f*3;
 
     States currentState = States.Idle;
     bool detected = false;
     
-    float enemyDetectedRange = 35.0f;
-    float maxAttackRange = 30.0f;
-    float maxChasingRange = 60.0f;
+    float enemyDetectedRange = 35.0f*3;
+    float maxAttackRange = 90.0f;
+    float maxChasingRange = 180.0f;
 
     bool shooting = false;
     bool hasShot = false;
@@ -124,7 +124,8 @@ public class AdultXenomorphBehaviour : MonoBehaviour
                     currentTimer += Time.deltaTime;
                     if (!hasShot && currentTimer > attackCooldown / 2)
                     {
-                        InternalCalls.InstantiateBullet(attachedGameObject.transform.position + attachedGameObject.transform.forward * 4.5f, attachedGameObject.transform.rotation);
+                        InternalCalls.InstantiateBullet(attachedGameObject.transform.position + attachedGameObject.transform.forward * 12.5f, attachedGameObject.transform.rotation);
+                        attachedGameObject.source.PlayAudio(AudioManager.EventIDs.ENEMYATTACK);
                         hasShot = true;
                     }
                     break;
@@ -149,6 +150,6 @@ public class AdultXenomorphBehaviour : MonoBehaviour
 
     public void ReduceLife() //temporary function for the hardcoding of collisions
     {
-        life -= 50.0f;
+        life -= 10.0f;
     }
 }

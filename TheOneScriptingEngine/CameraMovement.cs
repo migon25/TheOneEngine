@@ -3,7 +3,7 @@
 public class CameraMovement : MonoBehaviour
 {
 	IGameObject playerGO;
-	Vector3 camOffset = new Vector3(0.0f, 80.0f, -60.0f);
+	Vector3 camOffset = new Vector3(0.0f, 120.0f, -60.0f);
 	float camJoyDisplacement = 10.0f;
 
 	public override void Start()
