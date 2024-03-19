@@ -20,6 +20,9 @@ class InternalCalls
 
     //Transform
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static bool TranslateCheck(IntPtr GOptr);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static Vector3 GetPosition(IntPtr GOptr);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -90,8 +93,7 @@ class InternalCalls
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static void ReplayPS(IntPtr GOptr);
-
-
+    
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static void PlaySource(IntPtr GOptr, EventIDs audio);
 

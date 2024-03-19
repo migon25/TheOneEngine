@@ -27,6 +27,17 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="MAINMENU" ID="{D471954F-3633-4A77-920F-C166B1FC9DE0}">
+							<ChildrenList>
+								<Action Name="" ID="{D527E901-413E-4AFD-95AA-F6FF872EDE52}" ShortID="306516120">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="mainmenu" ID="{BE9DF162-2899-4FEA-96EE-B7167D11F9D1}" WorkUnitID="{A5DDD9EF-ABE8-46C9-A47B-71C56C6B2370}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="Ambience" ID="{80F3A7DD-31FA-45C5-9310-9A5CA720D656}" ShortID="804417063">

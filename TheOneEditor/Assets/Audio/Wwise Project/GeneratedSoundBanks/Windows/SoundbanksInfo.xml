@@ -162,7 +162,7 @@
 				</AcousticTexture>
 			</AcousticTextures>
 		</SoundBank>
-		<SoundBank Id="3491347560" Type="User" Language="SFX" Hash="{6D777480-77B7-B816-0879-1E2F8DF98D2F}">
+		<SoundBank Id="3491347560" Type="User" Language="SFX" Hash="{179384C0-3974-1EC9-E5A8-0E7264B0E17E}">
 			<ShortName>TheOneEngine</ShortName>
 			<Path>TheOneEngine.bnk</Path>
 			<Media>
@@ -185,6 +185,10 @@
 				<File Id="342155423" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>levelAmbient.wav</ShortName>
 					<CachePath>SFX/levelAmbient_FBC78EF0.wem</CachePath>
+				</File>
+				<File Id="396795933" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>menu.wav</ShortName>
+					<CachePath>SFX/menu_FBC78EF0.wem</CachePath>
 				</File>
 				<File Id="466064314" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>waves.wav</ShortName>
@@ -242,6 +246,11 @@
 						<MediaRef Id="579890625"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="3604647259" Name="MAINMENU">
+					<MediaRefs>
+						<MediaRef Id="396795933"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="1730564819" Name="MUSIC1">
 					<MediaRefs>
 						<MediaRef Id="657823762"/>
@@ -270,5 +279,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{E73895D7-5844-E020-558F-ED503D162308}</FileHash>
+	<FileHash>{5C9663E6-BA50-9D2B-C886-5D4D08083D99}</FileHash>
 </SoundBanksInfo>

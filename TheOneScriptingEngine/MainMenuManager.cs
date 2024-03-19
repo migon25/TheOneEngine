@@ -10,6 +10,11 @@ public class MainMenuManager : MonoBehaviour
     {
         canvas = new ICanvas(InternalCalls.GetGameObjectPtr());
     }
+
+    public override void Start()
+    {
+        attachedGameObject.source.PlayAudio(AudioManager.EventIDs.MAINMENU);
+    }
     public override void Update()
     {
         float dt = InternalCalls.GetAppDeltaTime();
@@ -72,6 +77,7 @@ public class MainMenuManager : MonoBehaviour
         if ((Input.GetControllerButton(Input.ControllerButtonCode.X) || Input.GetKeyboardButton(Input.KeyboardCode.RETURN)) && canvas.GetSelection() == 0)
         {
             SceneManager.LoadScene("Level1");
+            attachedGameObject.source.StopAudio(AudioManager.EventIDs.MAINMENU);
             attachedGameObject.source.PlayAudio(AudioManager.EventIDs.CLICK);
         }
 
