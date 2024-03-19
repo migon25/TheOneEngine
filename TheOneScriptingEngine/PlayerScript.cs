@@ -16,10 +16,6 @@ public class PlayerScript : MonoBehaviour
 			SceneManager.LoadScene("Scene");
 		}
 
-		if (Input.GetKeyboardButton(Input.KeyboardCode.ESCAPE))
-		{
-			InternalCalls.ExitApplication();
-		}
 		if (Input.GetKeyboardButton(Input.KeyboardCode.W))
 		{
 			movement = movement + Vector3.forward;

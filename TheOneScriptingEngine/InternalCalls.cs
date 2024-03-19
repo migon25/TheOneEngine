@@ -58,6 +58,9 @@ class InternalCalls
 
     //User Interfaces
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static void CanvasEnableToggle(IntPtr GOptr);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static void MoveSelectedButton(IntPtr GOptr, int direction);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
