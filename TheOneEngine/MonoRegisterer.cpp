@@ -97,7 +97,7 @@ static vec3f GetTransformRight(GameObject* GOptr)
 //GameObject
 static GameObject* InstantiateBullet(vec3f* initialPosition, vec3f* direction)
 {
-	engine->N_sceneManager->CreateTeapot();
+	engine->N_sceneManager->CreateMeshGO("Assets/Meshes/SM_Cube.fbx");
 	GameObject* go = engine->N_sceneManager->objectsToAdd.back().get();
 
 	SetPosition(go, initialPosition);
@@ -113,7 +113,7 @@ static GameObject* InstantiateBullet(vec3f* initialPosition, vec3f* direction)
 
 static void DestroyGameObject(GameObject* objectToDestroy)
 {
-	objectToDestroy->Delete(engine->N_sceneManager->objectsToDelete);
+	objectToDestroy->AddToDelete(engine->N_sceneManager->objectsToDelete);
 }
 
 static GameObject* FindGameObject(MonoString* monoString)

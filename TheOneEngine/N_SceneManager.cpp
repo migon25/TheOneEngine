@@ -392,7 +392,7 @@ std::shared_ptr<GameObject> N_SceneManager::CreateMeshGO(std::string path)
 		// Take name before editing for meshData lookUp
 		std::string folderName = "Library/Meshes/" + name + "/";
 
-		name = GenerateUniqueName(name);
+ 		name = GenerateUniqueName(name);
 
 		// Create emptyGO parent if meshes > 1
 		bool isSingleMesh = meshes.size() > 1 ? false : true;
@@ -491,7 +491,7 @@ std::shared_ptr<GameObject> N_SceneManager::CreateExistingMeshGO(std::string pat
 	else
 	{
 		std::string name = fbxName;
-		name = GenerateUniqueName(name);
+ 		name = GenerateUniqueName(name);
 
 		// Create emptyGO parent if meshes >1
 		bool isSingleMesh = fileCount > 1 ? false : true;
@@ -582,12 +582,10 @@ void N_SceneManager::AddPendingGOs()
 
 void N_SceneManager::DeletePendingGOs()
 {
-	for (auto it = objectsToDelete.begin(); it != objectsToDelete.end(); ++it) {
-		(*it)->Delete();
-	}
+	for (auto object : objectsToDelete)
+		object->Delete();
 
-	objectsToDelete.clear();
-	
+	objectsToDelete.clear();	
 }
 
 uint N_SceneManager::GetNumberGO() const

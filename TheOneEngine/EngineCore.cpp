@@ -141,7 +141,7 @@ void EngineCore::Update(double dt)
                             if (collisionSolver->CheckCollision(item, item2))
                             {
                                 LOG(LogType::LOG_WARNING, "Player Hit");
-                                item->Delete(engine->N_sceneManager->objectsToDelete);
+                                item->AddToDelete(engine->N_sceneManager->objectsToDelete);
                             }
                             break;
                         case CollisionType::Enemy:
@@ -149,7 +149,7 @@ void EngineCore::Update(double dt)
                             if (collisionSolver->CheckCollision(item, item2))
                             {
                                 MonoManager::CallScriptFunction(item2->GetComponent<Script>()->monoBehaviourInstance, "ReduceLife");
-                                item->Delete(engine->N_sceneManager->objectsToDelete);
+                                item->AddToDelete(engine->N_sceneManager->objectsToDelete);
                             }
                             break;
                         default:
@@ -213,15 +213,15 @@ void EngineCore::Render(Camera* camera)
         camera->lookAt.x, camera->lookAt.y, camera->lookAt.z,
 		cameraTransform->GetUp().x, cameraTransform->GetUp().y, cameraTransform->GetUp().z);
 
-    DrawGrid(1000, 10);
-    DrawAxis();
+    //DrawGrid(1000, 50);
+    //DrawAxis();
 
-    if (collisionSolver->drawCollisions) collisionSolver->DrawCollisions();
+    //if (collisionSolver->drawCollisions) collisionSolver->DrawCollisions();
 
-    if (!monoManager->debugShapesQueue.empty())
+    /*if (!monoManager->debugShapesQueue.empty())
     {
         monoManager->RenderShapesQueue();
-    }
+    }*/
 
     glColor3f(1.0f, 1.0f, 1.0f);
     //DrawFrustum(camera->viewMatrix);

@@ -127,8 +127,9 @@ public:
     void Enable();
     void Disable();
 
+    // Remove go from parent's children vector
     void Delete();
-    void Delete(std::vector<GameObject*>& objectsToDelete);
+    void AddToDelete(std::vector<GameObject*>& objectsToDelete);
 
     std::string GetName() const;
     void SetName(const std::string& name);
