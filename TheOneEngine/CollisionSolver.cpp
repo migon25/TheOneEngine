@@ -2,6 +2,9 @@
 #include "Defs.h"
 #include "Collider2D.h"
 #include "Transform.h"
+#include "EngineCore.h"
+#include "N_SceneManager.h"
+#include "MonoManager.h"
 
 #include "SDL2/SDL.h"
 #include "GL/gl.h"
@@ -13,6 +16,139 @@ CollisionSolver::CollisionSolver()
 }
 
 CollisionSolver::~CollisionSolver() {}
+
+bool CollisionSolver::PreUpdate()
+{
+    bool ret = true;
+
+    //first, lets see the collider component still exists
+    for (auto it = goWithCollision.begin(); it != goWithCollision.end(); )
+    {
+        bool remItem = true;
+        for (auto& item2 : (*it)->GetAllComponents())
+        {
+            if (item2->GetType() == ComponentType::Collider2D) remItem = false;
+        }
+        if (remItem)
+        {
+            it = goWithCollision.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
+    }
+
+    return ret;
+}
+
+bool CollisionSolver::Update(double dt)
+{
+    bool ret = true;
+
+    //now lets check and solve collisions
+    for (auto& item : goWithCollision)
+    {
+        // Collision solving
+        switch (item->GetComponent<Collider2D>()->collisionType)
+        {
+        case CollisionType::Player:
+            for (auto& item2 : goWithCollision)
+            {
+                if (item != item2)
+                {
+                    switch (item2->GetComponent<Collider2D>()->collisionType)
+                    {
+                    case CollisionType::Player:
+                        //there is no player-player collision since we only have 1 player
+                        break;
+                    case CollisionType::Enemy:
+                        //implement any low life to player
+                        break;
+                    case CollisionType::Wall:
+                        //if they collide
+                        if (CheckCollision(item, item2))
+                        {
+                            //we push player out of wall
+                            SolveCollision(item, item2);
+                        }
+                        break;
+                    default:
+                        break;
+                    }
+                }
+            }
+            break;
+        case CollisionType::Enemy:
+            for (auto& item2 : goWithCollision)
+            {
+                if (item != item2)
+                {
+                    switch (item2->GetComponent<Collider2D>()->collisionType)
+                    {
+                    case CollisionType::Player:
+                        //implement any low life to player
+                        break;
+                    case CollisionType::Enemy:
+                        //if they collide
+                        if (CheckCollision(item, item2))
+                        {
+                            //we push player out of other enemy
+                            SolveCollision(item, item2);
+                        }
+                        break;
+                    case CollisionType::Wall:
+                        //if they collide
+                        if (CheckCollision(item, item2))
+                        {
+                            //we push enemy out of wall
+                            SolveCollision(item, item2);
+                        }
+                        break;
+                    default:
+                        break;
+                    }
+                }
+            }
+            break;
+        case CollisionType::Wall:
+            // do nothing at all
+            break;
+        case CollisionType::Bullet:
+            for (auto& item2 : goWithCollision)
+            {
+                if (item != item2)
+                {
+                    switch (item2->GetComponent<Collider2D>()->collisionType)
+                    {
+                    case CollisionType::Player:
+                        if (CheckCollision(item, item2))
+                        {
+                            LOG(LogType::LOG_WARNING, "Player Hit");
+                            item->AddToDelete(engine->N_sceneManager->objectsToDelete);
+                        }
+                        break;
+                    case CollisionType::Enemy:
+                        //if they collide
+                        if (CheckCollision(item, item2))
+                        {
+                            MonoManager::CallScriptFunction(item2->GetComponent<Script>()->monoBehaviourInstance, "ReduceLife");
+                            item->AddToDelete(engine->N_sceneManager->objectsToDelete);
+                        }
+                        break;
+                    default:
+                        break;
+                    }
+                }
+            }
+            break;
+        default:
+            break;
+        }
+    }
+
+    return ret;
+}
 
 vec2 CollisionSolver::Clamp(vec2 origin, vec2 min, vec2 max)
 {

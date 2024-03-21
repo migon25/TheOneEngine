@@ -37,133 +37,15 @@ void EngineCore::Start()
 
 bool EngineCore::PreUpdate()
 {
-    return inputManager->PreUpdate();
+    inputManager->PreUpdate();
+    collisionSolver->PreUpdate();
+    return true;
 }
 
 void EngineCore::Update(double dt)
 {
-    //first, lets see the collider component still exists
-    for (auto it = collisionSolver->goWithCollision.begin(); it != collisionSolver->goWithCollision.end(); )
-    {
-        bool remItem = true;
-        for (auto& item2 : (*it)->GetAllComponents())
-        {
-            if (item2->GetType() == ComponentType::Collider2D) remItem = false;
-        }
-        if (remItem)
-        {
-            it = collisionSolver->goWithCollision.erase(it);
-        }
-        else
-        {
-            ++it;
-        }
-    }
-
-    //now lets check and solve collisions
-    if (/*app->state == GameState::PLAY || app->state == GameState::PLAY_ONCE*/true)
-    {
-        for (auto& item : collisionSolver->goWithCollision)
-        {
-            // Collision solving
-            switch (item->GetComponent<Collider2D>()->collisionType)
-            {
-            case CollisionType::Player:
-                for (auto& item2 : collisionSolver->goWithCollision)
-                {
-                    if (item != item2)
-                    {
-                        switch (item2->GetComponent<Collider2D>()->collisionType)
-                        {
-                        case CollisionType::Player:
-                            //there is no player-player collision since we only have 1 player
-                            break;
-                        case CollisionType::Enemy:
-                            //implement any low life to player
-                            break;
-                        case CollisionType::Wall:
-                            //if they collide
-                            if (collisionSolver->CheckCollision(item, item2))
-                            {
-                                //we push player out of wall
-                                collisionSolver->SolveCollision(item, item2);
-                            }
-                            break;
-                        default:
-                            break;
-                        }
-                    }
-                }
-                break;
-            case CollisionType::Enemy:
-                for (auto& item2 : collisionSolver->goWithCollision)
-                {
-                    if (item != item2)
-                    {
-                        switch (item2->GetComponent<Collider2D>()->collisionType)
-                        {
-                        case CollisionType::Player:
-                            //implement any low life to player
-                            break;
-                        case CollisionType::Enemy:
-                            //if they collide
-                            if (collisionSolver->CheckCollision(item, item2))
-                            {
-                                //we push player out of other enemy
-                                collisionSolver->SolveCollision(item, item2);
-                            }
-                            break;
-                        case CollisionType::Wall:
-                            //if they collide
-                            if (collisionSolver->CheckCollision(item, item2))
-                            {
-                                //we push enemy out of wall
-                                collisionSolver->SolveCollision(item, item2);
-                            }
-                            break;
-                        default:
-                            break;
-                        }
-                    }
-                }
-                break;
-            case CollisionType::Wall:
-                // do nothing at all
-                break;
-            case CollisionType::Bullet:
-                for (auto& item2 : collisionSolver->goWithCollision)
-                {
-                    if (item != item2)
-                    {
-                        switch (item2->GetComponent<Collider2D>()->collisionType)
-                        {
-                        case CollisionType::Player:
-                            if (collisionSolver->CheckCollision(item, item2))
-                            {
-                                LOG(LogType::LOG_WARNING, "Player Hit");
-                                item->AddToDelete(engine->N_sceneManager->objectsToDelete);
-                            }
-                            break;
-                        case CollisionType::Enemy:
-                            //if they collide
-                            if (collisionSolver->CheckCollision(item, item2))
-                            {
-                                MonoManager::CallScriptFunction(item2->GetComponent<Script>()->monoBehaviourInstance, "ReduceLife");
-                                item->AddToDelete(engine->N_sceneManager->objectsToDelete);
-                            }
-                            break;
-                        default:
-                            break;
-                        }
-                    }
-                }
-                break;
-            default:
-                break;
-            }
-        }
-    }
-
+    
+    collisionSolver->Update(dt);
     audioManager->Update(dt);
 
     this->dt = dt;
