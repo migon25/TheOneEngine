@@ -503,10 +503,27 @@ bool PanelInspector::Draw()
                     particleSystem->Replay();
                 }
 
-                for (auto emmiter = particleSystem->emmiters.begin(); emmiter != particleSystem->emmiters.end(); ++emmiter) {
-                    UIEmmiterWriteNode((*emmiter).get());
+                if (ImGui::Button("Export")) {
+                    particleSystem->ExportParticles();
+                }
+                ImGui::SameLine();
+                if (ImGui::Button("Import")) {
+                    // particleSystem->ExportParticles();
                 }
 
+                int emmiterID = 0;
+                for (auto emmiter = particleSystem->emmiters.begin(); emmiter != particleSystem->emmiters.end(); ++emmiter) {
+                    ImGui::PushID(emmiterID);
+                    ImGui::Text("Emmiter %d", emmiterID);
+                    // delete emmiter
+                    UIEmmiterWriteNode((*emmiter).get());
+                    emmiterID++;
+                }
+                
+                // add emmiter
+                if (ImGui::Button("Add Emmiter")) {
+                    particleSystem->AddEmmiter();
+                }
 
                 ImGui::Dummy(ImVec2(0.0f, 10.0f));
                 if (ImGui::Button("Remove Particle System"))

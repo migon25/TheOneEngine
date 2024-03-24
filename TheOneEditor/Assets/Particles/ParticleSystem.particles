@@ -1,0 +1,95 @@
+{
+  "Emmiters": [
+    {
+      "Delay": 0.0,
+      "Duration": 10.0,
+      "InitializeModules": [
+        {
+          "MaxSpeed": [
+            0.5,
+            2.0,
+            0.5
+          ],
+          "MinSpeed": [
+            -0.5,
+            1.0,
+            -0.5
+          ],
+          "Type": 0,
+          "UsingSingleValueSpeed": false
+        }
+      ],
+      "IsLooping": true,
+      "IsON": true,
+      "Lifetime": 67.05281829833984,
+      "MaxParticles": 100,
+      "RenderModule": [
+        {
+          "BillboardType": 0,
+          "Type": 0
+        }
+      ],
+      "SpawnModule": [
+        {
+          "SpawnRate": 100.0,
+          "Type": 0
+        }
+      ]
+    },
+    {
+      "Delay": 0.0,
+      "Duration": 10.0,
+      "InitializeModules": [
+        {
+          "MaxSpeed": [
+            0.5,
+            2.0,
+            0.5
+          ],
+          "MinSpeed": [
+            10.0,
+            1.0,
+            -0.5
+          ],
+          "Type": 0,
+          "UsingSingleValueSpeed": false
+        },
+        {
+          "MaxColor": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "MinColor": [
+            100.0,
+            100.0,
+            0.0
+          ],
+          "Type": 1,
+          "UsingSingleValueColor": true
+        }
+      ],
+      "IsLooping": true,
+      "IsON": true,
+      "Lifetime": 67.05281829833984,
+      "MaxParticles": 100,
+      "RenderModule": [
+        {
+          "BillboardType": 0,
+          "Type": 0
+        }
+      ],
+      "SpawnModule": [
+        {
+          "Amount": 10.0,
+          "SpawnRate": 0.5,
+          "Type": 2
+        }
+      ]
+    }
+  ],
+  "IsON": true,
+  "Name": "ParticleSystem",
+  "Type": 9,
+  "UID": 3469422375
+}
