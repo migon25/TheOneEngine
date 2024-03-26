@@ -32,7 +32,7 @@ protected:
 
 class SetSpeed : public InitializeEmmiterModule {
 public:
-	SetSpeed();
+	SetSpeed(Emmiter* owner);
 
 	const SingleOrRandom<vec3> getVector() {
 		return speed;
@@ -49,7 +49,7 @@ public:
 
 class SetColor : public InitializeEmmiterModule {
 public:
-	SetColor();
+	SetColor(Emmiter* owner);
 
 	const SingleOrRandom<vec3> getVector() {
 		return color;

@@ -116,6 +116,8 @@ void UIEmmiterWriteNode(Emmiter* emmiter)
 	ImGui::PushID("add_update_emmiter_window");
 	if (ImGui::BeginMenu("+"))
 	{
+		if (ImGui::MenuItem("Acceleration"))
+			emmiter->AddModule(UpdateEmmiterModule::ACCELERATION);
 
 		ImGui::EndMenu();
 	}
@@ -137,7 +139,8 @@ void UIEmmiterWriteNode(Emmiter* emmiter)
 		}
 
 		switch ((*m)->type) {
-		case UpdateEmmiterModule::CHANGE_COLOR:
+		case UpdateEmmiterModule::ACCELERATION:
+			UIInspectorEmmiterUpdateModule((AccelerationUpdate*)(*m).get());
 			break;
 
 		default:
@@ -282,7 +285,23 @@ void UIInspectorEmmiterInitializeModule(SetColor* initModule)
 
 
 // update modules --------------------------------------------------------------------------------------------------------------
-// void UIInspectorEmmiterUpdateModule(SetColor* updateModule) {}
+void UIInspectorEmmiterUpdateModule(AccelerationUpdate* updateModule)
+{
+	ImGui::Text("Acceleration: ");
+
+	ImGui::PushItemWidth(60);
+
+	ImGui::PushID("set_color_max_PS");
+	ImGui::InputDouble("R", &updateModule->acceleration.x, 0, 0, "%.2f");
+	ImGui::SameLine();
+	ImGui::InputDouble("G", &updateModule->acceleration.y, 0, 0, "%.2f");
+	ImGui::SameLine();
+	ImGui::InputDouble("B", &updateModule->acceleration.z, 0, 0, "%.2f");
+	ImGui::PopID();
+
+	ImGui::PopItemWidth();
+
+}
 
 
 

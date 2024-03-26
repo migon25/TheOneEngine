@@ -1,8 +1,9 @@
 #include "InitializeEmmiterModule.h"
 
-SetSpeed::SetSpeed()
+SetSpeed::SetSpeed(Emmiter* owner)
 {
 	type = SET_SPEED;
+	this->owner = owner;
 }
 
 void SetSpeed::Initialize(Particle* particle)
@@ -61,9 +62,10 @@ void SetSpeed::LoadModule(const json& moduleJSON)
 	}
 }
 
-SetColor::SetColor()
+SetColor::SetColor(Emmiter* owner)
 {
 	type = SET_COLOR;
+	this->owner = owner;
 }
 
 void SetColor::Initialize(Particle* particle)

@@ -20,7 +20,7 @@ void UIInspectorEmmiterInitializeModule(SetColor* initModule);
 
 
 // update modules
-// void UIInspectorEmmiterUpdateModule(SetColor* updateModule);
+void UIInspectorEmmiterUpdateModule(AccelerationUpdate* updateModule);
 
 
 
