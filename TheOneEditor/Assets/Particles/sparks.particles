@@ -21,7 +21,7 @@
       ],
       "IsLooping": true,
       "IsON": true,
-      "Lifetime": 67.05281829833984,
+      "Lifetime": 4.946733474731445,
       "MaxParticles": 100,
       "RenderModule": [
         {
@@ -31,6 +31,7 @@
       ],
       "SpawnModule": [
         {
+          "Duration": 1.0,
           "SpawnRate": 100.0,
           "Type": 0
         }
@@ -71,7 +72,7 @@
       ],
       "IsLooping": true,
       "IsON": true,
-      "Lifetime": 67.05281829833984,
+      "Lifetime": 4.946733474731445,
       "MaxParticles": 100,
       "RenderModule": [
         {
@@ -82,6 +83,7 @@
       "SpawnModule": [
         {
           "Amount": 10.0,
+          "Duration": 10.0,
           "SpawnRate": 0.5,
           "Type": 2
         }

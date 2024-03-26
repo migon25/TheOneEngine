@@ -27,10 +27,15 @@
 #include "imgui.h"
 #include "imgui_internal.h"
 
+#include <fstream>
+
+namespace fs = std::filesystem;
+
 PanelInspector::PanelInspector(PanelType type, std::string name) : Panel(type, name)
 {
     matrixDirty = false;
     chooseScriptNameWindow = false;
+    chooseParticlesToImportWindow = false;
     view_pos = { 0, 0, 0 };
     view_rot_rad = { 0, 0, 0 };
     view_rot_deg = { 0, 0, 0 };
@@ -508,8 +513,10 @@ bool PanelInspector::Draw()
                 }
                 ImGui::SameLine();
                 if (ImGui::Button("Import")) {
-                    // particleSystem->ExportParticles();
+                    chooseParticlesToImportWindow = true;
                 }
+
+                // change name
 
                 int emmiterID = 0;
                 for (auto emmiter = particleSystem->emmiters.begin(); emmiter != particleSystem->emmiters.end(); ++emmiter) {
@@ -974,6 +981,7 @@ bool PanelInspector::Draw()
             //}
         }
         if(chooseScriptNameWindow) ChooseScriptNameWindow();
+        else if (chooseParticlesToImportWindow) ChooseParticlesToImportWindow();
 
         ImGui::End();
 	}	
@@ -1005,6 +1013,62 @@ void PanelInspector::ChooseScriptNameWindow()
         }
 
         chooseScriptNameWindow = false;
+    }
+
+    ImGui::End();
+}
+
+void PanelInspector::ChooseParticlesToImportWindow()
+{
+    ImGui::Begin("Particles name", &chooseParticlesToImportWindow);
+
+    static char nameRecipient[32];
+
+    ImGui::InputText("File Name", nameRecipient, IM_ARRAYSIZE(nameRecipient));
+
+    std::string nameFile = nameRecipient;
+
+    nameFile = nameFile + ".particles";
+
+    fs::path assetsDir = fs::path(ASSETS_PATH) / "Particles" / nameFile;
+
+    if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && nameRecipient != "")
+    {
+        //std::string className = "ActualScriptTest2";
+        if (std::filesystem::exists(assetsDir))
+        {
+            // Read the scene JSON from the file
+            std::ifstream file(assetsDir);
+            if (!file.is_open())
+            {
+                LOG(LogType::LOG_ERROR, "Failed to open scene file: {}", assetsDir);
+                return;
+            }
+
+            json particlesJSON;
+
+            try
+            {
+                file >> particlesJSON;
+            }
+            catch (const json::parse_error& e)
+            {
+                LOG(LogType::LOG_ERROR, "Failed to parse scene JSON: {}", e.what());
+                return;
+            }
+
+            // Close the file
+            file.close();
+
+            selectedGO->GetComponent<ParticleSystem>()->LoadComponent(particlesJSON);
+            ImGui::CloseCurrentPopup();
+        }
+        else
+        {
+            LOG(LogType::LOG_WARNING, "Could not find file '%s'", nameFile);
+        }
+
+        chooseParticlesToImportWindow = false;
     }
 
     ImGui::End();
