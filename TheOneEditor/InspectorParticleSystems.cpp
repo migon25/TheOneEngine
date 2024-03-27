@@ -70,6 +70,9 @@ void UIEmmiterWriteNode(Emmiter* emmiter)
 		if (ImGui::MenuItem("Set Color"))
 			emmiter->AddModule(InitializeEmmiterModule::SET_COLOR);
 
+		if (ImGui::MenuItem("Set Scale"))
+			emmiter->AddModule(InitializeEmmiterModule::SET_SCALE);
+
 		ImGui::EndMenu();
 	}
 	ImGui::PopID();
@@ -96,6 +99,10 @@ void UIEmmiterWriteNode(Emmiter* emmiter)
 
 		case InitializeEmmiterModule::SET_COLOR:
 			UIInspectorEmmiterInitializeModule((SetColor*)(*m).get());
+			break;
+
+		case InitializeEmmiterModule::SET_SCALE:
+			UIInspectorEmmiterInitializeModule((SetScale*)(*m).get());
 			break;
 
 		default:
@@ -281,6 +288,44 @@ void UIInspectorEmmiterInitializeModule(SetColor* initModule)
 
 	ImGui::PopItemWidth();
 
+}
+
+void UIInspectorEmmiterInitializeModule(SetScale* initModule)
+{
+	ImGui::Text("Set Initial Scale: ");
+
+	ImGui::Checkbox("Single Value", &initModule->scale.usingSingleValue);
+
+	ImGui::PushItemWidth(60);
+
+	if (initModule->scale.usingSingleValue) {
+		ImGui::PushID("set_scale_single_PS");
+		ImGui::InputDouble("R", &initModule->scale.singleValue.x, 0, 0, "%.2f");
+		ImGui::SameLine();
+		ImGui::InputDouble("G", &initModule->scale.singleValue.y, 0, 0, "%.2f");
+		ImGui::SameLine();
+		ImGui::InputDouble("B", &initModule->scale.singleValue.z, 0, 0, "%.2f");
+		ImGui::PopID();
+	}
+	else {
+		ImGui::PushID("set_scale_min_PS");
+		ImGui::InputDouble("R", &initModule->scale.rangeValue.lowerLimit.x, 0, 0, "%.2f");
+		ImGui::SameLine();
+		ImGui::InputDouble("G", &initModule->scale.rangeValue.lowerLimit.y, 0, 0, "%.2f");
+		ImGui::SameLine();
+		ImGui::InputDouble("B", &initModule->scale.rangeValue.lowerLimit.z, 0, 0, "%.2f");
+		ImGui::PopID();
+
+		ImGui::PushID("set_scale_max_PS");
+		ImGui::InputDouble("R", &initModule->scale.rangeValue.upperLimit.x, 0, 0, "%.2f");
+		ImGui::SameLine();
+		ImGui::InputDouble("G", &initModule->scale.rangeValue.upperLimit.y, 0, 0, "%.2f");
+		ImGui::SameLine();
+		ImGui::InputDouble("B", &initModule->scale.rangeValue.upperLimit.z, 0, 0, "%.2f");
+		ImGui::PopID();
+	}
+
+	ImGui::PopItemWidth();
 }
 
 

@@ -18,6 +18,9 @@ void UIInspectorEmmiterInitializeModule(SetSpeed* initModule);
 
 void UIInspectorEmmiterInitializeModule(SetColor* initModule);
 
+void UIInspectorEmmiterInitializeModule(SetScale* initModule);
+
+
 
 // update modules
 void UIInspectorEmmiterUpdateModule(AccelerationUpdate* updateModule);
