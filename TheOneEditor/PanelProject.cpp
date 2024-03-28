@@ -75,21 +75,27 @@ bool PanelProject::Draw()
 			// Inspector ----------------------------
 			ImGui::TableNextColumn();
 
-			ImGui::Text("%s", fileSelected.path.c_str());
+			//Historn: NEED TO CREATE CHILD WINDOW FOR DRAG AND DROP
+			//if(ImGui::BeginChild("FileExplorer"))
+			if (fileSelected)
+			{
+				ImGui::Text("%s", fileSelected->path.string().c_str());
+			}
 
 			ImGui::Separator();
 
-			InspectorDraw();
+			FileExplorerDraw();
+
+			DragAndDrop();
 
 			ImGui::EndTable();
 		}
 
 		SaveWarning();
-
-		ImGui::PopStyleVar(2);
-		ImGui::End();
 	}
 
+	ImGui::PopStyleVar();
+	ImGui::End();
 	return true;
 }
 
@@ -171,10 +177,11 @@ std::pair<bool, uint32_t> PanelProject::DirectoryTreeViewRecursive(const fs::pat
 	return { any_node_clicked, node_clicked };
 }
 
-void PanelProject::InspectorDraw()
+void PanelProject::FileExplorerDraw()
 {
 	if (refresh)
 	{
+		fileSelected = nullptr;
 		files.clear();
 		files = ListFiles(directoryPath);
 		refresh = false;
@@ -212,12 +219,14 @@ void PanelProject::InspectorDraw()
 
 		ImGui::ImageButton((void*)(intptr_t)iconTexture, ImVec2(fontSize, fontSize), ImVec2(0.0f, 0.0f), ImVec2(1.0f, 1.0f), -1, ImVec4(.30f, .30f, .30f, 0.00f));
 
-		if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(0))
+		if (ImGui::IsItemHovered() && (ImGui::IsMouseClicked(0) || ImGui::IsMouseClicked(1)))
 		{
-			fileSelected = file;
+			fileSelected = &file;
 		}
 
-		DoubleClickFile(file);
+		DoubleClickFile();
+
+		ContextMenu();
 
 		ImGui::SetCursorPos(textPos);
 
@@ -226,11 +235,6 @@ void PanelProject::InspectorDraw()
 		ImGui::EndGroup();
 
 		ImGui::SameLine(0, ImGui::GetStyle().ItemSpacing.y + fontSize);
-		
-		ContextMenu(file);
-
-		if (DragAndDrop(file))
-			break;
 		
 		ImGui::PopStyleVar(5);
 	}
@@ -243,7 +247,7 @@ std::vector<FileInfo> PanelProject::ListFiles(const std::string& path)
 	for (const auto& entry : fs::directory_iterator(path)) {
 		FileInfo fileInfo;
 
-		fileInfo.path = entry.path().string();
+		fileInfo.path = entry.path();
 		fileInfo.name = entry.path().stem().string();
 		fileInfo.isDirectory = entry.is_directory();
 
@@ -355,7 +359,7 @@ void PanelProject::LoadImagePreviews(const FileInfo& info)
 {
 	if (info.fileType == FileType::TEXTURE)
 	{
-		imagePreviews[info.name] = LoadTexture(info.path);
+		imagePreviews[info.name] = LoadTexture(info.path.string());
 	}
 }
 
@@ -388,7 +392,7 @@ void PanelProject::SaveWarning()
 
 		ImGui::SetCursorPosX((ImGui::GetContentRegionAvail().x - 100 * 2.0f - ImGui::GetStyle().ItemSpacing.x) / 2.0f);
 		if (ImGui::Button("Yes", { 100, 20 })) {
-			engine->N_sceneManager->LoadScene(fileSelected.name);
+			engine->N_sceneManager->LoadScene(fileSelected->name);
 			ImGui::CloseCurrentPopup();
 		}
 		ImGui::SameLine();
@@ -399,14 +403,14 @@ void PanelProject::SaveWarning()
 	}
 }
 
-void PanelProject::DoubleClickFile(const FileInfo& info)
+void PanelProject::DoubleClickFile()
 {
 	if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0))
 	{
-		switch (info.fileType)
+		switch (fileSelected->fileType)
 		{
 		case FileType::FOLDER:
-			directoryPath = info.path;
+			directoryPath = fileSelected->path.string();
 			refresh = true;
 			break;
 		case FileType::SCENE:
@@ -416,7 +420,7 @@ void PanelProject::DoubleClickFile(const FileInfo& info)
 			}
 			else
 			{
-				engine->N_sceneManager->LoadScene(info.name);
+				engine->N_sceneManager->LoadScene(fileSelected->name);
 			}
 			break;
 		case FileType::PREFAB:
@@ -426,7 +430,7 @@ void PanelProject::DoubleClickFile(const FileInfo& info)
 			}
 			else
 			{
-				engine->N_sceneManager->LoadScene(info.name);
+				engine->N_sceneManager->LoadScene(fileSelected->name);
 			}
 			break;
 		default:
@@ -436,7 +440,7 @@ void PanelProject::DoubleClickFile(const FileInfo& info)
 	
 }
 
-bool PanelProject::DragAndDrop(const FileInfo& info)
+bool PanelProject::DragAndDrop()
 {
 	// Check if the window is being hovered over while dragging
 	if (ImGui::IsWindowHovered() && ImGui::IsMouseDragging(0)) 
@@ -446,7 +450,7 @@ bool PanelProject::DragAndDrop(const FileInfo& info)
 
 	if (ImGui::BeginDragDropSource())
 	{
-		ImGui::SetDragDropPayload(info.name.c_str(), &info, sizeof(FileInfo));
+		ImGui::SetDragDropPayload(fileSelected->name.c_str(), &fileSelected, sizeof(FileInfo));
 
 		ImGui::EndDragDropSource();
 	}
@@ -462,21 +466,20 @@ bool PanelProject::DragAndDrop(const FileInfo& info)
 					// Save the GameObject as a prefab
 					SaveGameObjectAsPrefab(gameObject);
 				}
-				ImGui::EndDragDropTarget();
 			}
 		}
-		else if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(info.name.c_str()))
+		else if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(fileSelected->name.c_str()))
 		{
 			FileInfo* fileInfo = (FileInfo*)payload->Data;
-			if (fileInfo) {
-				if (ImGui::IsItemHovered())
+			if (fileInfo) 
+			{
+				if (ImGui::IsItemHovered() && ImGui::IsWindowHovered(ImGuiHoveredFlags_AllowWhenBlockedByActiveItem))
 				{
-					LOG(LogType::LOG_INFO, "Path Hovered File: %s", info.path);
+					//LOG(LogType::LOG_INFO, "Path Hovered File: %s", info.path.string().c_str());
 					// Perform the file move operation
-					fs::rename(fileInfo->path, info.path);
+					//fs::rename(fileSelected->path, info.path);
 				}
 			}
-			ImGui::EndDragDropTarget();
 			refresh = true;
 		}
 		ImGui::EndDragDropTarget();
@@ -485,16 +488,17 @@ bool PanelProject::DragAndDrop(const FileInfo& info)
 	return refresh;
 }
 
-void PanelProject::ContextMenu(const FileInfo& info)
+void PanelProject::ContextMenu()
 {
 	if (ImGui::BeginPopupContextItem())
 	{
 		
-		/*if (ImGui::MenuItem("Delete"))
+		if (ImGui::MenuItem("Delete"))
 		{
-			fs::remove(info.name);
+			fs::remove(fileSelected->path);
+			fileSelected = nullptr;
 			refresh = true;
-		}*/
+		}
 
 		ImGui::EndPopup();
 	}
