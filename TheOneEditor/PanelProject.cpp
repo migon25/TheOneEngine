@@ -86,8 +86,6 @@ bool PanelProject::Draw()
 
 			FileExplorerDraw();
 
-			DragAndDrop();
-
 			ImGui::EndTable();
 		}
 
@@ -223,6 +221,9 @@ void PanelProject::FileExplorerDraw()
 		{
 			fileSelected = &file;
 		}
+
+		if (DragAndDrop(file))
+			break;
 
 		DoubleClickFile();
 
@@ -440,7 +441,7 @@ void PanelProject::DoubleClickFile()
 	
 }
 
-bool PanelProject::DragAndDrop()
+bool PanelProject::DragAndDrop(const FileInfo& info)
 {
 	// Check if the window is being hovered over while dragging
 	if (ImGui::IsWindowHovered() && ImGui::IsMouseDragging(0)) 
@@ -450,7 +451,7 @@ bool PanelProject::DragAndDrop()
 
 	if (ImGui::BeginDragDropSource())
 	{
-		ImGui::SetDragDropPayload(fileSelected->name.c_str(), &fileSelected, sizeof(FileInfo));
+		ImGui::SetDragDropPayload(fileSelected->name.c_str(), &info, sizeof(FileInfo));
 
 		ImGui::EndDragDropSource();
 	}
@@ -464,7 +465,7 @@ bool PanelProject::DragAndDrop()
 				if (gameObject)
 				{
 					// Save the GameObject as a prefab
-					SaveGameObjectAsPrefab(gameObject);
+					SaveGameObjectAsPrefab(*gameObject, info);
 				}
 			}
 		}
@@ -473,19 +474,37 @@ bool PanelProject::DragAndDrop()
 			FileInfo* fileInfo = (FileInfo*)payload->Data;
 			if (fileInfo) 
 			{
-				if (ImGui::IsItemHovered() && ImGui::IsWindowHovered(ImGuiHoveredFlags_AllowWhenBlockedByActiveItem))
+				if (ImGui::IsItemHovered())
 				{
 					//LOG(LogType::LOG_INFO, "Path Hovered File: %s", info.path.string().c_str());
 					// Perform the file move operation
-					//fs::rename(fileSelected->path, info.path);
+					//FileDropping(info);
+					fs::rename(fileSelected->path, info.path / fileSelected->path.filename());
+					fileSelected = nullptr;
+					refresh = true;
 				}
 			}
-			refresh = true;
+			
 		}
 		ImGui::EndDragDropTarget();
 	}
 
 	return refresh;
+}
+
+void PanelProject::FileDropping(const FileInfo& info)
+{
+	if (fileSelected->fileType != FileType::FOLDER && info.fileType == FileType::FOLDER)
+	{
+		fs::rename(fileSelected->path, info.path / fileSelected->path.filename());
+	}
+	else if (fileSelected->fileType == FileType::FOLDER && info.fileType == FileType::FOLDER)
+	{
+		fs::rename(fileSelected->path, info.path / fileSelected->path.filename());
+	}
+
+	fileSelected = nullptr;
+	refresh = true;
 }
 
 void PanelProject::ContextMenu()
@@ -504,18 +523,24 @@ void PanelProject::ContextMenu()
 	}
 }
 
-void PanelProject::SaveGameObjectAsPrefab(GameObject* gameObject) {
-	if (gameObject) {
-		
-		gameObject->SetPrefab(UIDGen::GenerateUID());
+void PanelProject::SaveGameObjectAsPrefab(GameObject& gameObject, const FileInfo& info) {
+	gameObject.SetPrefab(UIDGen::GenerateUID());
 
-		std::string prefabName = gameObject->GetName() + ".prefab";
+	std::string prefabName = gameObject.GetName() + ".prefab";
 
-		// Serialize the GameObject and save it as a prefab file
-		json gameObjectJSON = gameObject->SaveGameObject();
-		std::ofstream(directoryPath + prefabName) << gameObjectJSON.dump(2);
-		LOG(LogType::LOG_OK, "PREFAB CREATED SUCCESSFULLY");
-		refresh = true;
-		engine->N_sceneManager->currentScene->SetIsDirty(true);
-	} 
+	// Serialize the GameObject and save it as a prefab file
+	json gameObjectJSON = gameObject.SaveGameObject();
+	if (info.isDirectory)
+	{
+		fs::path filename = info.path / prefabName;
+		std::ofstream(filename) << gameObjectJSON.dump(2);
+	}
+	else
+	{
+		fs::path filename = directoryPath + prefabName;
+		std::ofstream(filename) << gameObjectJSON.dump(2);
+	}
+	LOG(LogType::LOG_OK, "PREFAB CREATED SUCCESSFULLY");
+	refresh = true;
+	engine->N_sceneManager->currentScene->SetIsDirty(true);
 }
