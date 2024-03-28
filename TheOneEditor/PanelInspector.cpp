@@ -517,6 +517,8 @@ bool PanelInspector::Draw()
                 }
 
                 // change name
+                particleSystem->GetNameToEdit()->resize(20);
+                ImGui::InputText("Name", (char*)particleSystem->GetNameToEdit()->c_str(), 20);
 
                 int emmiterID = 0;
                 for (auto emmiter = particleSystem->emmiters.begin(); emmiter != particleSystem->emmiters.end(); ++emmiter) {
