@@ -244,6 +244,7 @@ UpdateEmmiterModule* Emmiter::AddModule(UpdateEmmiterModule::UpdateEmmiterModule
 	{
 	case UpdateEmmiterModule::ACCELERATION:
 		updateModules.push_back(std::move(std::make_unique<AccelerationUpdate>(this)));
+		newModule = updateModules[updateModules.size() - 1].get();
 		break;
 	default:
 		break;
