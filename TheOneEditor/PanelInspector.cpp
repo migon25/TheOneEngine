@@ -1022,6 +1022,7 @@ void PanelInspector::ChooseScriptNameWindow()
 
 void PanelInspector::ChooseParticlesToImportWindow()
 {
+    ImGui::SetNextWindowPos(ImVec2(0, 0));
     ImGui::Begin("Particles name", &chooseParticlesToImportWindow);
 
     static char nameRecipient[32];
