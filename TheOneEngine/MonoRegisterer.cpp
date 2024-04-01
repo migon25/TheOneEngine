@@ -313,6 +313,13 @@ static void PlaySource(GameObject* GOptr, uint audio) {
 	audioManager->PlayAudio(GOptr->GetComponent<Source>(), audio);
 }
 
+// Explicit instantiation for GameObject components
+template <typename TComponent>
+static TComponent* GetComponent(GameObject* containerGO)
+{
+	return containerGO->GetComponent<TComponent>();
+}
+
 void MonoRegisterer::RegisterFunctions()
 {
 	mono_add_internal_call("InternalCalls::GetGameObjectPtr", GetGameObjectPtr);
@@ -354,6 +361,10 @@ void MonoRegisterer::RegisterFunctions()
 
 	mono_add_internal_call("InternalCalls::PlaySource", PlaySource);
 	mono_add_internal_call("InternalCalls::StopSource", StopSource);
+
+	mono_add_internal_call("InternalCalls::GetComponent", GetComponent<Transform>);
+	mono_add_internal_call("InternalCalls::GetComponent", GetComponent<Script>);
+	mono_add_internal_call("InternalCalls::GetComponent", GetComponent<Source>);
 }
 
 bool MonoRegisterer::CheckMonoError(MonoError& error)

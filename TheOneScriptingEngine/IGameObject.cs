@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 public class IGameObject
 {
@@ -42,5 +43,21 @@ public class IGameObject
         goToReturn.transform = new ITransform(foundGOptr);
 
         return goToReturn;
+    }
+
+    public TComponent GetComponent<TComponent>() where TComponent : IComponent
+    {
+        Debug.Log("GetComponent called is: " + typeof(TComponent).ToString());
+
+        TComponent component = InternalCalls.GetComponent<TComponent>(containerGOptr);
+
+        Debug.Log("Transform pointer: " + component.ToString());
+
+        if (component != null)
+            return component;
+
+        //Debug.Log("Target object pos X is: " + transformComponent.position.x.ToString());
+        //Debug.Log("Transform: " + transformComponent.ToString());
+        return null;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using static AudioManager;
 
@@ -54,6 +55,13 @@ class InternalCalls
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static IntPtr FindGameObject(string name);
+
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static TComponent GetComponent<TComponent>(IntPtr gameObject) where TComponent : IComponent;
+
+    //Scripts
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    internal extern string GetScriptClassName();
 
     //Scene Manager
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
