@@ -45,7 +45,15 @@ bool N_SceneManager::Start()
 
 bool N_SceneManager::PreUpdate()
 {
-	// Do nothing
+	if (sceneChange)
+	{
+		// Kiko - Here add the transition managing
+		LoadSceneFromJSON(currentScene->GetPath());
+
+		FindCameraInScene();
+		currentScene->SetIsDirty(true);
+		sceneChange = false;
+	}
 
 	return true;
 }
@@ -57,15 +65,15 @@ bool N_SceneManager::Update(double dt, bool isPlaying)
 	// Save Scene by checking if isDirty and pressing CTRL+S
 	//if (currentScene->IsDirty()) SaveScene();
 	
-	sceneIsPlaying = isPlaying;
+	if(!sceneChange)
+		sceneIsPlaying = isPlaying;
 
-	if (previousFrameIsPlaying != isPlaying && isPlaying == true)
+	if (previousFrameIsPlaying != sceneIsPlaying && sceneIsPlaying == true)
 	{
 		for (const auto gameObject : currentScene->GetRootSceneGO()->children)
 		{
-			// Kiko disabled this
-			if(!gameObject.get()->GetComponent<Canvas>())
-				gameObject->Enable();
+			if(gameObject.get()->GetComponent<Script>())
+				gameObject.get()->GetComponent<Script>()->Start();
 		}
 	}
 
@@ -74,7 +82,7 @@ bool N_SceneManager::Update(double dt, bool isPlaying)
 		currentScene->UpdateGOs(dt);
 	}
 
-	previousFrameIsPlaying = isPlaying;
+	previousFrameIsPlaying = sceneIsPlaying;
 
 	return true;
 }
@@ -110,12 +118,9 @@ void N_SceneManager::LoadScene(uint index)
 
 void N_SceneManager::LoadScene(std::string sceneName)
 {
-	std::string fileName = "Assets/Scenes/" + sceneName + ".toe";
-
-	LoadSceneFromJSON(fileName);
-
-	FindCameraInScene();
-	currentScene->SetIsDirty(true);
+	this->currentScene->SetPath("Assets/Scenes/" + sceneName + ".toe");
+	this->sceneChange = true;
+	sceneIsPlaying = false;
 }
 
 void N_SceneManager::SaveScene()

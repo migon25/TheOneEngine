@@ -84,6 +84,8 @@ private:
 	MeshLoader* meshLoader = nullptr;
 	bool sceneIsPlaying = false;
 	bool previousFrameIsPlaying = false;
+	//Kikofp02: This will check if the engine has to change scene
+	bool sceneChange = false;
 };
 
 class Scene
