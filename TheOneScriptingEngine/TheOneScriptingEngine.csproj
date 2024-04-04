@@ -54,7 +54,7 @@
     <Compile Include="IGameObject.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="InternalCalls.cs" />
-    <Compile Include="IScript.cs" />
+    <Compile Include="IObject.cs" />
     <Compile Include="ISource.cs" />
     <Compile Include="IParticleSystem.cs" />
     <Compile Include="PauseMenuManager.cs" />

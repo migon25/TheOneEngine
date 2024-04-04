@@ -3,22 +3,23 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-public class IGameObject
+public class IGameObject : IObject
 {
-    private IntPtr containerGOptr;
-
-    public string name;
-    public bool isActive;
     public ITransform transform;
     public ISource source;
 
-    public IGameObject()
+    public IGameObject() : base()
     {
-        containerGOptr = InternalCalls.GetGameObjectPtr();
+        transform = new ITransform();
 
-        transform = new ITransform(containerGOptr);
+        source = new ISource();
+    }
+    public IGameObject(IntPtr GOref) : base(GOref)
+    {
+        containerGOptr = GOref;
+        transform = new ITransform(GOref);
 
-        source = new ISource(containerGOptr);
+        source = new ISource(GOref);
     }
 
     public void Destroy()
@@ -30,34 +31,44 @@ public class IGameObject
     {
         IntPtr foundGOptr = InternalCalls.FindGameObject(name);
 
-        if(foundGOptr == null)
+        if(foundGOptr == IntPtr.Zero)
         {
             //Insert error or something
 
             return new IGameObject();
         }
 
-        IGameObject goToReturn = new IGameObject();
-
-        goToReturn.containerGOptr = foundGOptr;
-        goToReturn.transform = new ITransform(foundGOptr);
-
+        IGameObject goToReturn = new IGameObject(foundGOptr);
+        
         return goToReturn;
     }
-
+    
+    //Used to get any component except scripts
     public TComponent GetComponent<TComponent>() where TComponent : IComponent
     {
         Debug.Log("GetComponent called is: " + typeof(TComponent).ToString());
 
-        TComponent component = InternalCalls.GetComponent<TComponent>(containerGOptr);
+        IntPtr component = IntPtr.Zero;
 
-        Debug.Log("Transform pointer: " + component.ToString());
+        if(Enum.TryParse(typeof(TComponent).ToString(), out IComponent.ComponentType type)) 
+        {
+            component = InternalCalls.ComponentCheck(containerGOptr, (int)type);
+        }
 
-        if (component != null)
-            return component;
+        if(component == IntPtr.Zero) 
+        {
+            Debug.Log("GetComponent called is: " + typeof(TComponent).ToString());
+            return null;
+        }
 
-        //Debug.Log("Target object pos X is: " + transformComponent.position.x.ToString());
-        //Debug.Log("Transform: " + transformComponent.ToString());
+        TComponent componentToReturn = new IComponent(containerGOptr) as TComponent;
+
+
+        Debug.Log("Component class to return: " + componentToReturn.ToString());
+
+        if (componentToReturn != null)
+            return componentToReturn;
+
         return null;
     }
 }

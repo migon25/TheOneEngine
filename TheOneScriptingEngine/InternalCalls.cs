@@ -57,11 +57,11 @@ class InternalCalls
     internal extern static IntPtr FindGameObject(string name);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
-    internal extern static TComponent GetComponent<TComponent>(IntPtr gameObject) where TComponent : IComponent;
+    internal extern static IntPtr ComponentCheck(IntPtr gameObject, int componentType);
 
-    //Scripts
+    //Component
     [MethodImpl(MethodImplOptions.InternalCall)]
-    internal extern string GetScriptClassName();
+    internal extern TComponent GetComponent<TComponent>() where TComponent : IComponent;
 
     //Scene Manager
     [MethodImplAttribute(MethodImplOptions.InternalCall)]

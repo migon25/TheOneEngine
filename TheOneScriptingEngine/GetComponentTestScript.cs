@@ -9,6 +9,7 @@ public class GetComponentTestScript : MonoBehaviour
     IGameObject getGoTest;
     GetComponentTestScript2 getComponentTestInterface;
     AdultXenomorphBehaviour getComponentTestCustomClass;
+    ICanvas canvas;
 
     public override void Start()
     {
@@ -23,6 +24,7 @@ public class GetComponentTestScript : MonoBehaviour
             //Debug.Log("Testing GetComponent with Transform X is: " + getComponentTestInterface.position.x.ToString());
             //Debug.Log("Testing GetComponent with Xenomorph health is: " + getComponentTestCustomClass.life.ToString());
             ITransform testTransform = getGoTest.GetComponent<ITransform>();
+            ICanvas testCanvas = getGoTest.GetComponent<ICanvas>();
 
             //Debug.Log("Result transform is: " + getComponentTestInterface.life);
         }

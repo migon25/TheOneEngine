@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class IComponent
+public class IComponent : IObject
 {
-    protected IntPtr containerGOptr;
+	public enum ComponentType
+	{
 
-    public IComponent(IntPtr gameObjectPtr)
-    {
-        containerGOptr = gameObjectPtr;
-    }
+	}
+
+   public IComponent() : base() { }
+   public IComponent(IntPtr gameObjectRef) : base(gameObjectRef) { }
 }
