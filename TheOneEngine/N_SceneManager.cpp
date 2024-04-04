@@ -40,6 +40,11 @@ bool N_SceneManager::Start()
 {
 	FindCameraInScene();
 
+	loadingScreen = std::make_shared<GameObject>("loadingScreen");
+	loadingScreen.get()->AddComponent<Transform>();
+	loadingScreen.get()->AddComponent<Canvas>();
+	loadingScreen.get()->GetComponent<Canvas>()->AddItemUI<ImageUI>("Assets/Textures/Hud/LoadingTxt.png");
+
 	return true;
 }
 
@@ -48,6 +53,7 @@ bool N_SceneManager::PreUpdate()
 	if (sceneChange)
 	{
 		// Kiko - Here add the transition managing
+
 		LoadSceneFromJSON(currentScene->GetPath());
 
 		FindCameraInScene();
