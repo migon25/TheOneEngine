@@ -33,9 +33,9 @@ public class IGameObject : IObject
 
         if(foundGOptr == IntPtr.Zero)
         {
-            //Insert error or something
+            Debug.LogError("GameObject with name '" + name + "' not found.");
 
-            return new IGameObject();
+            return null;
         }
 
         IGameObject goToReturn = new IGameObject(foundGOptr);
@@ -50,25 +50,31 @@ public class IGameObject : IObject
 
         IntPtr component = IntPtr.Zero;
 
-        if(Enum.TryParse(typeof(TComponent).ToString(), out IComponent.ComponentType type)) 
+        TComponent componentToReturn = null;
+
+        if (Enum.TryParse(typeof(TComponent).ToString(), out IComponent.ComponentType type))
         {
+            Debug.LogCheck("The GetType of the class is an internal class");
             component = InternalCalls.ComponentCheck(containerGOptr, (int)type);
-        }
 
-        if(component == IntPtr.Zero) 
+            if (component != IntPtr.Zero) 
+            {
+                componentToReturn = new IComponent(containerGOptr) as TComponent;
+            }
+        }
+        else if (typeof(TComponent).IsSubclassOf(typeof(MonoBehaviour)))
         {
-            Debug.Log("GetComponent called is: " + typeof(TComponent).ToString());
-            return null;
+            Debug.LogCheck("The GetType of the class is a script");
+            component = InternalCalls.ComponentCheck(containerGOptr, (int)IComponent.ComponentType.MonoBehaviour, typeof(TComponent).ToString());
+
+            if (component != IntPtr.Zero)
+            {
+                componentToReturn = InternalCalls.GetScript<TComponent>(containerGOptr, typeof(TComponent).ToString());
+            }
         }
-
-        TComponent componentToReturn = new IComponent(containerGOptr) as TComponent;
-
 
         Debug.Log("Component class to return: " + componentToReturn.ToString());
 
-        if (componentToReturn != null)
-            return componentToReturn;
-
-        return null;
+        return componentToReturn;
     }
 }

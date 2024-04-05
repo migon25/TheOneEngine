@@ -11,4 +11,10 @@ public class GetComponentTestScript2 : MonoBehaviour
             life -= 20;
         }
     }
+
+    public void Testing()
+    {
+        Debug.Log("This is a test I am calling from TestScript2 and my current life is: " + life.ToString());
+        life -= 50;
+    }
 }

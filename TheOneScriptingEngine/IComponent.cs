@@ -6,8 +6,20 @@ using System.Threading.Tasks;
 
 public class IComponent : IObject
 {
-	public enum ComponentType
-	{
+    public enum ComponentType
+    {
+        ITransform,
+        ICamera,
+        IMesh,
+        ITexture,
+        MonoBehaviour,
+        ICollider2D,
+        ICanvas,
+        IListener,
+        ISource,
+        IParticleSystem,
+        Unknown
+    }
 
 	}
 

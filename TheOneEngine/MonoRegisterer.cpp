@@ -3,6 +3,7 @@
 #include "Defs.h"
 
 #include "EngineCore.h"
+#include "Component.h"
 #include "Transform.h"
 #include "Canvas.h"
 #include "Collider2D.h"
@@ -128,6 +129,59 @@ static GameObject* FindGameObject(MonoString* monoString)
 		}
 	}
 	return nullptr;
+}
+
+static void* ComponentCheck(GameObject* GOptr, int componentType, MonoString* scriptName = nullptr)
+{
+	ComponentType type = (ComponentType)componentType;
+
+	if (type != ComponentType::Script)
+	{
+		//Implement case for engine components
+		LOG(LogType::LOG_WARNING, "You asked for an Engine component. Haha, sike!");
+	}
+	else if (scriptName != nullptr)
+	{
+		std::string scriptToFind = MonoRegisterer::MonoStringToUTF8(scriptName);
+		
+		for (auto comp: GOptr->GetAllComponents())
+		{
+			if (typeid(comp) == typeid(Script))
+			{
+				Script* scriptToAccess = (Script*)comp;
+				if (scriptToAccess->scriptName == scriptToFind)
+				{
+					return scriptToAccess;
+				}
+			}
+		}
+	}
+
+	return nullptr;
+}
+static void* GetScript(GameObject* GOptr, MonoString* scriptName)
+{
+	std::string scriptToFind = MonoRegisterer::MonoStringToUTF8(scriptName);
+
+	for (auto comp : GOptr->GetAllComponents())
+	{
+		if (typeid(comp) == typeid(Script))
+		{
+			Script* scriptToAccess = (Script*)comp;
+			if (scriptToAccess->scriptName == scriptToFind)
+			{
+				void* cSharpClassInstance = nullptr;
+				void* params[] =
+				{
+					cSharpClassInstance
+				};
+
+				MonoManager::CallScriptFunction(scriptToAccess->monoBehaviourInstance, "GetClassInstance", params, 1);
+
+				return cSharpClassInstance;
+			}
+		}
+	}
 }
 
 //Scene Management
@@ -341,6 +395,8 @@ void MonoRegisterer::RegisterFunctions()
 	mono_add_internal_call("InternalCalls::InstantiateBullet", InstantiateBullet);
 	mono_add_internal_call("InternalCalls::DestroyGameObject", DestroyGameObject);
 	mono_add_internal_call("InternalCalls::FindGameObject", FindGameObject);
+	mono_add_internal_call("InternalCalls::ComponentCheck", ComponentCheck);
+	mono_add_internal_call("InternalCalls::GetScript", GetScript);
 
 	mono_add_internal_call("InternalCalls::LoadScene", LoadScene);
 
