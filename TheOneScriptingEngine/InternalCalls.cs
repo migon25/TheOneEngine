@@ -49,6 +49,9 @@ class InternalCalls
     //GameObjects
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static IGameObject InstantiateBullet(Vector3 initialPosition, Vector3 direction);
+    
+    [MethodImplAttribute(MethodImplOptions.InternalCall)]
+    internal extern static string GetGameObjectName(IntPtr GOptr);
 
     [MethodImplAttribute(MethodImplOptions.InternalCall)]
     internal extern static void DestroyGameObject(IntPtr GOtoDestroy);

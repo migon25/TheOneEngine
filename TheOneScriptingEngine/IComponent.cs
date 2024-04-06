@@ -21,8 +21,6 @@ public class IComponent : IObject
         Unknown
     }
 
-	}
-
    public IComponent() : base() { }
    public IComponent(IntPtr gameObjectRef) : base(gameObjectRef) { }
 }

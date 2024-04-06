@@ -6,11 +6,10 @@ public class MonoBehaviour : IComponent
     public IGameObject attachedGameObject;
     public MonoBehaviour() : base() { attachedGameObject = new IGameObject(containerGOptr); }
 
-    private void GetClassInstance(object classInstance)
+    public object GetClassInstance()
     {
-        classInstance = this;
+        return this;
     }
-
 
     public virtual void Start() { }
     public virtual void Update() { }

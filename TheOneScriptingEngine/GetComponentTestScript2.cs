@@ -2,19 +2,23 @@
 
 public class GetComponentTestScript2 : MonoBehaviour
 {
-    public int life = 200;
 
-    public override void Update()
+    public object GetClassInstance()
     {
-        if (Input.GetKeyboardButton(Input.KeyboardCode.K))
-        {
-            life -= 20;
-        }
+        //Take into account that right now it is being called from here, not MonoBehaviour
+        return this;
     }
 
-    public void Testing()
+    public int life = 500;
+
+    public void ReduceLife1()
     {
-        Debug.Log("This is a test I am calling from TestScript2 and my current life is: " + life.ToString());
+        Debug.LogCheck("TestScript2 func1 current life is: " + life.ToString());
         life -= 50;
+    }
+    public void ReduceLife2()
+    {
+        Debug.LogError("TestScript2 func2 current life is: " + life.ToString());
+        life -= 10;
     }
 }

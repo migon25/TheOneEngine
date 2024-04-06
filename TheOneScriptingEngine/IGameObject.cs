@@ -10,6 +10,8 @@ public class IGameObject : IObject
 
     public IGameObject() : base()
     {
+        name = "";
+
         transform = new ITransform();
 
         source = new ISource();
@@ -17,6 +19,7 @@ public class IGameObject : IObject
     public IGameObject(IntPtr GOref) : base(GOref)
     {
         containerGOptr = GOref;
+        name = InternalCalls.GetGameObjectName(containerGOptr);
         transform = new ITransform(GOref);
 
         source = new ISource(GOref);
@@ -69,12 +72,21 @@ public class IGameObject : IObject
 
             if (component != IntPtr.Zero)
             {
+                Debug.LogCheck("Component was found in the C++ game object");
                 componentToReturn = InternalCalls.GetScript<TComponent>(containerGOptr, typeof(TComponent).ToString());
             }
         }
 
-        Debug.Log("Component class to return: " + componentToReturn.ToString());
-
-        return componentToReturn;
+        
+        if (componentToReturn != null)
+        {
+            Debug.LogCheck("Component class to return: " + componentToReturn.ToString());
+            return componentToReturn;
+        }
+        else
+        {
+            Debug.LogError("Error finding component '" + typeof(TComponent).ToString() + "' in GameObject '" + name + "'. Check if the component exists in the Game Object.");
+            return new IComponent() as TComponent;
+        }
     }
 }

@@ -112,6 +112,11 @@ static GameObject* InstantiateBullet(vec3f* initialPosition, vec3f* direction)
 	return go;
 }
 
+static MonoString* GetGameObjectName(GameObject* GOptr)
+{
+	return mono_string_new(MonoManager::GetAppDomain(), GOptr->GetName().c_str());
+}
+
 static void DestroyGameObject(GameObject* objectToDestroy)
 {
 	objectToDestroy->AddToDelete(engine->N_sceneManager->objectsToDelete);
@@ -138,7 +143,7 @@ static void* ComponentCheck(GameObject* GOptr, int componentType, MonoString* sc
 	if (type != ComponentType::Script)
 	{
 		//Implement case for engine components
-		LOG(LogType::LOG_WARNING, "You asked for an Engine component. Haha, sike!");
+		LOG(LogType::LOG_WARNING, "Engine component cases pending to implement.");
 	}
 	else if (scriptName != nullptr)
 	{
@@ -146,7 +151,7 @@ static void* ComponentCheck(GameObject* GOptr, int componentType, MonoString* sc
 		
 		for (auto comp: GOptr->GetAllComponents())
 		{
-			if (typeid(comp) == typeid(Script))
+			if (comp->GetType() == ComponentType::Script)
 			{
 				Script* scriptToAccess = (Script*)comp;
 				if (scriptToAccess->scriptName == scriptToFind)
@@ -165,20 +170,12 @@ static void* GetScript(GameObject* GOptr, MonoString* scriptName)
 
 	for (auto comp : GOptr->GetAllComponents())
 	{
-		if (typeid(comp) == typeid(Script))
+		if (comp->GetType() == ComponentType::Script)
 		{
 			Script* scriptToAccess = (Script*)comp;
 			if (scriptToAccess->scriptName == scriptToFind)
 			{
-				void* cSharpClassInstance = nullptr;
-				void* params[] =
-				{
-					cSharpClassInstance
-				};
-
-				MonoManager::CallScriptFunction(scriptToAccess->monoBehaviourInstance, "GetClassInstance", params, 1);
-
-				return cSharpClassInstance;
+				return MonoManager::CallScriptFunction(scriptToAccess->monoBehaviourInstance, "GetClassInstance");
 			}
 		}
 	}
@@ -393,6 +390,7 @@ void MonoRegisterer::RegisterFunctions()
 	mono_add_internal_call("InternalCalls::GetTransformRight", GetTransformRight);
 
 	mono_add_internal_call("InternalCalls::InstantiateBullet", InstantiateBullet);
+	mono_add_internal_call("InternalCalls::GetGameObjectName", GetGameObjectName);
 	mono_add_internal_call("InternalCalls::DestroyGameObject", DestroyGameObject);
 	mono_add_internal_call("InternalCalls::FindGameObject", FindGameObject);
 	mono_add_internal_call("InternalCalls::ComponentCheck", ComponentCheck);
