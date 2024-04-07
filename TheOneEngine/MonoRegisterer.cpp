@@ -142,8 +142,13 @@ static void* ComponentCheck(GameObject* GOptr, int componentType, MonoString* sc
 
 	if (type != ComponentType::Script)
 	{
-		//Implement case for engine components
-		LOG(LogType::LOG_WARNING, "Engine component cases pending to implement.");
+		for (auto comp : GOptr->GetAllComponents())
+		{
+			if (comp->GetType() == type)
+			{
+				return &comp->enabled;
+			}
+		}
 	}
 	else if (scriptName != nullptr)
 	{
@@ -161,9 +166,9 @@ static void* ComponentCheck(GameObject* GOptr, int componentType, MonoString* sc
 			}
 		}
 	}
-
 	return nullptr;
 }
+
 static void* GetScript(GameObject* GOptr, MonoString* scriptName)
 {
 	std::string scriptToFind = MonoRegisterer::MonoStringToUTF8(scriptName);
@@ -364,13 +369,6 @@ static void PlaySource(GameObject* GOptr, uint audio) {
 	audioManager->PlayAudio(GOptr->GetComponent<Source>(), audio);
 }
 
-// Explicit instantiation for GameObject components
-template <typename TComponent>
-static TComponent* GetComponent(GameObject* containerGO)
-{
-	return containerGO->GetComponent<TComponent>();
-}
-
 void MonoRegisterer::RegisterFunctions()
 {
 	mono_add_internal_call("InternalCalls::GetGameObjectPtr", GetGameObjectPtr);
@@ -415,10 +413,6 @@ void MonoRegisterer::RegisterFunctions()
 
 	mono_add_internal_call("InternalCalls::PlaySource", PlaySource);
 	mono_add_internal_call("InternalCalls::StopSource", StopSource);
-
-	mono_add_internal_call("InternalCalls::GetComponent", GetComponent<Transform>);
-	mono_add_internal_call("InternalCalls::GetComponent", GetComponent<Script>);
-	mono_add_internal_call("InternalCalls::GetComponent", GetComponent<Source>);
 }
 
 bool MonoRegisterer::CheckMonoError(MonoError& error)

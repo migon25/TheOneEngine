@@ -2,13 +2,6 @@
 
 public class GetComponentTestScript2 : MonoBehaviour
 {
-
-    public object GetClassInstance()
-    {
-        //Take into account that right now it is being called from here, not MonoBehaviour
-        return this;
-    }
-
     public int life = 500;
 
     public void ReduceLife1()

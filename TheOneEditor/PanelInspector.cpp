@@ -388,10 +388,10 @@ bool PanelInspector::Draw()
 
             /*Script Component*/
             Script* script = selectedGO->GetComponent<Script>();
-
-            if (script != nullptr && ImGui::CollapsingHeader("Script", treeNodeFlags))
+            ImGuiTreeNodeFlags scriptTreeNodeFlags = ImGuiTreeNodeFlags_None | ImGuiTreeNodeFlags_Leaf;
+            if (script != nullptr && ImGui::CollapsingHeader("Script", scriptTreeNodeFlags))
             {
-                
+                ImGui::TextColored({ 0.0f, 0.7f, 0.3f, 1.0f }, script->scriptName.c_str());
                 ImGui::Dummy(ImVec2(0.0f, 10.0f));
             }
 

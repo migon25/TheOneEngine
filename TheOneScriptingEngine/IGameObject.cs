@@ -49,30 +49,62 @@ public class IGameObject : IObject
     //Used to get any component except scripts
     public TComponent GetComponent<TComponent>() where TComponent : IComponent
     {
-        Debug.Log("GetComponent called is: " + typeof(TComponent).ToString());
-
         IntPtr component = IntPtr.Zero;
 
         TComponent componentToReturn = null;
 
         if (Enum.TryParse(typeof(TComponent).ToString(), out IComponent.ComponentType type))
         {
-            Debug.LogCheck("The GetType of the class is an internal class");
             component = InternalCalls.ComponentCheck(containerGOptr, (int)type);
 
             if (component != IntPtr.Zero) 
             {
-                componentToReturn = new IComponent(containerGOptr) as TComponent;
+
+                switch (type)
+                {
+                    case IComponent.ComponentType.ITransform:
+                        componentToReturn = new ITransform(containerGOptr) as TComponent;
+                        break;
+                    //case IComponent.ComponentType.ICamera:
+                    //    componentToReturn = new ICamera(containerGOptr) as TComponent;
+                    //    Debug.LogCheck("The GetType of the class is: " + type.ToString());
+                    //    break;
+                    //case IComponent.ComponentType.IMesh:
+                    //    componentToReturn = new IMesh(containerGOptr) as TComponent;
+                    //    Debug.LogCheck("The GetType of the class is: " + type.ToString());
+                    //    break;
+                    //case IComponent.ComponentType.ITexture:
+                    //    componentToReturn = new ITexture(containerGOptr) as TComponent;
+                    //    Debug.LogCheck("The GetType of the class is: " + type.ToString());
+                    //    break;
+                    //case IComponent.ComponentType.ICollider2D:
+                    //    componentToReturn = new ICollider2D(containerGOptr) as TComponent;
+                    //    Debug.LogCheck("The GetType of the class is: " + type.ToString());
+                    //    break;
+                    case IComponent.ComponentType.ICanvas:
+                        componentToReturn = new ICanvas(containerGOptr) as TComponent;
+                        break;
+                    //case IComponent.ComponentType.IListener:
+                    //    componentToReturn = new IListener(containerGOptr) as TComponent;
+                    //    Debug.LogCheck("The GetType of the class is: " + type.ToString());
+                    //    break;
+                    case IComponent.ComponentType.ISource:
+                        componentToReturn = new ISource(containerGOptr) as TComponent;
+                        break;
+                    case IComponent.ComponentType.IParticleSystem:
+                        componentToReturn = new IParticleSystem(containerGOptr) as TComponent;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
         else if (typeof(TComponent).IsSubclassOf(typeof(MonoBehaviour)))
         {
-            Debug.LogCheck("The GetType of the class is a script");
             component = InternalCalls.ComponentCheck(containerGOptr, (int)IComponent.ComponentType.MonoBehaviour, typeof(TComponent).ToString());
 
             if (component != IntPtr.Zero)
             {
-                Debug.LogCheck("Component was found in the C++ game object");
                 componentToReturn = InternalCalls.GetScript<TComponent>(containerGOptr, typeof(TComponent).ToString());
             }
         }
@@ -80,12 +112,10 @@ public class IGameObject : IObject
         
         if (componentToReturn != null)
         {
-            Debug.LogCheck("Component class to return: " + componentToReturn.ToString());
             return componentToReturn;
         }
         else
         {
-            Debug.LogError("Error finding component '" + typeof(TComponent).ToString() + "' in GameObject '" + name + "'. Check if the component exists in the Game Object.");
             return new IComponent() as TComponent;
         }
     }

@@ -140,6 +140,15 @@ void* MonoManager::CallScriptFunction(MonoObject* monoBehaviourInstance, std::st
 
     if (method == nullptr)
     {
+        // Get the parent class (MonoBehaviour's base class)
+        MonoClass* parentClass = mono_class_get_parent(instanceClass);
+
+        method = mono_class_get_method_from_name(parentClass, functionToCall.c_str(), 0);
+    }
+
+    if (method == nullptr)
+    {
+        //Used for handling virtual functions errors
         for (auto checkFunction : functionsToIgnore)
         {
             if (functionToCall == checkFunction) return nullptr;
@@ -171,6 +180,14 @@ void* MonoManager::CallScriptFunction(MonoObject* monoBehaviourInstance, std::st
 
     // Get a reference to the method in the class
     MonoMethod* method = mono_class_get_method_from_name(instanceClass, functionToCall.c_str(), parameterCount);
+
+    if (method == nullptr)
+    {
+        // Get the parent class (MonoBehaviour's base class)
+        MonoClass* parentClass = mono_class_get_parent(instanceClass);
+
+        method = mono_class_get_method_from_name(parentClass, functionToCall.c_str(), 0);
+    }
 
     if (method == nullptr)
     {
