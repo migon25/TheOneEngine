@@ -424,7 +424,6 @@ bool PanelInspector::Draw()
                 // Offset of collider
                 float offsetX = (float)collider2D->offset.x;
                 float offsetY = (float)collider2D->offset.y;
-                float offsetZ = (float)collider2D->offset.z;
                 ImGui::Text("Offset");
                 ImGui::Text("X");
                 ImGui::SameLine();
@@ -438,15 +437,25 @@ bool PanelInspector::Draw()
                 {
                     collider2D->offset.y = offsetY;
                 }
-                ImGui::Text("Z");
-                ImGui::SameLine();
-                if (ImGui::InputFloat("##OffsetZ", &offsetZ))
-                {
-                    collider2D->offset.z = offsetZ;
-                }
 
                 if (collider2D->colliderType == ColliderType::Rect)
                 {
+                    ImGui::Checkbox("CornerPivot", &(collider2D->cornerPivot));
+
+                    if (collider2D->cornerPivot)
+                    {
+                        int t = (int)collider2D->objectOrientation;
+                        if (ImGui::Button("Change Collider Orientation"))
+                        {
+                            t++;
+                            if (t >= 4)
+                            {
+                                t = 0;
+                            }
+                            collider2D->objectOrientation = (ObjectOrientation)t;
+                        }
+                    }
+
                     // Rectangle collider
                     float w = (float)collider2D->w;
                     float h = (float)collider2D->h;
